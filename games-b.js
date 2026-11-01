@@ -7,8 +7,9 @@
 
 /* ---------- shared jump scene (Luksong Tinik / Luksong Baka) ---------- */
 function jumpGame(api, cfg) {
-  const scene = h('<div class="jscene"><div class="jground"></div><div class="jobst"></div><div class="jumper">🧒</div><div class="jlabel"></div></div>');
+  const scene = h(`<div class="jscene"><div class="jground"></div><div class="jobst"></div><div class="jumper">${FZ.me('stand')}</div><div class="jlabel"></div></div>`);
   const obst = $('.jobst', scene), jm = $('.jumper', scene), label = $('.jlabel', scene);
+  const setPose = p => { jm.innerHTML = FZ.me(p); };
   api.stage.append(scene);
   const ctl = h(`<div class="jctl"><div class="meter"><div class="mfill"></div><div class="mreq"></div><div class="mmark"></div></div><button class="btn big jbtn">${cfg.mode === 'hold' ? '🦘 Hold… then let go!' : '🦘 Talon!'}</button></div>`);
   api.stage.append(ctl);
@@ -26,14 +27,15 @@ function jumpGame(api, cfg) {
     const ok = power >= needed();
     const W = scene.clientWidth, Hh = scene.clientHeight, xt = W * 0.2, xe = W * 0.78;
     jm.getAnimations().forEach(a => a.cancel());
-    api.sfx('jump');
+    api.sfx('jump'); setPose('run');
     const run = jm.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${xt}px,0)` }], { duration: 350, fill: 'forwards', easing: 'ease-in' });
     run.onfinish = () => {
       const endX = ok ? xe : W * 0.37, hh = ok ? power * MAXJ * Hh : Math.min(power * MAXJ * Hh, cfg.levels[lv].h * Hh * 0.85);
       const fr = []; for (let i = 0; i <= 20; i++) { const t = i / 20; fr.push({ transform: `translate(${xt + (endX - xt) * t}px,${-4 * hh * t * (1 - t)}px)` }); }
+      setPose('jump');
       const j = jm.animate(fr, { duration: ok ? 850 : 600, fill: 'forwards' });
       j.onfinish = () => {
-        if (api.dead) return;
+        if (api.dead) return; setPose('stand');
         if (ok) {
           api.sfx('good'); api.msg('Wow! You jumped over it! 🎉', true);
           api.later(() => {
@@ -90,7 +92,8 @@ FZ.reg({
       levels: [1, 2, 3, 4, 5].map((p, i) => ({ p, h: 0.1 + 0.09 * p, name: names[i] })),
       draw(el, L, scene) {
         const Hs = scene.clientHeight, ks = Math.min(Hs * 0.2, scene.clientWidth * 0.1), unit = Hs * 0.09;
-        el.innerHTML = `<div class="kid" style="font-size:${ks}px;left:calc(50% - ${ks * 1.9}px)">🧒🏽</div><div class="kid" style="font-size:${ks}px;left:calc(50% + ${ks * 0.8}px)">🧒🏻</div>
+        const kh = ks * 1.55, kw = kh * 0.83;
+        el.innerHTML = `<div class="kid" style="height:${kh}px;width:${kw}px;left:calc(50% - ${kw + 10}px)">${FZ.pal(0, 'sit')}</div><div class="kid" style="height:${kh}px;width:${kw}px;left:calc(50% + 10px)">${FZ.pal(2, 'sit', { flip: true })}</div>
           <div class="stack" style="font-size:${unit * 0.75}px"><div style="height:${Hs * 0.1}px">🦶</div>${Array.from({ length: L.p }, () => `<div style="height:${unit}px">✋</div>`).join('')}</div>`;
       },
       levelMsg: 'Tap Talon! when the marker is past the green line.',
@@ -114,7 +117,7 @@ FZ.reg({
   how: [
     'Press and HOLD the jump button — the bar fills up with power!',
     'Let go when the bar is past the green ✅ line so you leap high enough.',
-    'The 🐄 gets bigger each level. Clear all 4 levels!'
+    'Your bending friend gets taller each level. Clear all 4 levels!'
   ],
   tip: 'The cow should tuck their head in and keep their back flat. Teach kids to run first, then push off with both feet.',
   start(api) {
@@ -122,7 +125,7 @@ FZ.reg({
     jumpGame(api, {
       mode: 'hold',
       levels: [0.2, 0.3, 0.4, 0.5].map((h, i) => ({ h, name: names[i] })),
-      draw(el, L, scene) { el.innerHTML = `<div class="baka" style="font-size:${L.h * scene.clientHeight * 1.35}px">🐄</div>`; },
+      draw(el, L, scene) { el.innerHTML = `<div class="baka" style="--bh:${Math.round(L.h * scene.clientHeight * 1.2 + 28)}px">${FZ.bender()}</div>`; },
       levelMsg: 'Hold the button, let go past the green line!',
       failMsg: 'Oops! You bumped the baka. Hold a little longer! 🐄',
       winMsg: 'You leaped over the baka at every height!'
@@ -149,7 +152,7 @@ FZ.reg({
   tip: 'Make a loop from rubber bands tied together. Kids love singing a rhythm while they hop — it helps them remember the pattern!',
   start(api) {
     const levels = [{ h: 0.07, n: 'Ankle (bukong-bukong)' }, { h: 0.17, n: 'Knee (tuhod)' }, { h: 0.28, n: 'Waist (baywang)' }, { h: 0.39, n: 'Chest (dibdib)' }, { h: 0.5, n: 'Head (ulo)' }];
-    const scene = h('<div class="jscene"><div class="jground"></div><div class="holder" style="left:3%">🧍‍♀️</div><div class="holder" style="right:3%">🧍‍♂️</div><div class="garter"></div><div class="jumper" style="left:50%;margin-left:-30px">🧒</div><div class="jlabel"></div></div>');
+    const scene = h(`<div class="jscene"><div class="jground"></div><div class="holder" style="left:3%">${FZ.pal(1, 'wide')}</div><div class="holder" style="right:3%">${FZ.pal(2, 'wide', { flip: true })}</div><div class="garter"></div><div class="jumper" style="left:calc(50% - var(--sh) * .136)">${FZ.me('stand')}</div><div class="jlabel"></div></div>`);
     api.stage.append(scene);
     const rope = $('.garter', scene), jm = $('.jumper', scene), label = $('.jlabel', scene);
     const seqBox = h('<div class="seq"></div>'), btns = h(`<div class="gbtns"><button class="btn big" data-t="L">⬅️ Left</button><button class="btn big" data-t="U">⬆️ Talon</button><button class="btn big" data-t="R">Right ➡️</button></div>`);
@@ -164,6 +167,7 @@ FZ.reg({
     }
     function draw() { seqBox.innerHTML = seq.map((t, i) => `<span class="${i < idx ? 'on' : i === idx ? 'now' : ''}">${SYM[t]}</span>`).join(''); }
     function hop(t) {
+      jm.innerHTML = FZ.me(t === 'U' ? 'jump' : 'wide'); setTimeout(() => { jm.innerHTML = FZ.me('stand'); }, t === 'U' ? 650 : 320);
       const dx = t === 'L' ? -34 : t === 'R' ? 34 : 0, dy = t === 'U' ? (levels[lv].h + 0.12) * scene.clientHeight : 26;
       jm.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${dx}px,${-dy}px)` }, { transform: 'translate(0,0)' }], { duration: t === 'U' ? 650 : 320 });
     }
@@ -269,14 +273,14 @@ FZ.reg({
   how: [
     'Wait for "Takbo!" then tap the 🥥 Left and 🥥 Right buttons <b>one after the other</b>.',
     'Tapping the same side twice makes you wobble and slide back!',
-    'Race the 🐶 dog and 🐱 cat to the 🏁 finish line.'
+    'Race your two friends to the 🏁 finish line.'
   ],
   tip: 'Use thick rope and sturdy shells; start on grass. Count "kaliwa, kanan" out loud together for the rhythm!',
   start(api) {
     const STEPS = 22;
-    const racers = [{ e: '🧒', p: 0, me: true }, { e: '🐶', p: 0, sp: 540 }, { e: '🐱', p: 0, sp: 640 }];
+    const racers = [{ e: FZ.me('run'), p: 0, me: true }, { e: FZ.pal(0, 'run'), p: 0, sp: 540 }, { e: FZ.pal(1, 'run'), p: 0, sp: 640 }];
     const wrap = h('<div class="race"></div>');
-    racers.forEach(r => { const l = h(`<div class="lane"><div class="rc">${r.e}🥥</div></div>`); r.el = $('.rc', l); wrap.append(l); });
+    racers.forEach(r => { const l = h(`<div class="lane"><div class="rc">${r.e}<span class="coco">🥥</span></div></div>`); r.el = $('.rc', l); wrap.append(l); });
     api.stage.append(wrap);
     const btns = h('<div class="foot2"><button class="btn big" data-f="L">🥥 Left</button><button class="btn big" data-f="R">Right 🥥</button></div>');
     api.stage.append(btns);
@@ -320,14 +324,14 @@ FZ.reg({
   ],
   tip: 'Play on soft ground, aim low, and throw underhand. Taya should not guard too close — keep it fair for the little ones.',
   start(api) {
-    const scene = h(`<div class="tp"><div class="circle"></div><div class="can">🥫</div><div class="taya">🧑</div><div class="throwline"></div><div class="kid">🧒</div><div class="slip">🩴</div></div>`);
+    const scene = h(`<div class="tp"><div class="circle"></div><div class="can">🥫</div><div class="taya">${FZ.rival('arms')}</div><div class="throwline"></div><div class="kid">${FZ.me('stand')}</div><div class="slip">🩴</div></div>`);
     const aim = h('<div class="aim"><div class="zone"></div><div class="cur"></div></div>');
-    const bars = h('<div class="bars" style="display:none"><div class="bar"><i></i><span>🧒 You: tap Takbo!</span></div><div class="bar bad"><i></i><span>🧑 Taya sets the can up</span></div></div>');
+    const bars = h('<div class="bars" style="display:none"><div class="bar"><i></i><span>🏃 You: tap Takbo!</span></div><div class="bar bad"><i></i><span>🥫 Taya sets the can up</span></div></div>');
     const act = h('<div class="actions"><button class="btn big" id="tpThrow">🩴 Hagis!</button></div>');
     api.stage.append(scene); api.stage.append(aim); api.stage.append(bars); api.stage.append(act);
     const can = $('.can', scene), slip = $('.slip', scene), cur = $('.cur', aim), mine = $('.bar i', bars), taya = $('.bar.bad i', bars), tayaEm = $('.taya', scene);
     const throwBtn = $('#tpThrow', act);
-    const home = () => { slip.style.left = '50%'; slip.style.top = '74%'; };
+    const home = () => { slip.style.left = '64%'; slip.style.top = '86%'; };
     home();
     let state = 'aim', x = 0, d = 1, tries = 0, saved = 0, taps = 0;
     api.frame(dt => { if (state !== 'aim') return; x += d * dt * 1.0; if (x >= 1) { x = 1; d = -1; } if (x <= 0) { x = 0; d = 1; } cur.style.left = (x * 100) + '%'; });
@@ -358,7 +362,7 @@ FZ.reg({
     }
     function tapRush() {
       taps++; mine.style.width = clamp(taps / 10 * 100, 0, 100) + '%'; api.sfx('step');
-      if (taps >= 10) { state = 'busy'; saved++; api.sfx('good'); slip.style.left = '50%'; slip.style.top = '88%'; api.msg('Nakuha mo ang tsinelas! 🩴 You are safe!', true); api.later(nextTry, 1300); }
+      if (taps >= 10) { state = 'busy'; saved++; api.sfx('good'); slip.style.left = '64%'; slip.style.top = '86%'; api.msg('Nakuha mo ang tsinelas! 🩴 You are safe!', true); api.later(nextTry, 1300); }
     }
     const press = e => { e && e.preventDefault(); if (state === 'aim') doThrow(); else if (state === 'rush') tapRush(); };
     throwBtn.addEventListener('pointerdown', press);

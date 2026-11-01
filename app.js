@@ -1,6 +1,6 @@
 'use strict';
 /* =====================================================
-   FunZone app: navigation, child mode, parent mode
+   FunZone app: navigation, child mode, parent mode, language
    ===================================================== */
 let curCat = 'all', curGame = null, curApi = null, prevScreen = 'home', playedSec = 0, resting = false;
 
@@ -12,11 +12,40 @@ function show(id) {
 }
 const totalStars = () => Object.values(FZ.progress).reduce((a, p) => a + (p.stars || 0), 0);
 
+/* ---------------- LANGUAGE + STATIC TEXT ---------------- */
+function applyStatic() {
+  $$('[data-i18n]').forEach(el => { el.innerHTML = FZ.t(el.dataset.i18n); });
+  $$('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', FZ.t(el.dataset.i18nAria)));
+  document.documentElement.lang = FZ.lang === 'tl' ? 'fil' : 'en';
+  $$('.langsw button').forEach(b => b.classList.toggle('active', b.dataset.lang === FZ.lang));
+}
+function setLang(l) {
+  FZ.lang = l; FZ.settings.lang = l; FZ.saveSettings();
+  applyStatic(); renderCats(); renderHome(); renderAvatars();
+  if (FZ.screen === 'parent') renderParent();
+  if (FZ.screen === 'lang') { show('home'); FZ.say(pick(FZ.t('mascot'))); }
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-lang]'); if (!b) return;
+  FZ.sfx('pop'); setLang(b.dataset.lang);
+});
+
+/* ---------------- AVATAR (boy or girl) ---------------- */
+const avatarSvg = a => { const old = FZ.settings.avatar; FZ.settings.avatar = a; const s = FZ.me('stand'); FZ.settings.avatar = old; return s; };
+function renderAvatars() {
+  const row = $('#avatarBtns'); row.innerHTML = '';
+  ['boy', 'girl'].forEach(a => {
+    const b = h(`<button class="${FZ.settings.avatar === a ? 'active' : ''}" aria-label="${FZ.t(a)}">${avatarSvg(a)}</button>`);
+    b.onclick = () => { FZ.settings.avatar = a; FZ.saveSettings(); FZ.sfx('good'); renderAvatars(); };
+    row.append(b);
+  });
+}
+
 /* ---------------- HOME ---------------- */
 function renderCats() {
   const nav = $('#cats'); nav.innerHTML = '';
   FZ.cats.forEach(c => {
-    const b = h(`<button class="chip ${c.id === curCat ? 'active' : ''}">${c.emoji} ${c.label}</button>`);
+    const b = h(`<button class="chip ${c.id === curCat ? 'active' : ''}">${c.emoji} ${FZ.t(c.key)}</button>`);
     b.onclick = () => { curCat = c.id; FZ.sfx('pop'); renderCats(); renderHome(); };
     nav.append(b);
   });
@@ -30,33 +59,32 @@ function renderHome() {
     card.onclick = () => { FZ.sfx('pop'); openIntro(g); };
     grid.append(card);
   });
-  const say = ['Kumusta! I\'m Kabaw. Pick a game to play!', 'Let\'s play like the kids of long ago!', 'Which game do you want to try today?', 'Tara, laro tayo! 🎉'];
-  $('#mascotSay').textContent = pick(say);
+  $('#mascotSay').textContent = pick(FZ.t('mascot'));
 }
 function goHome() { destroyGame(); renderHome(); show('home'); }
 
 /* ---------------- INTRO (how it is played for real + in the game) ---------------- */
-const bullets = (arr, icon) => arr.map((t, i) => `<li data-i="${Array.isArray(icon) ? icon[i % icon.length] : icon}">${t}</li>`).join('');
+const bullets = (arr, icon) => arr.map((t, i) => `<li data-i="${icon[i % icon.length]}">${t}</li>`).join('');
 function openIntro(g) {
   destroyGame(); curGame = g;
   const sc = $('#intro');
   sc.innerHTML = `
     <div class="ihead">
-      <button class="round" id="iBack" aria-label="Back">⬅️</button>
+      <button class="round" id="iBack" aria-label="${FZ.t('back')}">⬅️</button>
       <div class="title"><span class="big-em">${g.emoji}</span><h2>${g.name}</h2></div>
-      <button class="round" id="iRead" aria-label="Read to me">🔊</button>
+      <button class="round" id="iRead" aria-label="${FZ.t('read_me')}">🔊</button>
     </div>
-    <p class="tagline">${g.tag}</p>
-    <div class="meta"><span class="chip">👥 ${g.players}</span><span class="chip">🧰 ${g.props}</span></div>
+    <p class="tagline">${FZ.g(g, 'tag')}</p>
+    <div class="meta"><span class="chip">👥 ${FZ.g(g, 'players')}</span><span class="chip">🧰 ${FZ.g(g, 'props')}</span></div>
     <div class="panels">
-      <article class="panel real"><h3>🌳 In real life</h3><ul>${bullets(g.real, ['👣', '🙌', '🏃', '🎉'])}</ul></article>
-      <article class="panel how"><h3>🎮 In FunZone</h3><ul>${bullets(g.how, ['👆', '✨', '⭐', '🎯'])}</ul></article>
+      <article class="panel real"><h3>${FZ.t('in_real')}</h3><ul>${bullets(FZ.g(g, 'real'), ['👣', '🙌', '🏃', '🎉'])}</ul></article>
+      <article class="panel how"><h3>${FZ.t('in_game')}</h3><ul>${bullets(FZ.g(g, 'how'), ['👆', '✨', '⭐', '🎯'])}</ul></article>
     </div>
     <div class="intro-actions">
-      <button class="btn big" id="iPlay">▶️ Let's Play!</button>
+      <button class="btn big" id="iPlay">${FZ.t('lets_play')}</button>
     </div>`;
   $('#iBack').onclick = goHome;
-  $('#iRead').onclick = () => FZ.say([g.name, g.tag, 'In real life.', ...g.real, 'In this game.', ...g.how].join('. '), true);
+  $('#iRead').onclick = () => { const [a, b] = FZ.t('read_intro'); FZ.say([g.name, FZ.g(g, 'tag'), a, ...FZ.g(g, 'real'), b, ...FZ.g(g, 'how')].join('. '), true); };
   $('#iPlay').onclick = () => { try { window.speechSynthesis.cancel(); } catch (e) { } FZ.sfx('good'); startGame(g); };
   show('intro');
 }
@@ -78,7 +106,7 @@ function makeApi(def) {
       requestAnimationFrame(loop); F.push(s); return () => { s.on = false; };
     },
     on(t, e, f, o) { t.addEventListener(e, f, o); L.push([t, e, f, o]); },
-    msg(t, speak) { $('#hint').textContent = t; if (speak) FZ.say(t); },
+    msg(t, speak) { t = FZ.tr(t); $('#hint').textContent = t; if (speak) FZ.say(t); },
     sfx: FZ.sfx,
     finish(stars, text) {
       if (dead) return; stars = clamp(stars, 1, 3);
@@ -101,17 +129,16 @@ function startGame(g) {
 }
 function showResult(g, stars, text) {
   const m = $('#modal');
-  const cheers = ['Galing!', 'Bravo!', 'Magaling!', 'Hooray!', 'Ang husay mo!'];
   m.innerHTML = `<div class="mcard">
     <div class="stars">${[0, 1, 2].map(i => `<span>${i < stars ? '⭐' : '☆'}</span>`).join('')}</div>
-    <h2>${pick(cheers)} 🎉</h2>
-    <p>${text || 'Great job playing ' + g.name + '!'}</p>
+    <h2>${pick(FZ.t('cheers'))} 🎉</h2>
+    <p>${text ? FZ.tr(text) : FZ.t('great_play', g.name)}</p>
     <div class="actions">
-      <button class="btn" id="mAgain">🔁 Play again</button>
-      <button class="btn ghost" id="mHome">🏠 More games</button>
+      <button class="btn" id="mAgain">${FZ.t('again')}</button>
+      <button class="btn ghost" id="mHome">${FZ.t('more')}</button>
     </div></div>`;
   m.classList.remove('hidden');
-  FZ.say('Great job!');
+  FZ.say(FZ.t('say_great'));
   $('#mAgain').onclick = () => { m.classList.add('hidden'); startGame(g); };
   $('#mHome').onclick = () => { m.classList.add('hidden'); goHome(); };
 }
@@ -119,8 +146,8 @@ function openHow(g) {
   const m = $('#modal');
   m.innerHTML = `<div class="mcard" style="text-align:left">
     <h2 style="text-align:center">${g.emoji} ${g.name}</h2>
-    <p><b>🎮 How to play:</b></p><ul style="padding-left:22px;margin-bottom:14px;font-size:19px">${g.how.map(t => `<li>${t}</li>`).join('')}</ul>
-    <div class="actions"><button class="btn" id="mClose">👍 OK!</button></div></div>`;
+    <p><b>${FZ.t('how_title')}</b></p><ul style="padding-left:22px;margin-bottom:14px;font-size:19px">${FZ.g(g, 'how').map(t => `<li>${t}</li>`).join('')}</ul>
+    <div class="actions"><button class="btn" id="mClose">${FZ.t('ok')}</button></div></div>`;
   m.classList.remove('hidden'); $('#mClose').onclick = () => m.classList.add('hidden');
 }
 $('#btnBack').onclick = () => { if (curGame) openIntro(curGame); else goHome(); };
@@ -147,14 +174,14 @@ let pinBuf = '', pinCb = null;
   });
 })();
 function updPin() { $$('#pinDots i').forEach((d, i) => d.classList.toggle('on', i < pinBuf.length)); }
-function askPin(cb, title) {
+function askPin(cb, titleKey) {
   pinCb = cb; pinBuf = ''; updPin();
-  $('#lockTitle').textContent = title || 'Parents only';
+  $('#lockTitle').textContent = FZ.t(titleKey || 'parents_only');
   prevScreen = FZ.screen && FZ.screen !== 'lock' ? FZ.screen : 'home';
   show('lock');
 }
 $('#lockCancel').onclick = () => { pinCb = null; show(resting ? 'rest' : prevScreen); };
-$('#btnParent').onclick = () => askPin(openParent, 'Parents only');
+$('#btnParent').onclick = () => askPin(openParent, 'parents_only');
 
 /* ---------------- PARENT MODE ---------------- */
 function openParent() { destroyGame(); renderParent(); show('parent'); }
@@ -163,64 +190,74 @@ $$('#ptabs button').forEach(b => b.onclick = () => {
   $$('#ptabs button').forEach(x => x.classList.toggle('active', x === b));
   $$('.ptab').forEach(t => t.classList.toggle('active', t.id === 'ptab-' + b.dataset.tab));
 });
+/* voices that fit the current language (Filipino voices for Tagalog, English voices for English) */
+const voiceMatch = v => { const l = v.lang.toLowerCase().replace('_', '-'); return FZ.lang === 'tl' ? /^(fil|tl)/.test(l) : l.startsWith('en'); };
+function hasLangVoice() { return FZ.lang !== 'tl' || FZ.voices.some(voiceMatch); }
+function voiceOptions() {
+  const cur = (FZ.settings.voices || {})[FZ.lang] || '';
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  return `<option value="">${FZ.t('voice_auto')}</option>` + FZ.voices.filter(voiceMatch).map(v => `<option value="${esc(v.name)}" ${v.name === cur ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('');
+}
 function renderParent() {
   /* progress */
   const tried = FZ.games.filter(g => (FZ.progress[g.id] || {}).plays).length;
   $('#ptab-progress').innerHTML = `
-    <div class="pcard"><h3>📊 Summary</h3>
-      <div class="prow2"><span class="n">Total stars collected</span><b>⭐ ${totalStars()} / ${FZ.games.length * 3}</b></div>
-      <div class="prow2"><span class="n">Games tried</span><b>${tried} / ${FZ.games.length}</b></div>
-      <div class="prow2"><span class="n">Play time this session</span><b>${Math.round(playedSec / 60)} min</b></div></div>
-    <div class="pcard"><h3>🎮 Each game</h3>${FZ.games.map(g => {
+    <div class="pcard"><h3>${FZ.t('summary')}</h3>
+      <div class="prow2"><span class="n">${FZ.t('total_stars')}</span><b>⭐ ${totalStars()} / ${FZ.games.length * 3}</b></div>
+      <div class="prow2"><span class="n">${FZ.t('games_tried')}</span><b>${tried} / ${FZ.games.length}</b></div>
+      <div class="prow2"><span class="n">${FZ.t('play_time')}</span><b>${Math.round(playedSec / 60)} ${FZ.t('min')}</b></div></div>
+    <div class="pcard"><h3>${FZ.t('each_game')}</h3>${FZ.games.map(g => {
       const p = FZ.progress[g.id] || { stars: 0, plays: 0 };
-      return `<div class="prow2"><span style="font-size:28px">${g.emoji}</span><span class="n">${g.name}</span><span>${'⭐'.repeat(p.stars)}${'☆'.repeat(3 - p.stars)}</span><span class="muted">${p.plays}× played</span></div>`;
+      return `<div class="prow2"><span style="font-size:28px">${g.emoji}</span><span class="n">${g.name}</span><span>${'⭐'.repeat(p.stars)}${'☆'.repeat(3 - p.stars)}</span><span class="muted">${FZ.t('times_played', p.plays)}</span></div>`;
     }).join('')}</div>`;
 
   /* settings */
   const S = FZ.settings;
   $('#ptab-settings').innerHTML = `
-    <div class="pcard"><h3>🔊 Sound & voice</h3>
-      <div class="row"><label for="sSound">Sound effects</label><label class="switch"><input type="checkbox" id="sSound" ${S.sound ? 'checked' : ''}><span></span></label></div>
-      <div class="row"><label for="sVoice">Read hints out loud (great for kids who can't read yet)</label><label class="switch"><input type="checkbox" id="sVoice" ${S.voice ? 'checked' : ''}><span></span></label></div>
+    <div class="pcard"><h3>${FZ.t('lang_row')}</h3>
+      <div class="row"><label>${FZ.t('lang_title')}</label><div class="langsw"><button data-lang="en" class="${FZ.lang === 'en' ? 'active' : ''}">🇺🇸 English</button><button data-lang="tl" class="${FZ.lang === 'tl' ? 'active' : ''}">🇵🇭 Tagalog</button></div></div>
     </div>
-    <div class="pcard"><h3>⏰ Screen-time limit</h3>
-      <div class="row"><label for="sLimit">Remind child to rest after</label>
-        <select id="sLimit">${[[0, 'No limit'], [10, '10 minutes'], [15, '15 minutes'], [20, '20 minutes'], [30, '30 minutes'], [45, '45 minutes']].map(([v, t]) => `<option value="${v}" ${+S.limit === v ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
-      <p class="muted">When time is up, FunZone shows a rest screen. Only a grown-up can unlock it with the PIN.</p>
+    <div class="pcard"><h3>${FZ.t('snd_title')}</h3>
+      <div class="row"><label for="sSound">${FZ.t('snd_fx')}</label><label class="switch"><input type="checkbox" id="sSound" ${S.sound ? 'checked' : ''}><span></span></label></div>
+      <div class="row"><label for="sVoice">${FZ.t('snd_voice')}</label><label class="switch"><input type="checkbox" id="sVoice" ${S.voice ? 'checked' : ''}><span></span></label></div>
+      <div class="row"><label for="sVoiceSel">${FZ.t('voice_pick')}</label><span style="display:flex;gap:8px;flex-wrap:wrap"><select id="sVoiceSel">${voiceOptions()}</select><button class="btn ghost" id="sVoiceTest" style="font-size:18px;padding:8px 16px">${FZ.t('voice_test')}</button></span></div>
+      <p class="muted" id="voiceNote">${hasLangVoice() ? FZ.t('voice_note') : FZ.t('voice_no_tl')}</p>
     </div>
-    <div class="pcard"><h3>🔐 Parent PIN</h3>
-      <div class="row"><input id="sPin" type="password" inputmode="numeric" maxlength="4" placeholder="New 4-digit PIN"><button class="btn" id="sPinSave">Save PIN</button></div>
+    <div class="pcard"><h3>${FZ.t('limit_title')}</h3>
+      <div class="row"><label for="sLimit">${FZ.t('limit_lbl')}</label>
+        <select id="sLimit">${[0, 10, 15, 20, 30, 45].map(v => `<option value="${v}" ${+S.limit === v ? 'selected' : ''}>${v ? FZ.t('minutes', v) : FZ.t('no_limit')}</option>`).join('')}</select></div>
+      <p class="muted">${FZ.t('limit_note')}</p>
+    </div>
+    <div class="pcard"><h3>${FZ.t('pin_title')}</h3>
+      <div class="row"><input id="sPin" type="password" inputmode="numeric" maxlength="4" placeholder="${FZ.t('pin_new')}"><button class="btn" id="sPinSave">${FZ.t('pin_save')}</button></div>
       <p class="muted" id="pinMsg"></p>
     </div>
-    <div class="pcard"><h3>🧹 Data</h3>
-      <div class="row"><label>Erase all stars and progress</label><button class="btn warn" id="sReset">Reset</button></div>
+    <div class="pcard"><h3>${FZ.t('data_title')}</h3>
+      <div class="row"><label>${FZ.t('data_erase')}</label><button class="btn warn" id="sReset">${FZ.t('reset')}</button></div>
     </div>
-    <div class="pcard"><h3>🔒 Privacy notice</h3>
-      <ul style="padding-left:22px;display:grid;gap:6px;font-size:17px">
-        <li><b>Nothing is collected.</b> FunZone has no accounts and never asks for your child's name, age, photo, voice or location.</li>
-        <li><b>Everything stays on this device.</b> Stars, settings and your PIN (stored scrambled) are saved only in this browser. Nothing is uploaded or shared, and there are no ads or trackers.</li>
-        <li><b>Read-aloud</b> uses your device's built-in voice. Some devices may process speech online, depending on the voice installed.</li>
-        <li><b>Delete anytime:</b> use "Reset" above, or clear this site's data in your browser settings.</li>
-      </ul>
+    <div class="pcard"><h3>${FZ.t('priv_title')}</h3>
+      <ul style="padding-left:22px;display:grid;gap:6px;font-size:17px">${FZ.t('priv').map(t => `<li>${t}</li>`).join('')}</ul>
     </div>`;
   $('#sSound').onchange = e => { S.sound = e.target.checked; FZ.saveSettings(); FZ.sfx('good'); };
-  $('#sVoice').onchange = e => { S.voice = e.target.checked; FZ.saveSettings(); if (S.voice) FZ.say('Hello!'); };
+  $('#sVoiceSel').onchange = e => { S.voices = Object.assign({}, S.voices); if (e.target.value) S.voices[FZ.lang] = e.target.value; else delete S.voices[FZ.lang]; FZ.saveSettings(); FZ.say(FZ.t('voice_hi'), true); };
+  $('#sVoiceTest').onclick = () => FZ.say(FZ.t('voice_hi'), true);
+  $('#sVoice').onchange = e => { S.voice = e.target.checked; FZ.saveSettings(); if (S.voice) FZ.say(FZ.t('hello')); };
   $('#sLimit').onchange = e => { S.limit = +e.target.value; FZ.saveSettings(); playedSec = 0; };
   $('#sPinSave').onclick = () => {
     const v = $('#sPin').value.trim();
-    if (/^\d{4}$/.test(v)) { S.pinHash = FZ.hash(v); FZ.saveSettings(); $('#pinMsg').textContent = '✅ PIN saved!'; $('#sPin').value = ''; }
-    else $('#pinMsg').textContent = '⚠️ Please enter exactly 4 digits.';
+    if (/^\d{4}$/.test(v)) { S.pinHash = FZ.hash(v); FZ.saveSettings(); $('#pinMsg').textContent = FZ.t('pin_saved'); $('#sPin').value = ''; }
+    else $('#pinMsg').textContent = FZ.t('pin_bad');
   };
-  $('#sReset').onclick = () => { if (confirm('Erase all stars and progress?')) { FZ.progress = {}; FZ.saveProgress(); renderParent(); } };
+  $('#sReset').onclick = () => { if (confirm(FZ.t('confirm_reset'))) { FZ.progress = {}; FZ.saveProgress(); renderParent(); } };
 
   /* real-life guide */
-  $('#ptab-guide').innerHTML = `<div class="pcard"><h3>📖 Play these games for real!</h3>
-    <p class="muted" style="margin-bottom:8px">Tap a game to see how it is played in real life, what you need, and tips for playing with your child offline.</p>
-    ${FZ.games.map(g => `<details><summary>${g.emoji} ${g.name} <span class="muted" style="font-weight:600">· ${g.players}</span></summary>
-      <div class="tipbox">🧰 <b>You need:</b> ${g.props}</div>
-      <b>🌳 In real life</b><ul>${g.real.map(t => `<li>${t}</li>`).join('')}</ul>
-      <b>🎮 In FunZone</b><ul>${g.how.map(t => `<li>${t}</li>`).join('')}</ul>
-      <div class="tipbox">💡 <b>Parent tip:</b> ${g.tip}</div></details>`).join('')}</div>`;
+  $('#ptab-guide').innerHTML = `<div class="pcard"><h3>${FZ.t('guide_title')}</h3>
+    <p class="muted" style="margin-bottom:8px">${FZ.t('guide_note')}</p>
+    ${FZ.games.map(g => `<details><summary>${g.emoji} ${g.name} <span class="muted" style="font-weight:600">· ${FZ.g(g, 'players')}</span></summary>
+      <div class="tipbox">${FZ.t('you_need')} ${FZ.g(g, 'props')}</div>
+      <b>${FZ.t('in_real')}</b><ul>${FZ.g(g, 'real').map(t => `<li>${t}</li>`).join('')}</ul>
+      <b>${FZ.t('in_game')}</b><ul>${FZ.g(g, 'how').map(t => `<li>${t}</li>`).join('')}</ul>
+      <div class="tipbox">${FZ.t('parent_tip')} ${FZ.g(g, 'tip')}</div></details>`).join('')}</div>`;
 }
 
 /* ---------------- TIME LIMIT / REST ---------------- */
@@ -228,11 +265,12 @@ setInterval(() => {
   if (!CHILD_SCREENS.includes(FZ.screen) || resting) return;
   playedSec += 5;
   if (FZ.settings.limit > 0 && playedSec >= FZ.settings.limit * 60) {
-    resting = true; destroyGame(); show('rest'); FZ.say('Time to rest! Ask a grown up.');
+    resting = true; destroyGame(); show('rest'); FZ.say(FZ.t('rest_say'));
   }
 }, 5000);
-$('#btnUnlock').onclick = () => askPin(() => { resting = false; playedSec = 0; goHome(); }, 'Grown-up unlock');
+$('#btnUnlock').onclick = () => askPin(() => { resting = false; playedSec = 0; goHome(); }, 'unlock_title');
 
 /* ---------------- BOOT ---------------- */
-renderCats(); renderHome(); show('home');
-if ('speechSynthesis' in window) speechSynthesis.getVoices();
+FZ.watchText($('#stage')); FZ.watchText($('#hint'));
+applyStatic(); renderCats(); renderAvatars(); renderHome();
+show(FZ.settings.lang ? 'home' : 'lang');       // first time: ask which language

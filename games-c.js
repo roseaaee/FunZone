@@ -23,7 +23,7 @@ FZ.reg({
   tip: 'Make a homemade sipa from a washer and a few strips of plastic bag. Start by letting your child kick it low, close to the ground.',
   start(api) {
     const parts = { foot: ['🦶', 'foot'], knee: ['🦵', 'knee'], elbow: ['💪', 'elbow'] };
-    const arena = h('<div class="sipaarena"><div class="gnd"></div><div class="zone"></div><div class="kid">🧒</div><div class="sipa"><div class="strands"></div><div class="washer"></div></div></div>');
+    const arena = h(`<div class="sipaarena"><div class="gnd"></div><div class="zone"></div><div class="kid">${FZ.me('stand')}</div><div class="sipa"><div class="strands"></div><div class="washer"></div></div></div>`);
     const hud = h('<div class="sipa-cnt">Kicks: <span id="sk">0</span>/8 · <span id="sl">💛💛💛</span></div>');
     const btns = h(`<div class="partbtns">${Object.entries(parts).map(([k, v]) => `<button class="btn big" data-p="${k}">${v[0]} ${v[1][0].toUpperCase() + v[1].slice(1)}</button>`).join('')}</div>`);
     api.stage.append(hud); api.stage.append(arena); api.stage.append(btns);
@@ -44,6 +44,7 @@ FZ.reg({
       const inZone = y + 28 > H * 0.42 && y + 28 < H * 0.76 && vy > 0;
       if (!inZone) { api.sfx('pop'); api.msg('Wait for the yellow zone! ⏳'); return; }
       if (p !== want) { api.sfx('oops'); api.msg(`Not that one! Use your ${parts[want][1].toUpperCase()} ${parts[want][0]}!`); return; }
+      const kidEl = $('.kid', arena); kidEl.innerHTML = FZ.me(p === 'foot' ? 'kick' : p === 'knee' ? 'knee' : 'elbow'); setTimeout(() => { kidEl.innerHTML = FZ.me('stand'); }, 450);
       count++; $('#sk').textContent = count; vy = -Math.sqrt(2 * G * 0.55 * H * 0.55); x = clamp(x + rnd(-60, 60), 30, W - 30); api.sfx('good');
       const plus = h('<div class="plus">+1</div>'); plus.style.left = x + 'px'; plus.style.top = (y - 10) + 'px'; arena.append(plus); setTimeout(() => plus.remove(), 800);
       if (count >= 8) { api.finish(lives, `You kicked the sipa ${count} times without hands!`); return; }
@@ -69,14 +70,14 @@ FZ.reg({
   how: [
     'First YOU guess. Close your eyes 🙈 — then a finger on the hand will flick and play a note 🎵!',
     'Every finger has its own sound, going up from the thumb to the pinky. Remember the note, then tap the finger!',
-    'Then it\'s your turn to flick a finger of 🐶\'s hand — will the dog guess it?'
+    'Then it\'s your turn to flick a finger of your friend\'s hand — will they guess it?'
   ],
   tip: 'In real life, play gently! Do a very light flick. For little kids, make the flick a soft tap with one finger so it never hurts.',
   start(api) {
     const names = [['Thumb', 'Hinlalaki'], ['Index', 'Hintuturo'], ['Middle', 'Hinlalato'], ['Ring', 'Palasingsingan'], ['Pinky', 'Hinliliit']];
     const freq = [262, 330, 392, 494, 587];
     const top = h('<div class="eyes">🙈</div>');
-    const hand = h(`<div class="hand">${names.map((n, i) => `<button class="finger f${i}" data-i="${i}" disabled><b>${i + 1}</b>${n[0]}<small>${n[1]}</small></button>`).join('')}</div>`);
+    const hand = h(`<div class="hand">${names.map((n, i) => `<button class="finger f${i}" data-i="${i}" disabled><b>${i + 1}</b>${FZ.lang === 'tl' ? n[1] : n[0]}<small>${FZ.lang === 'tl' ? n[0] : n[1]}</small></button>`).join('')}</div>`);
     const score = h('<div class="score">Points: <span id="pp">0</span>/4</div>');
     api.stage.append(top); api.stage.append(hand); api.stage.append(score);
     const fs = $$('.finger', hand);
@@ -89,10 +90,10 @@ FZ.reg({
       if (rounds >= 4) return api.finish(pts >= 3 ? 3 : pts >= 2 ? 2 : 1, `You scored ${pts} out of 4 points!`);
       role = rounds < 2 ? 'guess' : 'flick';
       if (role === 'guess') {
-        top.textContent = '🙈'; api.msg('Close your eyes… 🙈 🐶 will flick one finger!', true);
+        top.textContent = '🙈'; api.msg('Close your eyes… 🙈 Your friend will flick one finger!', true);
         api.later(() => { target = rnd(0, 4); flick(target); top.textContent = '🤔'; api.msg('Which finger was flicked? Remember the note! 🎵', true); enable(true); }, 2200);
       } else {
-        top.textContent = '🐶'; api.msg('Your turn! Pick a finger on 🐶\'s hand to flick!', true); enable(true);
+        top.innerHTML = FZ.pal(1, 'stand'); api.msg('Your turn! Pick a finger on your friend\'s hand to flick!', true); enable(true);
       }
     }
     fs.forEach(f => f.onclick = () => {
@@ -101,10 +102,10 @@ FZ.reg({
         const ok = i === target; fs[target].classList.add('ok'); if (!ok) f.classList.add('no');
         if (ok) { pts++; api.sfx('good'); api.msg('Tama! ✅ Correct!', true); } else { api.sfx('oops'); api.msg(`Sayang! It was finger ${target + 1}. 😅`, true); }
       } else {
-        flick(i); top.textContent = '🐶🤔';
+        flick(i); top.innerHTML = FZ.pal(1, 'stand') + '🤔';
         api.later(() => {
           const g = Math.random() < .2 ? i : rnd(0, 4); fs[g].classList.add(g === i ? 'ok' : 'no');
-          if (g === i) { api.sfx('oops'); api.msg('🐶 guessed right! Good dog!', true); } else { pts++; api.sfx('good'); api.msg('🐶 guessed wrong! You win a point! 🎉', true); }
+          if (g === i) { api.sfx('oops'); api.msg('Your friend guessed right! Good guess!', true); } else { pts++; api.sfx('good'); api.msg('Your friend guessed wrong! You win a point! 🎉', true); }
           $('#pp').textContent = pts; api.later(() => { rounds++; next(); }, 1600);
         }, 1500);
         return;
@@ -262,7 +263,7 @@ FZ.reg({
   ],
   tip: 'In real life, only older kids with adult supervision should try this. At home, play it as a "pretend climb" with a soft rope or a play-gym wall.',
   start(api) {
-    const sc = h('<div class="psc"><div class="top">🚩🎁</div><div class="pole"></div><div class="gnd"></div><div class="climber">🧗</div><div class="tag">Height: <span id="ph">0</span>%</div><div class="grip" id="pg">🧈 Slippery!</div></div>');
+    const sc = h(`<div class="psc"><div class="top">🚩🎁</div><div class="pole"></div><div class="gnd"></div><div class="climber">${FZ.me('climb')}</div><div class="tag">Height: <span id="ph">0</span>%</div><div class="grip" id="pg">🧈 Slippery!</div></div>`);
     const btns = h('<div class="pbtns"><button class="btn big main" id="pc">🤲 Akyat!</button><button class="btn big ghost" id="ps">🏖️ Buhangin</button><button class="btn big ghost" id="pf">👫 Kaibigan</button></div>');
     api.stage.append(sc); api.stage.append(btns);
     const cl = $('.climber', sc);

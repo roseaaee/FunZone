@@ -370,3 +370,82 @@ details .tipbox{background:#fff6d6;border-radius:12px;padding:8px 12px;margin:6p
   .mascot{font-size:52px}.bubble{font-size:17px}
   .dpad{grid-template-columns:repeat(3,70px)}.dpad button{height:62px}
 }
+
+/* =====================================================
+   FILIPINO KIDS (SVG characters)
+   ===================================================== */
+.kidsvg{display:block;overflow:visible;height:1em;width:auto}
+/* on the grid boards */
+.ent.haskid .kidsvg{height:128%;filter:drop-shadow(0 3px 0 rgba(0,0,0,.18))}
+.ent.haskid{transform:translateY(-9%)}
+.ent.me.haskid{filter:drop-shadow(0 0 5px #ffe066)}
+.ent.me.safe.haskid{filter:drop-shadow(0 0 9px #4dabf7) drop-shadow(0 0 3px #fff)}
+.ent.me.jailed.haskid{filter:grayscale(.85)}
+.ent.boss.haskid{filter:drop-shadow(0 0 4px #7048e8)}
+.ent.hen.haskid .kidsvg{height:132%}
+.ent.chick.haskid .kidsvg{height:112%}
+/* jump scenes */
+.jscene,.tsato,.tp{--sh:min(44vh,330px)}
+.jscene{height:var(--sh)}
+.jumper .kidsvg{height:calc(var(--sh) * .4)}
+.jobst .kid .kidsvg{height:100%;width:100%}
+.holder{height:calc(var(--sh) * .6);font-size:0}
+.holder .kidsvg{height:100%}
+/* kadang-kadang */
+.lane .rc .kidsvg{height:clamp(46px,8vh,64px);margin-right:2px;flex:none}
+.lane .rc{width:auto}
+/* tumbang preso */
+.tp .kid .kidsvg{height:clamp(64px,13vh,96px)}
+.tp .taya .kidsvg{height:clamp(54px,11vh,82px)}
+.tp .taya{transform:translate(-50%,-50%)}
+/* sipa, palosebo */
+.sipaarena .kid .kidsvg{height:clamp(86px,22vh,140px)}
+.psc .climber .kidsvg{height:62px}
+.psc .climber{margin-left:-22px}
+/* taguan + pitik-bulag */
+.spot .who .kidsvg{height:1.5em;width:auto}
+.spot .who{right:-6px;bottom:-6px}
+.eyes{display:flex;justify-content:center;align-items:center;gap:8px;min-height:90px}
+.eyes .kidsvg{height:90px}
+
+/* =====================================================
+   LANGUAGE + AVATAR PICKERS
+   ===================================================== */
+.langsw{display:inline-flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 4px 0 rgba(0,0,0,.12);gap:2px}
+.langsw button{background:transparent;border-radius:999px;padding:6px 12px;font-size:16px;font-weight:800;color:var(--ink)}
+.langsw button.active{background:var(--purple);color:#fff}
+.avatar-row{display:flex;align-items:center;gap:10px;margin-left:auto;background:#fff;border-radius:22px;padding:6px 12px;box-shadow:0 4px 0 rgba(0,0,0,.1)}
+.avatar-row span{font-weight:800;font-size:16px}
+.avatar-row button{width:54px;height:66px;border-radius:18px;background:#f3f0ff;padding:4px;box-shadow:0 4px 0 #d7cbff}
+.avatar-row button.active{background:#ffe066;box-shadow:0 4px 0 #e0b800;transform:translateY(2px)}
+.avatar-row .kidsvg{height:100%;width:100%}
+.mascot-row{flex-wrap:wrap}
+#lang{justify-content:center}
+.langbox{margin:auto;background:#fff;border-radius:34px;padding:24px 28px;text-align:center;width:min(94vw,460px);box-shadow:0 8px 0 rgba(0,0,0,.15)}
+.langbox .mascot{font-size:80px;display:block}
+.langbox h2{font-size:30px;margin:6px 0 14px}
+.langbtns{display:grid;gap:14px}
+.langbtns .btn{font-size:30px;padding:18px}
+.langbtns .btn.en{background:#4dabf7;box-shadow:0 6px 0 #2b86c9}
+.langbtns .btn.tl{background:#ff7a59;box-shadow:0 6px 0 #d05a3c}
+.pkid{display:flex;justify-content:center;gap:10px;margin:6px 0 14px}
+.pkid .kidsvg{height:110px}
+@media (max-width:520px){.avatar-row{margin-left:0;width:100%;justify-content:center}}
+
+/* boards no longer clip, so kids can stand at the very edge */
+.board{overflow:visible}
+.cell.tl{border-top-left-radius:15px}.cell.tr{border-top-right-radius:15px}.cell.bl{border-bottom-left-radius:15px}.cell.br{border-bottom-right-radius:15px}
+.ent.haskid .kidsvg{height:122%}
+.ent.haskid{transform:translateY(-7%)}
+.psc .climber{margin-left:0}
+.psc .climber .kidsvg{height:86px}
+.playbar,.hint{flex:none}
+.jscene{--sh:min(44vh,330px,60vw)}
+@media (max-width:520px){.hint{font-size:18px;padding:8px 14px}}
+
+/* ---- v3 fixes: spacing under boards, bending kid (Luksong Baka), coconut shells ---- */
+.board{margin-bottom:calc(var(--cell) * .3)}
+.jobst .baka{line-height:0}
+.jobst .baka .kidsvg{height:var(--bh,110px);width:auto;filter:drop-shadow(0 3px 0 rgba(0,0,0,.15))}
+.lane .rc .coco{font-size:26px;line-height:1;margin-left:-30px;align-self:flex-end;margin-bottom:2px;position:relative;z-index:0}
+.lane .rc .kidsvg{position:relative;z-index:1}

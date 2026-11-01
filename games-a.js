@@ -18,7 +18,7 @@ FZ.reg({
   ],
   how: [
     'You are the runner 🧒. Use the arrows to move one square at a time.',
-    'The taggers slide left and right on their lines. The 🦸 head defender slides up and down the middle line.',
+    'The red-shirt taggers slide left and right on their lines. The head defender (purple shirt) slides up and down the middle line.',
     'Run to the ⭐ side, then run back to 🏠. If you get tagged, you start again.'
   ],
   tip: 'Draw 3 lines about 3 big steps apart, and one long line down the middle. Let the child be a runner first, then a defender so they feel both roles.',
@@ -27,9 +27,9 @@ FZ.reg({
     const b = FZ.board(R, C, (r, c) => [lines.includes(r) ? 'line' : '', c === mid ? 'vline' : '', r === 0 ? 'goal' : '', r === R - 1 ? 'home' : ''].join(' '));
     api.stage.append(b.el);
     [0, 6].forEach(c => { b.cell(0, c).textContent = '⭐'; b.cell(R - 1, c).textContent = '🏠'; });
-    const me = b.ent('🧒', R - 1, 3, 'me');
-    const guards = lines.map((r, i) => ({ e: b.ent(['👧', '👦', '🧑'][i], r, i % 2 ? 0 : 6), dir: i % 2 ? 1 : -1, kind: 'h' }));
-    guards.push({ e: b.ent('🦸', 2, mid, 'boss'), dir: 1, kind: 'v' });
+    const me = b.ent(FZ.me('stand'), R - 1, 3, 'me');
+    const guards = lines.map((r, i) => ({ e: b.ent(FZ.rival('arms', i === 1 ? { girl: true, skin: '#dba574' } : i === 2 ? { skin: '#b97a4a' } : {}), r, i % 2 ? 0 : 6), dir: i % 2 ? 1 : -1, kind: 'h' }));
+    guards.push({ e: b.ent(FZ.kid({ pose: 'arms', shirt: '#7048e8', shorts: '#212529', shoe: '#ffd43b' }), 2, mid, 'boss'), dir: 1, kind: 'v' });
     let phase = 'out', tags = 0;
     const hit = () => guards.some(g => g.e.r === me.r && g.e.c === me.c);
     function check() {
@@ -62,8 +62,8 @@ FZ.reg({
     'Win by touching the enemy base, or by jailing every opponent.'
   ],
   how: [
-    'You are the blue runner 🧒. Use the arrows to run toward the red base 🚩 on the right side.',
-    'The red 😈 guards chase you ONLY on their side (the red half).',
+    'You are the runner in the orange shirt. Use the arrows to run toward the red base 🚩 on the right side.',
+    'The kids in red shirts chase you ONLY on their side (the red half).',
     'If you get caught you go to jail 🔒. Tap "Call a friend" and your teammate will run over to free you!'
   ],
   tip: 'Use trees or two buckets as bases. Younger kids can play without the "who left later" rule; just tag and jail.',
@@ -74,8 +74,8 @@ FZ.reg({
     for (let r = 2; r <= 4; r++) { b.cell(r, 0).classList.add('baseB'); b.cell(r, C - 1).classList.add('baseR'); }
     b.cell(3, 0).textContent = '🏠'; b.cell(3, C - 1).textContent = '🚩';
     b.cell(0, C - 1).textContent = '🔒'; b.cell(0, C - 1).classList.add('jail');
-    const me = b.ent('🧒', 3, 1, 'me');
-    const gs = [b.ent('😈', 1, 6), b.ent('😈', 5, 6)];
+    const me = b.ent(FZ.me('run'), 3, 1, 'me');
+    const gs = [b.ent(FZ.rival('arms'), 1, 6), b.ent(FZ.rival('arms', { girl: true, skin: '#dba574' }), 5, 6)];
     let jailed = false, caught = 0;
     const actions = h('<div class="actions"></div>');
     function check() {
@@ -90,7 +90,7 @@ FZ.reg({
       btn.onclick = () => { btn.remove(); rescue(); }; actions.append(btn);
     }
     function rescue() {
-      const f = b.ent('🧑', 0, 0, 'friend'); api.msg('Your friend is running to rescue you! 🏃', true);
+      const f = b.ent(FZ.pal(0, 'run'), 0, 0, 'friend'); api.msg('Your friend is running to rescue you! 🏃', true);
       let c = 0;
       const id = api.every(() => {
         c++; f.set(0, c); api.sfx('step');
@@ -102,7 +102,7 @@ FZ.reg({
     }
     api.stage.append(FZ.dpad(api, (dr, dc) => { if (jailed) return; me.set(clamp(me.r + dr, 0, R - 1), clamp(me.c + dc, 0, C - 1)); api.sfx('step'); check(); }));
     api.stage.append(actions);
-    api.msg('Run to the red 🚩 flag! Watch out for the 😈 guards.', true);
+    api.msg('Run to the red 🚩 flag! Watch out for the red team.', true);
     api.every(() => {
       if (jailed) return;
       gs.forEach((g, i) => {
@@ -124,7 +124,7 @@ function chase(api, cfg) {
   cfg.build(b, st, api);
   const blocked = (r, c) => cfg.blocked ? cfg.blocked(r, c, st) : false;
   const safe = (r, c) => cfg.safe(r, c, st);
-  const me = b.ent('🧒', R - 1, 0, 'me');
+  const me = b.ent(FZ.me('stand'), R - 1, 0, 'me');
   const it = b.ent(cfg.itEmoji, 0, C - 1, 'it');
   let mode = 'run', caught = 0, got = 0, itTicks = 0;
   /* stars to collect on the ground */
@@ -135,7 +135,7 @@ function chase(api, cfg) {
   function check() {
     if (mode === 'run') {
       if (it.r === me.r && it.c === me.c && !safe(me.r, me.c)) {
-        caught++; mode = 'it'; itTicks = 0; it.say(cfg.friendEmoji || '👧'); api.sfx('oops'); api.msg(cfg.caughtMsg, true);
+        caught++; mode = 'it'; itTicks = 0; it.say(cfg.friendEmoji || FZ.pal(1)); api.sfx('oops'); api.msg(cfg.caughtMsg, true);
       }
     } else if (it.r === me.r && it.c === me.c) {
       mode = 'run'; it.say(cfg.itEmoji); it.set(0, C - 1); api.sfx('pop'); api.msg('Tag! They\'re "It" again. Collect the ⭐ stars!', true);
@@ -178,18 +178,18 @@ FZ.reg({
   ],
   how: [
     'Move with the arrows. Brown 🪨 blocks are <b>Langit</b> — you are safe there (you will see ✅).',
-    'Collect 3 ⭐ stars that sit on the ground. The 🐺 wolf is "It" and chases you on the lupa!',
-    'If you get tagged, now YOU are It! Chase your friend 👧 to tag them back.'
+    'Collect 3 ⭐ stars that sit on the ground. Taya (the kid in the red shirt) is "It" and chases you on the lupa!',
+    'If you get tagged, now YOU are It! Chase your friend to tag them back.'
   ],
   tip: 'Safe spots must be a little raised. Add a rule that you can only stay on langit while counting to 5 so everyone keeps moving!',
   start(api) {
     const plat = new Set(['1,1', '1,2', '3,4', '3,5', '5,1', '5,6', '2,7', '4,3']);
     chase(api, {
-      R: 7, C: 9, itEmoji: '🐺', friendEmoji: '👧',
+      R: 7, C: 9, itEmoji: FZ.rival('run'), friendEmoji: FZ.pal(1, 'run'),
       build(b) { plat.forEach(k => { const [r, c] = k.split(',').map(Number); const cell = b.cell(r, c); cell.classList.add('raised'); cell.textContent = '🪨'; }); },
       safe: (r, c) => plat.has(r + ',' + c),
       startMsg: 'Stand on 🪨 (langit) to be safe. Collect 3 ⭐ from the ground!',
-      caughtMsg: 'Tagged on the lupa! Now YOU are It — tag 👧!',
+      caughtMsg: 'Tagged on the lupa! Now YOU are It — tag your friend!',
       winMsg: 'You collected all the stars on the lupa!'
     });
   }
@@ -207,16 +207,16 @@ FZ.reg({
     'When Taya finds someone, they race back and shout <b>"Pung!"</b> with the hider\'s name while touching the base. If a hider reaches the base first, they are safe!'
   ],
   how: [
-    'Watch the counting: Isa… hanggang Sampu! You are the seeker.',
+    'Watch the counting: one… to ten! You are the seeker.',
     '3 friends are hiding. Tap a hiding place to look inside.',
     'When you find a friend, tap the big <b>PUNG!</b> button to catch them.'
   ],
   tip: 'Agree on boundaries before playing. For tiny kids, hide in plain sight and count only to 10 so it stays exciting, not scary.',
   start(api) {
     const em = ['🌳', '🏠', '🌴', '🪣', '🪨', '🌽', '🚲', '🪑'];
-    const kids = shuffle(['👧', '👦', '🧒', '👶']).slice(0, 3);
+    const kids = shuffle([FZ.pal(0, 'stand'), FZ.pal(1, 'stand'), FZ.pal(2, 'stand'), FZ.pal(3, 'stand')]).slice(0, 3);
     const hide = shuffle([0, 1, 2, 3, 4, 5, 6, 7]).slice(0, 3);
-    const words = ['Isa', 'Dalawa', 'Tatlo', 'Apat', 'Lima', 'Anim', 'Pito', 'Walo', 'Siyam', 'Sampu'];
+    const words = FZ.lang === 'tl' ? ['Isa', 'Dalawa', 'Tatlo', 'Apat', 'Lima', 'Anim', 'Pito', 'Walo', 'Siyam', 'Sampu'] : ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
     const w = h(`<div class="taguan"><div class="countbox"><div class="countnum">🙈</div><div class="countword">Eyes closed…</div></div><div class="spots"></div><button class="btn pung" disabled>🏁 PUNG!</button></div>`);
     api.stage.append(w);
     const num = $('.countnum', w), word = $('.countword', w), box = $('.spots', w), pung = $('.pung', w);
@@ -230,7 +230,7 @@ FZ.reg({
         if (k >= 0) {
           s.classList.add('found'); s.insertAdjacentHTML('beforeend', `<span class="who">${kids[k]}</span>`);
           pending = s; pung.disabled = false; pung.classList.add('pulse'); api.sfx('good');
-          api.msg('Nakita kita! 👀 Quick — tap PUNG!', true);
+          api.msg('Found you! 👀 Quick — tap PUNG!', true);
         } else { s.classList.add('empty'); s.insertAdjacentHTML('beforeend', '<span class="who">💨</span>'); api.sfx('pop'); api.msg('Nobody here! Try another spot.'); }
       };
       box.append(s); return s;
@@ -246,7 +246,7 @@ FZ.reg({
     let i = 0;
     api.every(() => {
       if (i < 10) { num.textContent = i + 1; word.textContent = words[i]; FZ.say(words[i], false); api.sfx('pop'); i++; }
-      else if (i === 10) { i++; num.textContent = '🔦'; word.textContent = 'Ayan na ako!'; ready = true; api.msg('Handa na ba kayo? Ayan na ako! Tap a place to look. 🔍', true); }
+      else if (i === 10) { i++; num.textContent = '🔦'; word.textContent = 'Here I come!'; ready = true; api.msg('Ready or not, here I come! Tap a place to look. 🔍', true); }
     }, 850);
   }
 });
@@ -265,7 +265,7 @@ FZ.reg({
   how: [
     'Dark green squares are <b>shade</b> (lilim). Stand there to be safe ✅.',
     'Watch the ☀️ bar: when the sun moves, the shadows move too!',
-    'Collect 3 ⭐ stars in the sunshine. The 🐺 wolf is It. If tagged, you chase 👧!'
+    'Collect 3 ⭐ stars in the sunshine. Taya (the kid in the red shirt) is It. If tagged, you chase your friend!'
   ],
   tip: 'Play on a sunny morning or afternoon. Ask your child where the shadow will be in a few minutes — a fun way to learn about the sun!',
   start(api) {
@@ -280,7 +280,7 @@ FZ.reg({
       const s = $('.sun', api.stage); if (s) s.style.left = (st.d > 0 ? '6%' : '84%');
     };
     chase(api, {
-      R: 7, C: 9, itEmoji: '🐺', friendEmoji: '👧', shiftMs: 9000,
+      R: 7, C: 9, itEmoji: FZ.rival('run'), friendEmoji: FZ.pal(1, 'run'), shiftMs: 9000,
       build(b, st) {
         st.d = 1; calc(st);
         trees.forEach(([r, c]) => b.cell(r, c).textContent = '🌳');
@@ -290,7 +290,7 @@ FZ.reg({
       shift(b, st) { st.d *= -1; calc(st); draw(b, st); api.sfx('pop'); api.msg('☀️ The sun moved! The shadows moved too!', true); },
       safe: (r, c, st) => st.shade.has(r + ',' + c),
       startMsg: 'Dark green = shade (safe). Collect 3 ⭐ — and watch the ☀️!',
-      caughtMsg: 'Tagged in the sunshine! Now YOU are It — tag 👧!',
+      caughtMsg: 'Tagged in the sunshine! Now YOU are It — tag your friend!',
       winMsg: 'You played tag in the sun and the shade!'
     });
   }
@@ -308,8 +308,8 @@ FZ.reg({
     'The hen spreads her arms and moves left and right to block the hawk. Chicks sway along with her. A tagged chick joins the hawk!'
   ],
   how: [
-    'You are Mother Hen 🐔. Your 3 chicks 🐥 follow right behind you.',
-    'The 🦅 hawk flies across the sky and then DIVES in a column.',
+    'You are the Mother Hen. Your 3 chicks follow in a line right behind you, holding on.',
+    'The hawk (brown shirt) runs across the top and then DIVES down a column.',
     'Move left and right to be under the hawk — if you block it, the chicks are safe! Block 7 dives.'
   ],
   tip: 'Chicks hold on firmly (but gently!) and the hen should mirror the hawk. Start slow so little ones can follow along.',
@@ -317,9 +317,9 @@ FZ.reg({
     const R = 8, C = 7;
     const b = FZ.board(R, C, r => r <= 1 ? 'sky' : 'grass');
     api.stage.append(b.el);
-    const hen = b.ent('🐔', 4, 3, 'hen');
-    const chicks = [5, 6, 7].map(r => b.ent('🐥', r, 3, 'chick'));
-    const hawk = b.ent('🦅', 0, 3, 'hawk');
+    const hen = b.ent(FZ.me('arms'), 4, 3, 'hen');
+    const chicks = [5, 6, 7].map((r, i) => b.ent(FZ.pal(i + 1, 'stand'), r, 3, 'chick'));
+    const hawk = b.ent(FZ.kid({ pose: 'arms', shirt: '#b5651d', shorts: '#4a2f12', skin: '#c58a55', deco: 'stripe' }), 0, 3, 'hawk');
     const warn = b.ent('⚠️', 3, 3); warn.el.style.opacity = 0;
     let dives = 0, busy = false;
     const moveHen = c => { c = clamp(c, 0, C - 1); hen.set(4, c); chicks.forEach(k => k.set(k.r, c)); api.sfx('step'); };
@@ -327,15 +327,15 @@ FZ.reg({
     api.on(b.el, 'pointerdown', e => { const rect = b.el.getBoundingClientRect(); moveHen(Math.floor((e.clientX - rect.left) / rect.width * C)); });
     b.el.style.touchAction = 'none';
     b.el.querySelectorAll('.ent').forEach(x => x.style.pointerEvents = 'none');
-    api.msg('Stay under the hawk 🦅 to protect your chicks!', true);
+    api.msg('Stay under the hawk to protect your chicks!', true);
     async function round() {
       if (dives >= 7) return end();
       let nc; do { nc = rnd(0, C - 1); } while (nc === hawk.c);
       hawk.set(1, nc); await api.sleep(1100);
       warn.set(3, nc); warn.el.style.opacity = 1; api.sfx('pop'); await api.sleep(800);
       warn.el.style.opacity = 0; dives++;
-      if (hen.c === hawk.c) { hawk.set(3, hawk.c); api.sfx('good'); api.msg('Blocked! 🐔 Good job, Inahin!'); }
-      else if (chicks.length) { const k = chicks[chicks.length - 1]; hawk.set(k.r, hawk.c); await api.sleep(250); chicks.pop().el.remove(); api.sfx('oops'); api.msg('Oh no! The hawk took a chick. 🐥 Stay closer!', true); }
+      if (hen.c === hawk.c) { hawk.set(3, hawk.c); api.sfx('good'); api.msg('Blocked! Good job, Inahin!'); }
+      else if (chicks.length) { const k = chicks[chicks.length - 1]; hawk.set(k.r, hawk.c); await api.sleep(250); chicks.pop().el.remove(); api.sfx('oops'); api.msg('Oh no! The hawk tagged a chick. Stay closer!', true); }
       await api.sleep(700); hawk.set(1, hawk.c); await api.sleep(300);
       round();
     }
@@ -357,22 +357,22 @@ FZ.reg({
   ],
   how: [
     'The 🪵 logs are the fence. Yellow squares touch the fence — you are safe there ✅.',
-    'Collect 3 ⭐ stars away from the fence. The 🐺 wolf is It!',
-    'If you get tagged, you are It — tag your friend 👧!'
+    'Collect 3 ⭐ stars away from the fence. Taya (the kid in the red shirt) is It!',
+    'If you get tagged, you are It — tag your friend!'
   ],
   tip: 'Pick a few different fences or posts so children keep moving between them. Make a rule: only 5 seconds on one fence!',
   start(api) {
     const fence = new Set(['1,4', '2,4', '3,4', '4,4', '5,4', '2,1', '4,7']);
     const near = (r, c) => { for (const k of fence) { const [fr, fc] = k.split(',').map(Number); if (Math.abs(fr - r) <= 1 && Math.abs(fc - c) <= 1) return true; } return false; };
     chase(api, {
-      R: 7, C: 9, itEmoji: '🐺', friendEmoji: '👧',
+      R: 7, C: 9, itEmoji: FZ.rival('run'), friendEmoji: FZ.pal(1, 'run'),
       build(b) {
         for (let r = 0; r < b.R; r++) for (let c = 0; c < b.C; c++) { const k = r + ',' + c; if (fence.has(k)) { b.cell(r, c).classList.add('fence'); b.cell(r, c).textContent = '🪵'; } else if (near(r, c)) b.cell(r, c).classList.add('touch'); }
       },
       blocked: (r, c) => fence.has(r + ',' + c),
       safe: (r, c) => near(r, c),
       startMsg: 'Yellow squares touch the fence — safe! Collect 3 ⭐.',
-      caughtMsg: 'Tagged away from the fence! Now YOU are It — tag 👧!',
+      caughtMsg: 'Tagged away from the fence! Now YOU are It — tag your friend!',
       winMsg: 'You are a fence-hugging champion!'
     });
   }
