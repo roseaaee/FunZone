@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>FunZone – Laro ng Lahi for Little Kids</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Pretty moving background -->
+<div class="sky" aria-hidden="true">
+  <span class="cloud c1">☁️</span><span class="cloud c2">☁️</span><span class="cloud c3">☁️</span>
+  <span class="sunny">🌞</span>
+  <span class="hill"></span>
+</div>
+
+<main id="app">
+
+  <!-- ============ CHILD MODE: HOME ============ -->
+  <section id="home" class="screen active">
+    <header class="topbar">
+      <h1 class="logo" aria-label="FunZone">
+        <span>F</span><span>u</span><span>n</span><span>Z</span><span>o</span><span>n</span><span>e</span>
+      </h1>
+      <div class="top-right">
+        <div class="starcount" title="My stars">⭐ <b id="totalStars">0</b></div>
+        <button id="btnParent" class="chip parent-btn">🔒 Parents</button>
+      </div>
+    </header>
+
+    <div class="mascot-row">
+      <div class="mascot" aria-hidden="true">🐃</div>
+      <div class="bubble" id="mascotSay">Kumusta! I'm Kabaw. Pick a game to play!</div>
+    </div>
+
+    <nav class="cats" id="cats" aria-label="Game types"></nav>
+    <div id="gameGrid" class="grid"></div>
+    <footer class="foot">Laro ng Lahi · Games of the Filipino people 🇵🇭</footer>
+  </section>
+
+  <!-- ============ CHILD MODE: GAME INTRO ============ -->
+  <section id="intro" class="screen"></section>
+
+  <!-- ============ CHILD MODE: PLAY ============ -->
+  <section id="play" class="screen">
+    <header class="playbar">
+      <button id="btnBack" class="round" aria-label="Back">⬅️</button>
+      <h2 id="playTitle"></h2>
+      <button id="btnHow" class="round" aria-label="How to play">❓</button>
+    </header>
+    <div id="hint" class="hint"></div>
+    <div id="stage" class="stage"></div>
+  </section>
+
+  <!-- ============ PARENT PIN ============ -->
+  <section id="lock" class="screen">
+    <div class="lockbox">
+      <div class="lock-ico">🔐</div>
+      <h2 id="lockTitle">Parents only</h2>
+      <p class="muted">Enter your 4-digit PIN (default: 1234)</p>
+      <div class="pindots" id="pinDots"><i></i><i></i><i></i><i></i></div>
+      <div class="keypad" id="keypad"></div>
+      <button id="lockCancel" class="btn ghost">Cancel</button>
+    </div>
+  </section>
+
+  <!-- ============ PARENT MODE ============ -->
+  <section id="parent" class="screen">
+    <header class="pbar">
+      <h2>👨‍👩‍👧 Parent Mode</h2>
+      <button id="btnExitParent" class="btn">🧒 Back to Kid Mode</button>
+    </header>
+    <nav class="ptabs" id="ptabs">
+      <button data-tab="progress" class="active">📊 Progress</button>
+      <button data-tab="settings">⚙️ Settings</button>
+      <button data-tab="guide">📖 Real-Life Guide</button>
+    </nav>
+    <div id="ptab-progress" class="ptab active"></div>
+    <div id="ptab-settings" class="ptab"></div>
+    <div id="ptab-guide" class="ptab"></div>
+  </section>
+
+  <!-- ============ REST TIME ============ -->
+  <section id="rest" class="screen">
+    <div class="restbox">
+      <div class="rest-em">😴🐃</div>
+      <h2>Pahinga muna!</h2>
+      <p>Time to rest your eyes and go play outside!<br>Ask a grown-up to unlock more play time.</p>
+      <button id="btnUnlock" class="btn big">👨‍👩‍👧 Grown-up unlock</button>
+    </div>
+  </section>
+
+</main>
+
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true"></div>
+
+<script src="core.js"></script>
+<script src="games-a.js"></script>
+<script src="games-b.js"></script>
+<script src="games-c.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
