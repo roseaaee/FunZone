@@ -15,7 +15,7 @@ function jumpGame(api, cfg) {
   api.stage.append(ctl);
   const MAXJ = 0.7, fill = $('.mfill', ctl), mark = $('.mmark', ctl), reqEl = $('.mreq', ctl), btn = $('.jbtn', ctl);
   let lv = 0, fails = 0, busy = false, val = 0, dir = 1, holding = false, hold0 = 0;
-  const needed = () => (cfg.levels[lv].h + 0.07) / MAXJ;
+  const needed = () => cfg.levels[lv].need !== undefined ? cfg.levels[lv].need : (cfg.levels[lv].h + 0.07) / MAXJ;
   function showLevel() {
     cfg.draw(obst, cfg.levels[lv], scene);
     label.textContent = `Level ${lv + 1}/${cfg.levels.length} · ${cfg.levels[lv].name}`;
@@ -86,15 +86,13 @@ FZ.reg({
   ],
   tip: 'Start with just feet, then add one hand at a time. Always cushion the sitters\' hands: gentle jumps only, and a soft grassy spot is best.',
   start(api) {
-    const names = ['Paa (feet)', 'Tuhod (knee)', 'Baywang (waist)', 'Dibdib (chest)', 'Balikat (shoulder)'];
+    const names = ['Paa (feet)', 'Isang kamay (1 hand)', 'Dalawang kamay (2 hands)', 'Tatlong kamay (3 hands)', 'Apat na kamay (4 hands)'];
     jumpGame(api, {
       mode: 'meter',
-      levels: [1, 2, 3, 4, 5].map((p, i) => ({ p, h: 0.1 + 0.09 * p, name: names[i] })),
-      draw(el, L, scene) {
-        const Hs = scene.clientHeight, ks = Math.min(Hs * 0.2, scene.clientWidth * 0.1), unit = Hs * 0.09;
-        const kh = ks * 1.55, kw = kh * 0.83;
-        el.innerHTML = `<div class="kid" style="height:${kh}px;width:${kw}px;left:calc(50% - ${kw + 10}px)">${FZ.pal(0, 'sit')}</div><div class="kid" style="height:${kh}px;width:${kw}px;left:calc(50% + 10px)">${FZ.pal(2, 'sit', { flip: true })}</div>
-          <div class="stack" style="font-size:${unit * 0.75}px"><div style="height:${Hs * 0.1}px">🦶</div>${Array.from({ length: L.p }, () => `<div style="height:${unit}px">✋</div>`).join('')}</div>`;
+      levels: [1, 2, 3, 4, 5].map((p, i) => ({ p, h: FZ.TINIK_U[i] / 112 * 0.4, need: 0.3 + 0.12 * i, name: names[i] })),
+      draw(el, L, scene) {                       // the two friends sit; the pile of feet and hands comes from THEIR arms and legs
+        const u = scene.clientHeight * 0.4 / 112;
+        el.innerHTML = `<div class="fig" style="height:${63 * u}px">${FZ.tinikFig(L.p)}</div>`;
       },
       levelMsg: 'Tap Talon! when the marker is past the green line.',
       failMsg: 'Oops! You touched the tinik. Try again! 🌵',
@@ -109,9 +107,9 @@ FZ.reg({
   tag: 'Leap over the bending cow!',
   players: '3 or more kids', props: 'A soft, grassy space',
   real: [
-    'One player is the <b>baka</b> (cow) and bends over, hands on knees, tucked in nice and low.',
+    'One player is the <b>baka</b> (cow). At first they crouch low with hands on the ground and head tucked in.',
     'Other players run up and leap over the cow\'s back like leap-frog, without touching their head.',
-    'After each round the cow stands up taller — first low, then higher and higher.',
+    'After each round the baka rises higher: hands on the feet, then the knees, then the thighs.',
     'If someone touches the cow or falls, they become the next baka!'
   ],
   how: [
@@ -121,11 +119,14 @@ FZ.reg({
   ],
   tip: 'The cow should tuck their head in and keep their back flat. Teach kids to run first, then push off with both feet.',
   start(api) {
-    const names = ['Mababa (low)', 'Katamtaman (medium)', 'Mataas (high)', 'Napakataas (very high)'];
+    const names = ['Kamay sa lupa (hands on ground)', 'Kamay sa paa (hands on feet)', 'Kamay sa tuhod (hands on knees)', 'Kamay sa hita (hands on thighs)'];
     jumpGame(api, {
       mode: 'hold',
-      levels: [0.2, 0.3, 0.4, 0.5].map((h, i) => ({ h, name: names[i] })),
-      draw(el, L, scene) { el.innerHTML = `<div class="baka" style="--bh:${Math.round(L.h * scene.clientHeight * 1.2 + 28)}px">${FZ.bender()}</div>`; },
+      levels: [1, 2, 3, 4].map((lvl, i) => ({ lvl, h: FZ.BAKA_U[i] / 112 * 0.4, need: 0.36 + 0.15 * i, name: names[i] })),
+      draw(el, L, scene) {                       // a real kid bends: hands on the ground, then feet, knees, thighs
+        const u = scene.clientHeight * 0.4 / 112;
+        el.innerHTML = `<div class="fig" style="height:${80 * u}px;margin-bottom:${-4 * u}px">${FZ.bakaFig(L.lvl)}</div>`;
+      },
       levelMsg: 'Hold the button, let go past the green line!',
       failMsg: 'Oops! You bumped the baka. Hold a little longer! 🐄',
       winMsg: 'You leaped over the baka at every height!'

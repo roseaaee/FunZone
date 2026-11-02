@@ -90,6 +90,12 @@ FZ.UI = {
   rest_say:     { en: 'Time to rest! Ask a grown up.', tl: 'Pahinga muna! Magpatulong sa nakatatanda.' },
   unlock_btn:   { en: '👨‍👩‍👧 Grown-up unlock', tl: '👨‍👩‍👧 Buksan ng nakatatanda' },
   hello:        { en: 'Hello!', tl: 'Kumusta!' },
+  tut_more:     { en: '📝 Read the steps', tl: '📝 Basahin ang mga hakbang' },
+  tut_step:     { en: 'Step', tl: 'Hakbang' },
+  tut_prev:     { en: 'Previous step', tl: 'Nakaraang hakbang' },
+  tut_next:     { en: 'Next step', tl: 'Susunod na hakbang' },
+  tut_play:     { en: 'Play', tl: 'Ipagpatuloy' },
+  tut_pause:    { en: 'Pause', tl: 'Ihinto' },
   voice_pick:   { en: 'Voice', tl: 'Boses' },
   voice_auto:   { en: 'Automatic (best available)', tl: 'Awtomatiko (pinakamaganda)' },
   voice_test:   { en: '▶ Test', tl: '▶ Subukan' },
@@ -151,7 +157,7 @@ FZ.TLG = {
       'Kapag nakita ng Taya ang isa, tatakbo siya pabalik sa base at sisigaw ng <b>"Pung!"</b> kasama ang pangalan habang hinahawakan ang base. Kung maunang makarating sa base ang nagtago, ligtas siya!'],
     how: [
       'Panoorin ang pagbibilang: isa… hanggang sampu! Ikaw ang taga-hanap.',
-      '3 kaibigan ang nagtatago. Pindutin ang taguan para silipin ito.',
+      'Pumili ng lugar: baryo, gubat, palaruan, paaralan o dalampasigan. 3 kaibigan ang nagtatago roon. Pindutin ang taguan para silipin ito.',
       'Kapag may nakita kang kaibigan, pindutin ang malaking <b>PUNG!</b> para mahuli siya.'],
     tip: 'Magkasundo muna sa mga hangganan bago maglaro. Para sa maliliit na bata, magtago sa madaling makitang lugar at hanggang 10 lang ang bilang para masaya at hindi nakakatakot.' },
   araw: {
@@ -210,9 +216,9 @@ FZ.TLG = {
     tag: 'Talunin ang yumuyukong baka!',
     players: '3 o higit pang bata', props: 'Malambot at madamong lugar',
     real: [
-      'Isa ang <b>baka</b> at yuyuko siya, nakapatong ang kamay sa tuhod, nakatago ang ulo.',
+      'Isa ang <b>baka</b>. Sa umpisa, nakayuko siya nang mababa, nakapatong ang kamay sa lupa at nakatago ang ulo.',
       'Ang ibang manlalaro ay tatakbo at lulundag sa likod ng baka, parang leap-frog, nang hindi nahahawakan ang ulo nito.',
-      'Pagkatapos ng bawat ikot, tatayo nang mas mataas ang baka — mababa muna, saka palaki nang palaki.',
+      'Pagkatapos ng bawat ikot, tumataas ang baka: kamay sa paa, saka sa tuhod, saka sa hita.',
       'Kapag may nakasagi sa baka o nadapa, siya na ang susunod na baka!'],
     how: [
       'Pindutin at I-HOLD ang pindutan ng talon — pupuno ang bar ng lakas!',

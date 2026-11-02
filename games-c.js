@@ -74,13 +74,13 @@ FZ.reg({
   ],
   tip: 'In real life, play gently! Do a very light flick. For little kids, make the flick a soft tap with one finger so it never hurts.',
   start(api) {
-    const names = [['Thumb', 'Hinlalaki'], ['Index', 'Hintuturo'], ['Middle', 'Hinlalato'], ['Ring', 'Palasingsingan'], ['Pinky', 'Hinliliit']];
+    const names = FZ.lang === 'tl' ? ['Hinlalaki', 'Hintuturo', 'Hinlalato', 'Palasingsingan', 'Hinliliit'] : ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky'];
     const freq = [262, 330, 392, 494, 587];
-    const top = h('<div class="eyes">🙈</div>');
-    const hand = h(`<div class="hand">${names.map((n, i) => `<button class="finger f${i}" data-i="${i}" disabled><b>${i + 1}</b>${FZ.lang === 'tl' ? n[1] : n[0]}<small>${FZ.lang === 'tl' ? n[0] : n[1]}</small></button>`).join('')}</div>`);
+    const top = h(`<div class="eyes"><span>${FZ.pal(0, 'stand')}</span><span class="pst" style="font-size:56px;line-height:1">🙈</span></div>`);
+    const hand = h(`<div class="hand">${names.map((n, i) => `<button type="button" class="finger f${i}" data-i="${i}" aria-label="${i + 1} · ${n}" disabled><b>${i + 1}</b></button>`).join('')}</div>`);
     const score = h('<div class="score">Points: <span id="pp">0</span>/4</div>');
     api.stage.append(top); api.stage.append(hand); api.stage.append(score);
-    const fs = $$('.finger', hand);
+    const fs = $$('.finger', hand), pst = $('.pst', top);
     let rounds = 0, pts = 0, role = 'guess', target = 0;
     const enable = on => fs.forEach(f => f.disabled = !on);
     const clear = () => fs.forEach(f => f.classList.remove('flash', 'ok', 'no'));
@@ -90,28 +90,27 @@ FZ.reg({
       if (rounds >= 4) return api.finish(pts >= 3 ? 3 : pts >= 2 ? 2 : 1, `You scored ${pts} out of 4 points!`);
       role = rounds < 2 ? 'guess' : 'flick';
       if (role === 'guess') {
-        top.textContent = '🙈'; api.msg('Close your eyes… 🙈 Your friend will flick one finger!', true);
-        api.later(() => { target = rnd(0, 4); flick(target); top.textContent = '🤔'; api.msg('Which finger was flicked? Remember the note! 🎵', true); enable(true); }, 2200);
-      } else {
-        top.innerHTML = FZ.pal(1, 'stand'); api.msg('Your turn! Pick a finger on your friend\'s hand to flick!', true); enable(true);
-      }
+        pst.textContent = '🙈'; api.msg('Close your eyes… 🙈 Your friend will flick one finger!', true);
+        api.later(() => { target = rnd(0, 4); flick(target); pst.textContent = '🤔'; api.msg('Which finger was flicked? Remember the note! 🎵', true); enable(true); }, 2200);
+      } else { pst.textContent = '👀'; api.msg('Your turn! Pick a finger on your friend\'s hand to flick!', true); enable(true); }
     }
-    fs.forEach(f => f.onclick = () => {
-      const i = +f.dataset.i; enable(false);
+    function choose(i) {
+      if (fs[i].disabled) return; enable(false);
       if (role === 'guess') {
-        const ok = i === target; fs[target].classList.add('ok'); if (!ok) f.classList.add('no');
+        const ok = i === target; fs[target].classList.add('ok'); if (!ok) fs[i].classList.add('no');
         if (ok) { pts++; api.sfx('good'); api.msg('Tama! ✅ Correct!', true); } else { api.sfx('oops'); api.msg(`Sayang! It was finger ${target + 1}. 😅`, true); }
+        $('#pp').textContent = pts; api.later(() => { rounds++; next(); }, 1800);
       } else {
-        flick(i); top.innerHTML = FZ.pal(1, 'stand') + '🤔';
+        flick(i); pst.textContent = '🤔';
         api.later(() => {
           const g = Math.random() < .2 ? i : rnd(0, 4); fs[g].classList.add(g === i ? 'ok' : 'no');
           if (g === i) { api.sfx('oops'); api.msg('Your friend guessed right! Good guess!', true); } else { pts++; api.sfx('good'); api.msg('Your friend guessed wrong! You win a point! 🎉', true); }
-          $('#pp').textContent = pts; api.later(() => { rounds++; next(); }, 1600);
+          $('#pp').textContent = pts; api.later(() => { rounds++; next(); }, 1700);
         }, 1500);
-        return;
       }
-      $('#pp').textContent = pts; api.later(() => { rounds++; next(); }, 1800);
-    });
+    }
+    fs.forEach(f => f.onclick = () => choose(+f.dataset.i));
+    api.on(window, 'keydown', e => { if (/^[1-5]$/.test(e.key)) choose(+e.key - 1); });
     next();
   }
 });
@@ -186,7 +185,7 @@ FZ.reg({
   ],
   tip: 'Play on flat, smooth ground. Keep marbles away from toddlers and babies, who may put them in their mouths. Always count marbles before and after!',
   start(api) {
-    const W = Math.min(window.innerWidth * 0.92, 400), H = W * 1.15, mr = W * 0.045, RR = W * 0.36, cx = W / 2, cy = W * 0.44;
+    const availH = Math.max(190, window.innerHeight - (window.innerWidth > window.innerHeight ? 150 : 270)), W = Math.min(window.innerWidth * 0.92, 400, availH / 1.15), H = W * 1.15, mr = W * 0.045, RR = W * 0.36, cx = W / 2, cy = W * 0.44;
     const arena = h(`<div class="holen" style="width:${W}px;height:${H}px"><div class="ring" style="left:${cx - RR}px;top:${cy - RR}px;width:${RR * 2}px;height:${RR * 2}px"></div></div>`);
     const hud = h('<div class="score">Out: <span id="ho">0</span>/3 · Shots left: <span id="hs">6</span></div>');
     api.stage.append(hud); api.stage.append(arena);
@@ -271,6 +270,7 @@ FZ.reg({
     const upd = () => { cl.style.bottom = (6 + p * 74) + '%'; $('#ph').textContent = Math.round(p * 100); $('#pg').textContent = sand > 0 ? '🏖️ Sandy grip!' : '🧈 Slippery!'; };
     function win() { if (done) return; done = true; const s = (performance.now() - t0) / 1000; api.finish(s <= 22 ? 3 : s <= 40 ? 2 : 1, `You reached the flag in ${Math.round(s)} seconds! 🚩`); }
     $('#pc').addEventListener('pointerdown', e => { e.preventDefault(); if (!t0) t0 = performance.now(); p = Math.min(1, p + 0.03); api.sfx('step'); upd(); if (p >= 1) win(); });
+    api.on(window, 'keydown', e => { if (e.repeat && e.code !== 'Space' && e.key !== 'ArrowUp') return; if (e.code === 'Space' || e.key === 'ArrowUp') { e.preventDefault(); $('#pc').dispatchEvent(new Event('pointerdown', { cancelable: true })); } else if (e.key.toLowerCase() === 's') $('#ps').click(); else if (e.key.toLowerCase() === 'f') $('#pf').click(); });
     $('#ps').onclick = () => { if (sandUses <= 0) return; sandUses--; sand = 7; api.sfx('pop'); api.msg(`Buhangin on your hands! 🏖️ (${sandUses} left)`, true); upd(); };
     $('#pf').onclick = () => { if (!friends) return; friends--; p = Math.min(1, p + 0.16); api.sfx('good'); api.msg('Your friends lifted you up! 👫', true); $('#pf').disabled = true; upd(); if (p >= 1) { if (!t0) t0 = performance.now(); win(); } };
     api.every(() => { if (!t0 || done) return; p = Math.max(0.03, p - (sand > 0 ? 0.005 : 0.017)); if (sand > 0) sand -= 0.45; upd(); }, 450);
@@ -348,6 +348,7 @@ FZ.reg({
       const i = +p.dataset.i; if (i > 6 || bd[i] === 0) { api.sfx('oops'); return; }
       play(0, i);
     });
+    api.on(window, 'keydown', e => { if (/^[1-7]$/.test(e.key)) { const p = $(`.pit.mine[data-i="${+e.key - 1}"]`, wrap); if (p) p.click(); } });
     api.msg('Tap one of your pits (bottom row) to sow the shells!', true); render();
   }
 });

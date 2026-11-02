@@ -208,46 +208,84 @@ FZ.reg({
   ],
   how: [
     'Watch the counting: one… to ten! You are the seeker.',
-    '3 friends are hiding. Tap a hiding place to look inside.',
+    'Pick a place: village, forest, playground, school or beach. 3 friends are hiding there. Tap a hiding place to look.',
     'When you find a friend, tap the big <b>PUNG!</b> button to catch them.'
   ],
   tip: 'Agree on boundaries before playing. For tiny kids, hide in plain sight and count only to 10 so it stays exciting, not scary.',
   start(api) {
-    const em = ['🌳', '🏠', '🌴', '🪣', '🪨', '🌽', '🚲', '🪑'];
-    const kids = shuffle([FZ.pal(0, 'stand'), FZ.pal(1, 'stand'), FZ.pal(2, 'stand'), FZ.pal(3, 'stand')]).slice(0, 3);
-    const hide = shuffle([0, 1, 2, 3, 4, 5, 6, 7]).slice(0, 3);
+    const L2 = (en, tl) => FZ.lang === 'tl' ? tl : en;
+    /* each place: hiding spots as [emoji, x%, feet-y%, size], decoration, and the base (where the seeker counts) */
+    const PLACES = [
+      { id: 'village', icon: '🏘️', name: L2('Village', 'Baryo'),
+        deco: [['☁️', 18, 16, 12], ['☁️', 66, 11, 10], ['🌞', 91, 12, 9]],
+        spots: [['🛖', 20, 52, 18], ['🌴', 85, 50, 18], ['🏠', 70, 61, 16], ['🛺', 50, 71, 12], ['🪵', 33, 67, 9], ['🧺', 91, 79, 9], ['🪣', 26, 81, 8], ['🌳', 47, 51, 16]] },
+      { id: 'forest', icon: '🌲', name: L2('Forest', 'Gubat'),
+        deco: [['🐦', 52, 14, 6], ['☁️', 80, 10, 9]],
+        spots: [['🌳', 14, 57, 20], ['🌲', 38, 53, 19], ['🌲', 70, 55, 19], ['🪨', 23, 81, 10], ['🪵', 56, 82, 11], ['🌿', 86, 82, 11], ['⛺', 60, 68, 14], ['🌳', 91, 53, 19]] },
+      { id: 'playground', icon: '🛝', name: L2('Playground', 'Palaruan'),
+        deco: [['☁️', 30, 12, 11], ['☁️', 74, 16, 9], ['🌞', 92, 10, 9]],
+        spots: [['🛝', 18, 56, 20], ['🎠', 72, 58, 17], ['🌳', 91, 52, 18], ['🪑', 45, 72, 10], ['🛖', 34, 81, 12], ['🚲', 62, 89, 9], ['🏖️', 84, 85, 12], ['🌳', 8, 50, 17]] },
+      { id: 'school', icon: '🏫', name: L2('School', 'Paaralan'),
+        deco: [['☁️', 62, 12, 11], ['🌞', 92, 11, 9]],
+        spots: [['🏫', 24, 52, 26], ['🚌', 76, 63, 19], ['🌳', 92, 52, 17], ['🪑', 46, 75, 10], ['🥅', 58, 50, 12], ['🚲', 12, 80, 10], ['🗑️', 34, 91, 8], ['⛲', 50, 64, 12]] },
+      { id: 'beach', icon: '🏖️', name: L2('Beach', 'Dalampasigan'),
+        deco: [['🌞', 90, 10, 10], ['☁️', 25, 13, 11], ['⛵', 60, 36, 7]],
+        spots: [['🏖️', 20, 60, 18], ['🌴', 86, 54, 19], ['🛶', 58, 64, 15], ['🪨', 38, 78, 10], ['🏰', 72, 85, 14], ['🪣', 90, 90, 8], ['🌴', 8, 68, 16], ['🛟', 46, 91, 8]] }
+    ];
     const words = FZ.lang === 'tl' ? ['Isa', 'Dalawa', 'Tatlo', 'Apat', 'Lima', 'Anim', 'Pito', 'Walo', 'Siyam', 'Sampu'] : ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
-    const w = h(`<div class="taguan"><div class="countbox"><div class="countnum">🙈</div><div class="countword">Eyes closed…</div></div><div class="spots"></div><button class="btn pung" disabled>🏁 PUNG!</button></div>`);
-    api.stage.append(w);
-    const num = $('.countnum', w), word = $('.countword', w), box = $('.spots', w), pung = $('.pung', w);
-    let ready = false, pending = null, found = 0, taps = 0;
-    const spotEls = em.map((e, i) => {
-      const s = h(`<button class="spot" aria-label="hiding place">${e}</button>`);
-      s.onclick = () => {
-        if (!ready || pending || s.dataset.done) return;
-        s.dataset.done = 1; taps++;
-        const k = hide.indexOf(i);
-        if (k >= 0) {
-          s.classList.add('found'); s.insertAdjacentHTML('beforeend', `<span class="who">${kids[k]}</span>`);
-          pending = s; pung.disabled = false; pung.classList.add('pulse'); api.sfx('good');
-          api.msg('Found you! 👀 Quick — tap PUNG!', true);
-        } else { s.classList.add('empty'); s.insertAdjacentHTML('beforeend', '<span class="who">💨</span>'); api.sfx('pop'); api.msg('Nobody here! Try another spot.'); }
-      };
-      box.append(s); return s;
+
+    /* step 1: choose where to play */
+    const chooser = h(`<div class="placepick"><h3>${L2('Where shall we play?', 'Saan tayo maglalaro?')}</h3><div class="placegrid"></div></div>`);
+    PLACES.forEach(p => {
+      const b = h(`<button type="button" class="placecard pl-${p.id}"><span class="pe">${p.icon}</span><span class="pn">${p.name}</span></button>`);
+      b.onclick = () => { api.sfx('good'); chooser.remove(); play(p); };
+      $('.placegrid', chooser).append(b);
     });
-    pung.onclick = () => {
-      if (!pending) return;
-      pending.insertAdjacentHTML('beforeend', '<span class="tick">✅</span>'); pending = null;
-      pung.disabled = true; pung.classList.remove('pulse'); found++; api.sfx('good');
-      if (found >= 3) api.finish(taps <= 5 ? 3 : taps <= 7 ? 2 : 1, 'You found all your friends! Pung! Pung! Pung!');
-      else api.msg('Pung! ✅ ' + (3 - found) + ' more to find…', true);
-    };
-    api.msg('Close your eyes and count with me!', true);
-    let i = 0;
-    api.every(() => {
-      if (i < 10) { num.textContent = i + 1; word.textContent = words[i]; FZ.say(words[i], false); api.sfx('pop'); i++; }
-      else if (i === 10) { i++; num.textContent = '🔦'; word.textContent = 'Here I come!'; ready = true; api.msg('Ready or not, here I come! Tap a place to look. 🔍', true); }
-    }, 850);
+    api.stage.append(chooser);
+    api.msg(L2('Pick a place to play hide-and-seek!', 'Pumili ng lugar para maglaro ng taguan!'), true);
+
+    /* step 2: count, then look for friends in the real-looking place */
+    function play(P) {
+      const kids = shuffle([FZ.pal(0, 'stand'), FZ.pal(1, 'stand'), FZ.pal(2, 'stand'), FZ.pal(3, 'stand')]).slice(0, 3);
+      const hide = shuffle(P.spots.map((_, i) => i)).slice(0, 3);
+      const w = h(`<div class="taguan"><div class="countbox"><div class="countnum">🙈</div><div class="countword">Eyes closed…</div></div>
+        <div class="tgscene tg-${P.id}" role="group" aria-label="${P.name}">
+          ${P.deco.map(([e, x, y, s]) => `<span class="tgdeco" style="left:${x}%;top:${y}%;font-size:${s}cqw">${e}</span>`).join('')}
+          <div class="tgbase" style="left:11%;top:96%;font-size:10cqw">🚩<small>${L2('Base', 'Base')}</small></div>
+          <div class="tgme" style="left:25%;top:96%">${FZ.me('arms')}</div>
+        </div><button type="button" class="btn pung" disabled>🏁 PUNG!</button></div>`);
+      api.stage.append(w);
+      const scene = $('.tgscene', w), num = $('.countnum', w), word = $('.countword', w), pung = $('.pung', w), base = $('.tgbase', w), me = $('.tgme', w);
+      let ready = false, pending = null, found = 0, taps = 0;
+      P.spots.forEach(([e, x, y, s], i) => {
+        const sp = h(`<button type="button" class="tgspot" aria-label="${L2('hiding place', 'taguan')}" style="left:${x}%;top:${y}%;font-size:${s}cqw;z-index:${Math.round(y)}">${e}</button>`);
+        sp.onclick = () => {
+          if (!ready || pending || sp.dataset.done) return;
+          sp.dataset.done = 1; taps++;
+          const k = hide.indexOf(i);
+          if (k >= 0) {
+            sp.classList.add('found'); sp.insertAdjacentHTML('beforeend', `<span class="who">${kids[k]}</span><span class="tick">👀</span>`);
+            pending = sp; pung.disabled = false; pung.classList.add('pulse'); base.classList.add('pulse'); api.sfx('good');
+            api.msg('Found you! 👀 Quick — tap PUNG!', true);
+          } else { sp.classList.add('empty'); sp.insertAdjacentHTML('beforeend', '<span class="puff">💨</span>'); api.sfx('pop'); api.msg('Nobody here! Try another spot.'); }
+        };
+        scene.append(sp);
+      });
+      api.on(window, 'keydown', e => { if ((e.key === 'Enter' || e.code === 'Space') && !pung.disabled) { e.preventDefault(); pung.click(); } });
+      pung.onclick = () => {
+        if (!pending) return;
+        pending.insertAdjacentHTML('beforeend', '<span class="tick ok">✅</span>'); pending.querySelector('.tick:not(.ok)')?.remove(); pending = null;
+        pung.disabled = true; pung.classList.remove('pulse'); base.classList.remove('pulse'); found++; api.sfx('good');
+        if (found >= 3) api.finish(taps <= 5 ? 3 : taps <= 7 ? 2 : 1, 'You found all your friends! Pung! Pung! Pung!');
+        else api.msg('Pung! ✅ ' + (3 - found) + ' more to find…', true);
+      };
+      api.msg('Close your eyes and count with me!', true);
+      let i = 0;
+      api.every(() => {
+        if (i < 10) { num.textContent = i + 1; word.textContent = words[i]; FZ.say(words[i], false); api.sfx('pop'); i++; }
+        else if (i === 10) { i++; num.textContent = '🔦'; word.textContent = 'Here I come!'; ready = true; me.innerHTML = FZ.me('stand'); api.msg('Ready or not, here I come! Tap a place to look. 🔍', true); }
+      }, 850);
+    }
   }
 });
 

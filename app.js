@@ -6,6 +6,7 @@ let curCat = 'all', curGame = null, curApi = null, prevScreen = 'home', playedSe
 
 const CHILD_SCREENS = ['home', 'intro', 'play'];
 function show(id) {
+  if (id !== 'intro') { clearInterval(FZ.tutTimer); FZ.tutTimer = null; }
   $$('.screen').forEach(s => s.classList.toggle('active', s.id === id));
   const sc = $('#' + id); if (sc) sc.scrollTop = 0;
   FZ.screen = id;
@@ -67,7 +68,7 @@ function goHome() { destroyGame(); renderHome(); show('home'); }
 const bullets = (arr, icon) => arr.map((t, i) => `<li data-i="${icon[i % icon.length]}">${t}</li>`).join('');
 function openIntro(g) {
   destroyGame(); curGame = g;
-  const sc = $('#intro');
+  const sc = $('#intro'), TUT = FZ.tut && FZ.tut[g.id];
   sc.innerHTML = `
     <div class="ihead">
       <button class="round" id="iBack" aria-label="${FZ.t('back')}">⬅️</button>
@@ -76,17 +77,53 @@ function openIntro(g) {
     </div>
     <p class="tagline">${FZ.g(g, 'tag')}</p>
     <div class="meta"><span class="chip">👥 ${FZ.g(g, 'players')}</span><span class="chip">🧰 ${FZ.g(g, 'props')}</span></div>
-    <div class="panels">
-      <article class="panel real"><h3>${FZ.t('in_real')}</h3><ul>${bullets(FZ.g(g, 'real'), ['👣', '🙌', '🏃', '🎉'])}</ul></article>
-      <article class="panel how"><h3>${FZ.t('in_game')}</h3><ul>${bullets(FZ.g(g, 'how'), ['👆', '✨', '⭐', '🎯'])}</ul></article>
-    </div>
+    ${TUT ? `<section class="tutor">
+      <div class="tcols">
+        <article class="tcol real"><h3>${FZ.t('in_real')}</h3><div class="tpic" id="tsReal"></div><p class="tcap" id="tcReal"></p></article>
+        <article class="tcol how"><h3>${FZ.t('in_game')}</h3><div class="tpic" id="tsGame"></div><p class="tcap" id="tcGame"></p></article>
+      </div>
+      <div class="tctl">
+        <button type="button" class="round" id="tPrev" aria-label="${FZ.t('tut_prev')}">◀</button>
+        <div class="tdots" id="tDots">${[0, 1, 2].map(i => `<button type="button" data-i="${i}" aria-label="${FZ.t('tut_step')} ${i + 1}">${i + 1}</button>`).join('')}</div>
+        <button type="button" class="round" id="tNext" aria-label="${FZ.t('tut_next')}">▶</button>
+        <button type="button" class="round" id="tPlay" aria-label="${FZ.t('tut_pause')}">⏸</button>
+      </div>
+    </section>` : ''}
     <div class="intro-actions">
       <button class="btn big" id="iPlay">${FZ.t('lets_play')}</button>
-    </div>`;
+    </div>
+    <details class="tmore"${TUT ? '' : ' open'}><summary>${FZ.t('tut_more')}</summary>
+      <div class="panels">
+        <article class="panel real"><h3>${FZ.t('in_real')}</h3><ul>${bullets(FZ.g(g, 'real'), ['👣', '🙌', '🏃', '🎉'])}</ul></article>
+        <article class="panel how"><h3>${FZ.t('in_game')}</h3><ul>${bullets(FZ.g(g, 'how'), ['👆', '✨', '⭐', '🎯'])}</ul></article>
+      </div>
+    </details>`;
+  if (TUT) runTutorial(TUT);
   $('#iBack').onclick = goHome;
-  $('#iRead').onclick = () => { const [a, b] = FZ.t('read_intro'); FZ.say([g.name, FZ.g(g, 'tag'), a, ...FZ.g(g, 'real'), b, ...FZ.g(g, 'how')].join('. '), true); };
+  $('#iRead').onclick = () => { const [a, b] = FZ.t('read_intro'); const cap = s => s.c[FZ.lang === 'tl' ? 1 : 0]; FZ.say(TUT ? [g.name, FZ.g(g, 'tag'), a, ...TUT.real.map(cap), b, ...TUT.game.map(cap)].join('. ') : [g.name, FZ.g(g, 'tag'), a, ...FZ.g(g, 'real'), b, ...FZ.g(g, 'how')].join('. '), true); };
   $('#iPlay').onclick = () => { try { window.speechSynthesis.cancel(); } catch (e) { } FZ.sfx('good'); startGame(g); };
   show('intro');
+  try { $('#iPlay').focus({ preventScroll: true }); } catch (e) { }          // keyboard users: Enter starts the game
+}
+
+/* ---------------- picture tutorial: 3 steps, real life and FunZone side by side ---------------- */
+function runTutorial(T) {
+  let step = 0, auto = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const li = FZ.lang === 'tl' ? 1 : 0;
+  const draw = () => {
+    $('#tsReal').innerHTML = FZ.tutScene(T.real[step]); $('#tsGame').innerHTML = FZ.tutScene(T.game[step]);
+    $('#tcReal').innerHTML = `<b>${step + 1}</b> ${T.real[step].c[li]}`; $('#tcGame').innerHTML = `<b>${step + 1}</b> ${T.game[step].c[li]}`;
+    $$('#tDots button').forEach((b, i) => b.classList.toggle('active', i === step));
+    $('#tPlay').textContent = auto ? '⏸' : '▶'; $('#tPlay').setAttribute('aria-label', FZ.t(auto ? 'tut_pause' : 'tut_play'));
+  };
+  const go = n => { step = (n + 3) % 3; draw(); };
+  $('#tPrev').onclick = () => { auto = false; go(step - 1); };
+  $('#tNext').onclick = () => { auto = false; go(step + 1); };
+  $('#tPlay').onclick = () => { auto = !auto; draw(); };
+  $$('#tDots button').forEach(b => b.onclick = () => { auto = false; go(+b.dataset.i); });
+  clearInterval(FZ.tutTimer);
+  FZ.tutTimer = setInterval(() => { if (auto && FZ.screen === 'intro') go(step + 1); }, 4500);
+  draw();
 }
 
 /* ---------------- PLAY ---------------- */
@@ -119,8 +156,21 @@ function makeApi(def) {
   return api;
 }
 function destroyGame() { if (curApi) { curApi.destroy(); curApi = null; } $('#modal').classList.add('hidden'); }
+/* keyboard hints for laptop users (shown only when a mouse/keyboard is the main input) */
+const ARROWS = ['←', '↑', '↓', '→'];
+FZ.keys = {
+  patintero: [[ARROWS, '🏃']], agawan: [[ARROWS, '🏃']], langit: [[ARROWS, '🏃']], araw: [[ARROWS, '🏃']], bakod: [[ARROWS, '🏃']],
+  lawin: [[['←', '→'], '🐔']], taguan: [[['Enter'], '🏁']], tinik: [[['Space'], '🦘']], baka: [[['Space'], '🦘⏳']], garter: [[['←', '↑', '→'], '🦘']],
+  kadang: [[['←', '→'], '🥥']], tumbang: [[['Space'], '🩴']], sipa: [[['F', 'K', 'E'], '🦶🦵💪']], pitik: [[['1', '2', '3', '4', '5'], '👆']],
+  tsato: [[['Space'], '🏏']], palosebo: [[['Space'], '🤲'], [['S'], '🏖️'], [['F'], '👫']], sungka: [[['1', '…', '7'], '🐚']]
+};
+function renderKeyHint(g) {
+  const el = $('#keyhint'); if (!el) return;
+  const groups = (FZ.keys[g.id] || []).concat([[['Esc'], '⬅️']]);
+  el.innerHTML = `<span class="kg">⌨️</span>` + groups.map(([ks, ic]) => `<span class="kg">${ks.map(k => `<kbd>${k}</kbd>`).join('')}<span class="ki">${ic}</span></span>`).join('');
+}
 function startGame(g) {
-  destroyGame(); curGame = g;
+  destroyGame(); curGame = g; renderKeyHint(g);
   $('#playTitle').textContent = g.emoji + ' ' + g.name;
   $('#hint').textContent = '';
   show('play');
@@ -158,21 +208,40 @@ let pinBuf = '', pinCb = null;
 (function buildKeypad() {
   const kp = $('#keypad');
   ['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', 'OK'].forEach(k => {
-    const b = h(`<button>${k}</button>`);
-    b.onclick = () => {
-      FZ.sfx('pop');
-      if (k === '⌫') pinBuf = pinBuf.slice(0, -1);
-      else if (k === 'OK') { /* auto-checks at 4 digits */ }
-      else if (pinBuf.length < 4) pinBuf += k;
-      updPin();
-      if (pinBuf.length === 4) {
-        if (FZ.hash(pinBuf) === FZ.settings.pinHash) { const cb = pinCb; pinCb = null; cb && cb(); }
-        else { FZ.sfx('oops'); const d = $('#pinDots'); d.classList.add('bad'); setTimeout(() => { d.classList.remove('bad'); pinBuf = ''; updPin(); }, 450); }
-      }
-    };
+    const b = h(`<button type="button">${k}</button>`);
+    b.onclick = () => pinPress(k);
     kp.append(b);
   });
 })();
+/* one handler for the on-screen keypad AND the physical keyboard (digits, numpad, Backspace, Enter, Esc) */
+function pinPress(k) {
+  if (pinBuf.length === 4) return;                                   // wrong-PIN shake in progress
+  FZ.sfx('pop');
+  const kb = $$('#keypad button').find(b => b.textContent === k); if (kb) { kb.classList.add('down'); setTimeout(() => kb.classList.remove('down'), 140); }
+  if (k === '⌫') pinBuf = pinBuf.slice(0, -1);
+  else if (k === 'OK') { if (pinBuf.length < 4) { $('#pinDots').classList.add('bad'); FZ.sfx('oops'); setTimeout(() => $('#pinDots').classList.remove('bad'), 400); } }
+  else if (pinBuf.length < 4) pinBuf += k;
+  updPin();
+  if (pinBuf.length === 4) {
+    if (FZ.hash(pinBuf) === FZ.settings.pinHash) { const cb = pinCb; pinCb = null; cb && cb(); }
+    else { FZ.sfx('oops'); const d = $('#pinDots'); d.classList.add('bad'); setTimeout(() => { d.classList.remove('bad'); pinBuf = ''; updPin(); }, 450); }
+  }
+}
+function lockCancel() { pinCb = null; show(resting ? 'rest' : prevScreen); }
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (FZ.screen === 'lock') {
+    if (/^[0-9]$/.test(e.key)) { e.preventDefault(); pinPress(e.key); }
+    else if (e.key === 'Backspace') { e.preventDefault(); pinPress('⌫'); }
+    else if (e.key === 'Enter') { e.preventDefault(); pinPress('OK'); }
+    else if (e.key === 'Escape') { e.preventDefault(); lockCancel(); }
+    return;
+  }
+  if (FZ.screen === 'intro' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft') && !/INPUT|SELECT|TEXTAREA/.test((e.target || {}).tagName || '')) { const b = $(e.key === 'ArrowRight' ? '#tNext' : '#tPrev'); if (b) { e.preventDefault(); b.click(); } return; }
+  if (e.key === 'Escape' && !$('#modal').classList.contains('hidden')) { $('#modal').classList.add('hidden'); return; }
+  if (e.key === 'Escape' && FZ.screen === 'play') { if (curGame) openIntro(curGame); }
+  else if (e.key === 'Escape' && FZ.screen === 'intro') goHome();
+});
 function updPin() { $$('#pinDots i').forEach((d, i) => d.classList.toggle('on', i < pinBuf.length)); }
 function askPin(cb, titleKey) {
   pinCb = cb; pinBuf = ''; updPin();
@@ -180,7 +249,7 @@ function askPin(cb, titleKey) {
   prevScreen = FZ.screen && FZ.screen !== 'lock' ? FZ.screen : 'home';
   show('lock');
 }
-$('#lockCancel').onclick = () => { pinCb = null; show(resting ? 'rest' : prevScreen); };
+$('#lockCancel').onclick = lockCancel;
 $('#btnParent').onclick = () => askPin(openParent, 'parents_only');
 
 /* ---------------- PARENT MODE ---------------- */
@@ -265,7 +334,7 @@ setInterval(() => {
   if (!CHILD_SCREENS.includes(FZ.screen) || resting) return;
   playedSec += 5;
   if (FZ.settings.limit > 0 && playedSec >= FZ.settings.limit * 60) {
-    resting = true; destroyGame(); show('rest'); FZ.say(FZ.t('rest_say'));
+    resting = true; destroyGame(); show('rest'); try { $('#btnUnlock').focus(); } catch (e) { } FZ.say(FZ.t('rest_say'));
   }
 }, 5000);
 $('#btnUnlock').onclick = () => askPin(() => { resting = false; playedSec = 0; goHome(); }, 'unlock_title');

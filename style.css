@@ -449,3 +449,273 @@ details .tipbox{background:#fff6d6;border-radius:12px;padding:8px 12px;margin:6p
 .jobst .baka .kidsvg{height:var(--bh,110px);width:auto;filter:drop-shadow(0 3px 0 rgba(0,0,0,.15))}
 .lane .rc .coco{font-size:26px;line-height:1;margin-left:-30px;align-self:flex-end;margin-bottom:2px;position:relative;z-index:0}
 .lane .rc .kidsvg{position:relative;z-index:1}
+
+/* ---- v4: kids stand ON their square (feet at the bottom), a little smaller; lines run under the feet ---- */
+.ent.haskid{transform:none;place-items:end center}
+.ent.haskid .kidsvg{height:92%}
+.ent.hen.haskid .kidsvg{height:98%}
+.ent.chick.haskid .kidsvg{height:80%}
+.cell.line{background:repeating-linear-gradient(90deg,#fff 0 12px,transparent 12px 20px) 0 90%/100% 6px no-repeat,#a6e57f}
+/* Luksong figures (Tinik / Baka) */
+.jobst .fig{position:absolute;bottom:16%;left:50%;transform:translateX(-50%);line-height:0;filter:drop-shadow(0 3px 0 rgba(0,0,0,.12))}
+.jobst .fig .kidsvg{height:100%;width:auto;overflow:visible}
+/* keyboard users get a clear focus ring */
+button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:4px solid #7048e8;outline-offset:3px}
+
+/* ---- Taguan: choose a place, then look for friends in a real-looking scene ---- */
+.placepick{width:100%;max-width:640px;text-align:center}
+.placepick h3{font-size:clamp(24px,5vw,32px);margin-bottom:12px}
+.placegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.placecard{border-radius:var(--radius);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.25);box-shadow:0 7px 0 rgba(0,0,0,.2);transition:transform .12s}
+.placecard:active{transform:translateY(5px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.placecard .pe{font-size:54px;line-height:1}.placecard .pn{font-size:21px;font-weight:800}
+.pl-village{background:linear-gradient(#74b816,#a9e34b)}.pl-forest{background:linear-gradient(#2b8a3e,#51cf66)}.pl-playground{background:linear-gradient(#f59f00,#ffd43b)}
+.pl-school{background:linear-gradient(#4263eb,#74c0fc)}.pl-beach{background:linear-gradient(#15aabf,#66d9e8)}
+.tgscene{position:relative;width:min(94vw,640px);aspect-ratio:16/11;container-type:size;border-radius:var(--radius);overflow:hidden;border:5px solid #fff;box-shadow:0 7px 0 rgba(0,0,0,.15);flex:none}
+.tgscene::before{content:"";position:absolute;inset:0;pointer-events:none}
+.tg-village{background:linear-gradient(#bfe9ff 0 36%,#9be37a 36% 100%)}
+.tg-village::before{background:linear-gradient(transparent 0 74%,#ead9a6 74% 88%,transparent 88%)}
+.tg-forest{background:linear-gradient(#a5d8b0 0 30%,#4aa564 30% 100%)}
+.tg-forest::before{background:radial-gradient(ellipse at 50% 100%,rgba(0,60,20,.28),transparent 70%)}
+.tg-playground{background:linear-gradient(#c9efff 0 34%,#8fdc6a 34% 100%)}
+.tg-playground::before{background:radial-gradient(ellipse 38% 22% at 62% 74%,#f3dfa2 0 98%,transparent 100%)}
+.tg-school{background:linear-gradient(#bfe9ff 0 34%,#9be37a 34% 52%,#cfd4dc 52% 100%)}
+.tg-beach{background:linear-gradient(#bfe9ff 0 30%,#4dabf7 30% 50%,#ffe8a3 50% 100%)}
+.tg-beach::before{background:linear-gradient(transparent 0 46%,rgba(255,255,255,.7) 46% 50%,transparent 50%)}
+.tgdeco{position:absolute;transform:translate(-50%,-50%);line-height:1;pointer-events:none}
+.tgspot{position:absolute;transform:translate(-50%,-100%);background:none;border:0;padding:0;line-height:1;cursor:pointer;transition:transform .12s}
+.tgspot:active{transform:translate(-50%,-100%) scale(.93)}
+.tgspot.empty{opacity:.75}
+.tgspot .who{position:absolute;left:62%;bottom:-4%;line-height:0;animation:pop .4s}
+.tgspot .who .kidsvg{height:17cqw;width:auto;filter:drop-shadow(0 2px 0 rgba(0,0,0,.2))}
+.tgspot .tick{position:absolute;left:-10%;top:-26%;font-size:.55em;line-height:1}
+.tgspot .puff{position:absolute;left:50%;top:10%;font-size:.5em;transform:translateX(-50%);animation:floatup .9s forwards}
+.tgbase{position:absolute;transform:translate(-50%,-100%);line-height:1;text-align:center;z-index:200}
+.tgbase small{display:block;font-size:2.4cqw;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.tgbase.pulse{animation:pulse .5s infinite alternate}
+.tgme{position:absolute;transform:translate(-50%,-100%);line-height:0;z-index:200}
+.tgme .kidsvg{height:24cqw;width:auto}
+
+/* ---- picture tutorials (real life | FunZone, side by side) ---- */
+.tutor{width:100%;max-width:900px}
+.tcols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,2vw,16px)}
+.tcol{background:#fff;border-radius:var(--radius);padding:clamp(8px,2vw,14px);box-shadow:0 6px 0 rgba(0,0,0,.1);min-width:0}
+.tcol.real{border-top:10px solid var(--orange)}.tcol.how{border-top:10px solid var(--blue)}
+.tcol h3{font-size:clamp(15px,3.6vw,22px);margin-bottom:6px;text-align:center}
+.tpic{width:100%}
+.tsc{position:relative;width:100%;aspect-ratio:4/3;container-type:size;overflow:hidden;border-radius:16px;border:3px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,.06);animation:tFade .4s}
+@keyframes tFade{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.bg-grass{background:linear-gradient(#c9efff 0 38%,#a6e57f 38% 100%)}
+.bg-ground{background:#a6e57f}
+.bg-ui{background:linear-gradient(#e3f6ff,#fff7d6)}
+.bg-sand{background:#ecd9b0}.bg-wood{background:#e8d5b5}
+.bg-jump{background:linear-gradient(#c9efff 0 84%,#7ed957 84% 88%,#b98657 88% 100%)}
+.ti{position:absolute}
+.tk{transform:translate(-50%,-100%)}.tk .tia{height:100%;display:block}.tk .kidsvg{height:100%;width:auto;display:block}
+.te,.tt{transform:translate(-50%,-50%);line-height:1;white-space:nowrap}
+.tt{font-weight:800}.tia{display:inline-block}
+.ts svg{width:100%;height:auto;display:block;overflow:visible}
+.tgrid{background-image:linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);background-size:calc(100% / var(--c)) calc(100% / var(--r));border-radius:3px}
+.a-hop{animation:tHop 1s ease-in-out infinite}.a-bob{animation:tBob 1.4s ease-in-out infinite}
+.a-slide{animation:tSlide 2s ease-in-out infinite alternate}.a-tap{animation:tTap .9s ease-in-out infinite}
+.a-spin{animation:tSpin 6s linear infinite}.a-pulse{animation:tPulse .7s ease-in-out infinite alternate}.a-shake{animation:tShake .5s ease-in-out infinite}
+@keyframes tHop{50%{transform:translateY(-14%)}}
+@keyframes tBob{50%{transform:translateY(-6%)}}
+@keyframes tSlide{to{transform:translateX(34%)}}
+@keyframes tTap{50%{transform:translateY(-22%) scale(.9)}}
+@keyframes tSpin{to{transform:rotate(360deg)}}
+@keyframes tPulse{to{transform:scale(1.12);opacity:.85}}
+@keyframes tShake{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.tcap{font-size:clamp(13px,2.9vw,18px);font-weight:700;line-height:1.25;margin-top:8px;min-height:3.8em;text-align:left}
+.tcap b{display:inline-grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:var(--purple);color:#fff;margin-right:.4em;font-size:.95em}
+.tctl{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0 2px;flex-wrap:wrap}
+.tdots{display:flex;gap:8px}
+.tdots button{width:44px;height:44px;border-radius:50%;background:#fff;font-size:20px;font-weight:800;box-shadow:0 4px 0 rgba(0,0,0,.14)}
+.tdots button.active{background:var(--purple);color:#fff}
+.tmore{width:100%;max-width:900px;margin-top:16px;background:rgba(255,255,255,.7);border-radius:var(--radius);padding:10px 14px}
+.tmore summary{font-size:20px;font-weight:800;cursor:pointer;padding:6px 0}
+.tmore .panels{margin-top:10px}
+@media (max-width:340px){.tcols{grid-template-columns:1fr}}
+
+/* ---- v5: small-phone fixes ---- */
+.ihead{gap:8px}
+.ihead .round{flex:none}
+.ihead .title{min-width:0;flex-wrap:wrap;gap:4px 10px;text-align:center}
+.ihead h2{font-size:clamp(24px,7.4vw,50px);overflow-wrap:anywhere}
+.big-em{font-size:clamp(40px,12vw,76px)}
+.lockbox{width:100%;max-width:380px}
+.sungka{grid-template-columns:minmax(0,1.3fr) repeat(7,minmax(0,1fr)) minmax(0,1.3fr);width:min(100%,720px);padding:clamp(6px,1.8vw,16px);gap:clamp(3px,1vw,10px)}
+.sungka .pit{min-width:0;overflow:hidden}
+.sungka .store{min-height:0}
+@media (max-width:420px){.sungka .pit .shells{display:none}}
+.screen{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right));padding-bottom:max(28px,env(safe-area-inset-bottom))}
+.ent.haskid{grid-template-rows:100%;grid-template-columns:100%;align-items:end;justify-items:center}
+.ent.haskid .kidsvg{max-height:100%}
+.ent.haskid .kidsvg{height:97%}
+.ent.hen.haskid .kidsvg{height:100%}
+.ent.chick.haskid .kidsvg{height:88%}
+
+/* =====================================================
+   v6: every screen size (phones, tablets, laptops) + keyboard
+   ===================================================== */
+:root{--ah:calc(100dvh - 330px)}
+/* bigger touch targets */
+.chip,.langsw button,.parent-btn{min-height:44px}
+.langsw button{min-width:52px}
+.ptabs button,.tdots button,.keypad button{min-height:44px}
+/* "Let's Play!" stays reachable while the walkthrough scrolls */
+.intro-actions{position:sticky;bottom:max(8px,env(safe-area-inset-bottom));z-index:6;margin-top:12px;pointer-events:none}
+.intro-actions .btn{pointer-events:auto}
+/* keyboard */
+.keyhint{display:none}
+@media (hover:hover) and (pointer:fine){
+  .keyhint{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;align-items:center;font-size:15px;font-weight:700;color:var(--muted);margin:-2px 0 8px;max-width:900px}
+  .keyhint .kg{display:inline-flex;align-items:center;gap:4px}
+  .keyhint .ki{font-size:18px;margin-left:2px}
+  kbd{font:inherit;font-size:13px;font-weight:800;color:var(--ink);background:#fff;border:2px solid #cdbfff;border-bottom-width:4px;border-radius:8px;padding:1px 8px;min-width:26px;text-align:center}
+}
+.keypad button.down{transform:translateY(3px);background:#e5dcff;box-shadow:0 2px 0 #cdbfff}
+/* big screens: let the content breathe */
+@media (min-width:1100px) and (min-height:800px){
+  .grid,.topbar,.mascot-row,.cats{max-width:1160px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+}
+/* short portrait phones (e.g. 360x640): trim the scenes so the controls stay on screen */
+@media (orientation:portrait) and (max-height:720px){
+  .jscene,.tsato,.tp{height:min(34vh,300px)}
+  .sipaarena{height:min(36vh,330px)}
+  .psc{height:min(40vh,340px)}
+  .sq{height:clamp(38px,6.4vh,58px)}
+  .piko{padding:8px 12px;gap:4px}
+  .playbar .round{width:50px;height:50px}
+  .btn.big{font-size:24px;padding:12px 24px}
+  .holder{font-size:clamp(50px,11vw,90px)}
+}
+/* phones held sideways: scene on the left, controls on the right */
+@media (orientation:landscape) and (max-height:560px){
+  :root{--ah:calc(100dvh - 120px)}
+  .screen{padding-top:8px;padding-bottom:10px}
+  .playbar .round{width:44px;height:44px;font-size:22px}
+  .playbar h2{font-size:22px}
+  .hint{margin:2px 0 4px;padding:2px 14px;font-size:16px;min-height:30px;border-radius:16px}
+  .keyhint{display:none!important}
+  #stage{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;align-content:center;gap:6px 22px}
+  #stage > .score,#stage > .sipa-cnt,#stage > .seq{flex-basis:100%;text-align:center;font-size:18px}
+  .board{--cell:min(calc(50vw / var(--cols)),calc(var(--ah) / var(--rows)),80px)}
+  .jscene,.tsato,.tp,.sipaarena{width:min(54vw,520px);height:min(var(--ah),280px)}
+  .psc{width:min(34vw,300px);height:min(var(--ah),340px)}
+  .dama{--sq:min(calc(var(--ah) / 8),64px)}
+  .race{width:min(54vw,520px)}
+  .jctl{width:min(34vw,300px)}
+  .meter{min-width:150px}
+  .aim,.bars{width:min(34vw,300px)}
+  .dpad{grid-template-columns:repeat(3,64px);gap:6px}.dpad button{height:56px;font-size:28px}
+  .btn.big{font-size:22px;padding:10px 22px}
+  .sungka{width:min(82vw,640px)}
+  .piko{padding:6px 12px;gap:3px}.sq{height:clamp(30px,8vh,44px);font-size:22px}
+  .holder{font-size:clamp(46px,9vw,70px)}
+  .finger{transform:scale(.8);transform-origin:bottom}
+  .eyes{min-height:60px}.eyes .kidsvg{height:62px}
+  /* parent PIN: dots on the left, keypad on the right */
+  .lockbox{max-width:640px;display:grid;grid-template-columns:1fr 1fr;column-gap:20px;align-items:center;padding:12px 20px}
+  .lockbox > *{grid-column:1}
+  .lockbox .keypad{grid-column:2;grid-row:1/8}
+  .keypad button{height:46px;font-size:24px}
+  .lock-ico{font-size:34px}
+  .mascot-row{margin:2px 0}.mascot{font-size:44px}
+  .big-em{font-size:46px}
+  .tpic{max-height:46vh}
+}
+
+/* v6b: landscape phones – scene on the left, controls stacked on the right */
+@media (orientation:landscape) and (max-height:560px){
+  #stage{display:grid;grid-template-columns:auto minmax(0,36vw);justify-content:center;align-content:center;align-items:center;gap:8px 20px;flex:1;width:100%}
+  #stage > *{grid-column:2;min-width:0;max-width:100%}
+  #stage > :is(.board,.jscene,.tsato,.tp,.sipaarena,.psc,.race,.holen,.dama,.piko,.sungka,.hand,.tgscene,.taguan){grid-column:1;grid-row:1 / span 8}
+  .actions,.partbtns,.pbtns,.gbtns,.jctl,.foot2{flex-direction:column;align-items:stretch;flex-wrap:nowrap;width:auto}
+  .gbtns .btn,.partbtns .btn,.pbtns .btn,.actions .btn,.foot2 .btn{min-width:0;font-size:20px;padding:8px 16px}
+  .pbtns .main{font-size:24px;padding:12px 20px}
+  .seq span{font-size:22px;padding:3px 10px}
+  .sunbar{width:100%;height:34px}.sunbar .sun{font-size:28px;line-height:34px}
+  .sungka{width:min(66vw,600px)}
+  /* intro: smaller pictures, compact header, small corner "Let's Play" */
+  .intro-actions{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:10px;margin:0;z-index:20}
+  .intro-actions .btn{font-size:20px;padding:8px 22px;box-shadow:0 4px 0 #3f9d68,0 8px 18px rgba(0,0,0,.22)}
+  #intro{padding-bottom:72px}
+  .tpic{width:min(100%,300px);margin-inline:auto}
+  .tagline{margin:0;font-size:16px}
+  .meta{margin-bottom:6px;gap:6px}.meta .chip{min-height:34px;font-size:14px;padding:3px 12px}
+  .tcap{min-height:0;font-size:15px}
+  .ihead h2{font-size:28px}
+  .tctl{margin:8px 0 2px}
+}
+
+/* v6c: Taguan place picker + hide-and-seek scene on short screens */
+@media (orientation:landscape) and (max-height:560px){
+  #stage > .placepick{grid-column:1 / -1}
+  .placepick h3{font-size:20px;margin:0 0 6px}
+  .placegrid{grid-template-columns:repeat(5,1fr)!important;gap:10px!important}
+  .placecard{padding:8px 6px;box-shadow:0 5px 0 rgba(0,0,0,.2)}
+  .placecard .pe{font-size:34px}.placecard .pn{font-size:15px}
+  .tgscene{width:min(60vw,520px)}
+}
+@media (orientation:portrait) and (max-height:720px){ .tgscene{width:min(94vw,520px)} }
+
+/* v6d: Araw-Lilim has an extra sun bar – keep its board + arrows on screen on laptops */
+.sunbar + .board{--cell:min(calc(92vw / var(--cols)),calc((100dvh - 450px) / var(--rows)),90px)}
+.sq{min-height:34px}
+
+/* v6e: intro fits on laptops / tablets held sideways without the button covering the step arrows */
+.intro-actions .btn{box-shadow:0 6px 0 #3f9d68,0 10px 22px rgba(0,0,0,.18)}
+@media (min-width:700px) and (min-height:561px) and (max-height:900px) and (orientation:landscape){
+  #intro{padding-top:8px}
+  .ihead h2{font-size:38px}.big-em{font-size:52px}.ihead .round{width:50px;height:50px}
+  .tagline{margin:0;font-size:18px}
+  .meta{margin:2px 0 8px;gap:8px}.meta .chip{min-height:36px;padding:3px 14px;font-size:16px}
+  .tcol{padding:8px 12px}.tcol h3{margin-bottom:4px}
+  .tcap{min-height:2.6em;margin-top:4px}
+  .tctl{margin:8px 0 0}
+  .intro-actions{position:static;margin-top:8px;pointer-events:auto}
+}
+
+/* v6f: small portrait phones – compact intro so the step arrows never hide behind the Play button */
+@media (orientation:portrait) and (max-height:720px){
+  #intro{padding-top:8px}
+  .ihead h2{font-size:clamp(22px,6.6vw,34px)}.big-em{font-size:42px}.ihead .round{width:46px;height:46px}
+  .tagline{margin:0;font-size:16px}
+  .meta{margin:2px 0 6px;gap:6px}.meta .chip{min-height:34px;padding:2px 10px;font-size:13px}
+  .tcol{padding:6px 8px}.tcol h3{margin-bottom:3px}
+  .tcap{min-height:0;font-size:13px;margin-top:4px}
+  .tctl{margin:6px 0 0;gap:6px}.tctl .round{width:44px;height:44px;font-size:20px}.tdots button{width:44px;height:44px}
+  .intro-actions{margin-top:6px}.intro-actions .btn.big{font-size:21px;padding:8px 22px}
+}
+
+/* v6g: Taguan hide-and-seek scene sized by screen height */
+.tgscene{width:min(94vw,640px,calc((100dvh - 400px) * 1.45))}
+@media (orientation:landscape) and (max-height:560px){
+  .taguan{display:grid;grid-template-columns:auto minmax(0,30vw);grid-template-areas:"scene count" "scene pung";align-items:center;align-content:center;gap:10px 18px;width:auto}
+  .taguan .tgscene{grid-area:scene;width:calc((100dvh - 118px) * 1.45)}
+  .taguan .countbox{grid-area:count;padding:6px 14px}
+  .countnum{font-size:44px}.countword{font-size:20px}
+  .taguan .pung{grid-area:pung;font-size:24px;padding:10px 18px}
+}
+@media (orientation:portrait) and (max-height:720px){ .tgscene{width:min(94vw,520px,calc((100dvh - 330px) * 1.45))} }
+
+/* ---- v4 polish (audit fixes) ---- */
+/* the decorative sun sat on top of the ❓ button and titles on phones */
+@media (max-width:520px){ .sunny{display:none} }
+/* Chinese Garter: keep the three buttons on one row on phones */
+@media (max-width:520px){ .gbtns{flex-wrap:nowrap;gap:8px} .gbtns .btn{flex:1 1 0;min-width:0;font-size:19px;padding:10px 6px} }
+/* Sungka: keep the big count and the little shells from touching */
+.pit{gap:3px}
+/* the keyboard hint strip is only useful with a physical keyboard */
+@media (pointer:coarse){ #keyhint{display:none} }
+/* logo stayed on one line on phones (it was breaking letter by letter) and the top row wraps neatly */
+.logo{white-space:nowrap}
+@media (max-width:520px){
+  .topbar{flex-wrap:wrap;justify-content:center;gap:8px}
+  .top-right{flex-wrap:wrap;justify-content:center;gap:8px}
+  .logo{font-size:44px}
+}
+/* Sungka: smaller shell pictures so they stay inside each pit on laptops */
+.pit .shells{font-size:clamp(7px,1.3vw,11px);letter-spacing:-2px;max-width:72%}

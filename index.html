@@ -66,6 +66,7 @@
       <button id="btnHow" class="round" data-i18n-aria="how_to" aria-label="How to play">❓</button>
     </header>
     <div id="hint" class="hint"></div>
+    <div id="keyhint" class="keyhint" aria-hidden="true"></div>
     <div id="stage" class="stage"></div>
   </section>
 
@@ -74,7 +75,7 @@
     <div class="lockbox">
       <div class="lock-ico">🔐</div>
       <h2 id="lockTitle">Parents only</h2>
-      <p class="muted" data-i18n="enter_pin">Enter your 4-digit PIN</p>
+      <p class="muted" data-i18n="enter_pin">Enter your 4-digit PIN (default: 1234)</p>
       <div class="pindots" id="pinDots"><i></i><i></i><i></i><i></i></div>
       <div class="keypad" id="keypad"></div>
       <button id="lockCancel" class="btn ghost" data-i18n="cancel">Cancel</button>
@@ -113,9 +114,11 @@
 
 <script src="core.js"></script>
 <script src="lang.js"></script>
+<script src="figures.js"></script>
 <script src="games-a.js"></script>
 <script src="games-b.js"></script>
 <script src="games-c.js"></script>
+<script src="tutorial.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
