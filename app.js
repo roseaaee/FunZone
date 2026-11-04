@@ -32,12 +32,12 @@ document.addEventListener('click', e => {
 });
 
 /* ---------------- AVATAR (boy or girl) ---------------- */
-const avatarSvg = a => { const old = FZ.settings.avatar; FZ.settings.avatar = a; const s = FZ.me('stand'); FZ.settings.avatar = old; return s; };
+const avatarSvg = a => FZ.kid(Object.assign({ pose: 'stand' }, FZ.look(), { girl: a === 'girl' }));
 function renderAvatars() {
   const row = $('#avatarBtns'); row.innerHTML = '';
   ['boy', 'girl'].forEach(a => {
-    const b = h(`<button class="${FZ.settings.avatar === a ? 'active' : ''}" aria-label="${FZ.t(a)}">${avatarSvg(a)}</button>`);
-    b.onclick = () => { FZ.settings.avatar = a; FZ.saveSettings(); FZ.sfx('good'); renderAvatars(); };
+    const b = h(`<button class="${(FZ.look().girl ? 'girl' : 'boy') === a ? 'active' : ''}" aria-label="${FZ.t(a)}">${avatarSvg(a)}</button>`);
+    b.onclick = () => { FZ.settings.look = Object.assign({}, FZ.look(), { girl: a === 'girl' }); FZ.saveSettings(); FZ.sfx('good'); renderAvatars(); };
     row.append(b);
   });
 }
@@ -89,6 +89,7 @@ function openIntro(g) {
         <button type="button" class="round" id="tPlay" aria-label="${FZ.t('tut_pause')}">⏸</button>
       </div>
     </section>` : ''}
+    <div class="digi"><b>${FZ.t('digi_title')}</b> ${FZ.digi(g.id)}</div>
     <div class="intro-actions">
       <button class="btn big" id="iPlay">${FZ.t('lets_play')}</button>
     </div>
@@ -148,20 +149,25 @@ function makeApi(def) {
     finish(stars, text) {
       if (dead) return; stars = clamp(stars, 1, 3);
       const p = FZ.progress[def.id] || { stars: 0, plays: 0 };
-      p.plays++; p.stars = Math.max(p.stars, stars); FZ.progress[def.id] = p; FZ.saveProgress();
-      FZ.sfx('win'); showResult(def, stars, text);
+      const newBadge = stars === 3 && !p.badge;
+      p.plays++; p.stars = Math.max(p.stars, stars); if (newBadge) p.badge = 1;
+      FZ.progress[def.id] = p; FZ.saveProgress();
+      api.freeze();                                   // the game stops here, so kids are not interrupted by more moves
+      newBadge ? FZ.sfx('win') : FZ.sfx('coin');
+      showResult(def, stars, text, newBadge);
     },
-    destroy() { dead = true; T.forEach(clearTimeout); I.forEach(clearInterval); F.forEach(s => s.on = false); L.forEach(([t, e, f, o]) => t.removeEventListener(e, f, o)); try { speechSynthesis.cancel(); } catch (e) { } }
+    freeze() { dead = true; T.forEach(clearTimeout); I.forEach(clearInterval); F.forEach(s => s.on = false); L.forEach(([t, e, f, o]) => t.removeEventListener(e, f, o)); },
+    destroy() { api.freeze(); try { speechSynthesis.cancel(); } catch (e) { } }
   };
   return api;
 }
-function destroyGame() { if (curApi) { curApi.destroy(); curApi = null; } $('#modal').classList.add('hidden'); }
+function destroyGame() { if (curApi) { curApi.destroy(); curApi = null; } $('#modal').classList.add('hidden'); hideToast(); }
 /* keyboard hints for laptop users (shown only when a mouse/keyboard is the main input) */
 const ARROWS = ['←', '↑', '↓', '→'];
 FZ.keys = {
   patintero: [[ARROWS, '🏃']], agawan: [[ARROWS, '🏃']], langit: [[ARROWS, '🏃']], araw: [[ARROWS, '🏃']], bakod: [[ARROWS, '🏃']],
   lawin: [[['←', '→'], '🐔']], taguan: [[['Enter'], '🏁']], tinik: [[['Space'], '🦘']], baka: [[['Space'], '🦘⏳']], garter: [[['←', '↑', '→'], '🦘']],
-  kadang: [[['←', '→'], '🥥']], tumbang: [[['Space'], '🩴']], sipa: [[['F', 'K', 'E'], '🦶🦵💪']], pitik: [[['1', '2', '3', '4', '5'], '👆']],
+  kadang: [[['←', '→'], '🥥']], tumbang: [[['Space'], '🩴']], sipa: [[['F', 'K', 'E'], '🦶🦵💪']],
   tsato: [[['Space'], '🏏']], palosebo: [[['Space'], '🤲'], [['S'], '🏖️'], [['F'], '👫']], sungka: [[['1', '…', '7'], '🐚']]
 };
 function renderKeyHint(g) {
@@ -177,20 +183,29 @@ function startGame(g) {
   curApi = makeApi(g);
   try { g.start(curApi); } catch (e) { console.error(e); curApi.msg('Oops, something went wrong. Try another game!'); }
 }
-function showResult(g, stars, text) {
-  const m = $('#modal');
-  m.innerHTML = `<div class="mcard">
-    <div class="stars">${[0, 1, 2].map(i => `<span>${i < stars ? '⭐' : '☆'}</span>`).join('')}</div>
-    <h2>${pick(FZ.t('cheers'))} 🎉</h2>
-    <p>${text ? FZ.tr(text) : FZ.t('great_play', g.name)}</p>
-    <div class="actions">
-      <button class="btn" id="mAgain">${FZ.t('again')}</button>
-      <button class="btn ghost" id="mHome">${FZ.t('more')}</button>
-    </div></div>`;
-  m.classList.remove('hidden');
+/* ---------------- REWARD BANNER (replaces the full-screen popup) ---------------- */
+let toastTimer = null;
+function hideToast() { const t = $('#toast'); if (!t) return; clearTimeout(toastTimer); t.classList.add('hidden'); t.classList.remove('gone'); }
+function showResult(g, stars, text, badge) {
+  const t = $('#toast'), total = totalStars();
+  t.innerHTML = `<div class="tstars" aria-label="${stars} stars">${[0, 1, 2].map(i => i < stars ? '⭐' : '☆').join('')}</div>
+    <div class="tmid">
+      <div class="ttext">${text ? FZ.tr(text) : FZ.t('great_play', g.name)}</div>
+      ${badge ? `<div class="tbadge">🏅 ${FZ.t('badge_new')}</div>` : ''}
+      <div class="tcoins">⭐ ${FZ.t('total_short')}: <b>${total}</b></div>
+    </div>
+    <div class="tbtns">
+      <button class="round small" id="tAgain" aria-label="${FZ.t('again')}">🔁</button>
+      <button class="round small" id="tHome" aria-label="${FZ.t('more')}">🏠</button>
+    </div>`;
+  t.classList.remove('hidden', 'gone');
+  if ($('#totalStars')) $('#totalStars').textContent = total;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.classList.add('gone'); setTimeout(hideToast, 450); }, 5200);
+  $('#tAgain').onclick = () => startGame(g);
+  $('#tHome').onclick = () => goHome();
+  t.onclick = e => { if (!e.target.closest('button')) hideToast(); };
   FZ.say(FZ.t('say_great'));
-  $('#mAgain').onclick = () => { m.classList.add('hidden'); startGame(g); };
-  $('#mHome').onclick = () => { m.classList.add('hidden'); goHome(); };
 }
 function openHow(g) {
   const m = $('#modal');
@@ -326,6 +341,7 @@ function renderParent() {
       <div class="tipbox">${FZ.t('you_need')} ${FZ.g(g, 'props')}</div>
       <b>${FZ.t('in_real')}</b><ul>${FZ.g(g, 'real').map(t => `<li>${t}</li>`).join('')}</ul>
       <b>${FZ.t('in_game')}</b><ul>${FZ.g(g, 'how').map(t => `<li>${t}</li>`).join('')}</ul>
+      <div class="tipbox">${FZ.t('digi_title')} ${FZ.digi(g.id)}</div>
       <div class="tipbox">${FZ.t('parent_tip')} ${FZ.g(g, 'tip')}</div></details>`).join('')}</div>`;
 }
 
@@ -343,3 +359,26 @@ $('#btnUnlock').onclick = () => askPin(() => { resting = false; playedSec = 0; g
 FZ.watchText($('#stage')); FZ.watchText($('#hint'));
 applyStatic(); renderCats(); renderAvatars(); renderHome();
 show(FZ.settings.lang ? 'home' : 'lang');       // first time: ask which language
+
+/* ---------------- DRESS-UP ---------------- */
+function openDress() { destroyGame(); renderDress(); show('dress'); }
+function renderDress() {
+  const L = FZ.look();
+  $('#dressPreview').innerHTML = FZ.me('stand');
+  $$('#dress .dgender button[data-g]').forEach(b => b.classList.toggle('active', (b.dataset.g === 'girl') === !!L.girl));
+  $('#dressParts').innerHTML = [['skin', 'dress_skin'], ['hair', 'dress_hair'], ['shirt', 'dress_shirt'], ['shorts', 'dress_shorts'], ['shoe', 'dress_shoes']]
+    .map(([k, t]) => `<div class="pcard dpart"><h3>${FZ.t(t)}</h3><div class="swatches">${FZ.LOOK_OPTS[k].map(c => `<button type="button" class="sw ${L[k] === c ? 'on' : ''}" data-k="${k}" data-c="${c}" style="background:${c}" aria-label="${c}"></button>`).join('')}</div></div>`).join('');
+}
+$('#btnDress').onclick = () => { FZ.sfx('pop'); openDress(); };
+$('#dressBack').onclick = () => goHome();
+$$('#dress .dgender button[data-g]').forEach(b => b.onclick = () => { FZ.settings.look = Object.assign({}, FZ.look(), { girl: b.dataset.g === 'girl' }); FZ.saveSettings(); FZ.sfx('pop'); renderDress(); });
+$('#dressSurprise').onclick = () => {
+  const r = k => pick(FZ.LOOK_OPTS[k]);
+  FZ.settings.look = { girl: Math.random() < .5, skin: r('skin'), hair: r('hair'), shirt: r('shirt'), shorts: r('shorts'), shoe: r('shoe') };
+  FZ.saveSettings(); FZ.sfx('good'); renderDress();
+};
+$('#dressParts').onclick = e => {
+  const b = e.target.closest('.sw'); if (!b) return;
+  FZ.settings.look = Object.assign({}, FZ.look(), { [b.dataset.k]: b.dataset.c }); FZ.saveSettings(); FZ.sfx('pop'); renderDress();
+};
+

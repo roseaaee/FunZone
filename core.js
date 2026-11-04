@@ -103,6 +103,7 @@ FZ.sfx = n => {
     good: () => { mallet(523, 0, 0.2); mallet(659, 0.09, 0.2); mallet(784, 0.18, 0.22, 0.7); },
     oops: () => { mallet(392, 0, 0.15, 0.35); mallet(294, 0.15, 0.15, 0.5); },
     jump: () => { glide(240, 620, 0.2, 0.13); puff(0.25, 1400, 0.05, 0, 'bandpass'); },
+    coin: () => { mallet(988, 0, 0.16, 0.2); mallet(1319, 0.08, 0.18, 0.4); mallet(1760, 0.16, 0.12, 0.5); },
     win: () => { [523, 659, 784, 1047].forEach((f, i) => mallet(f, i * 0.12, 0.2, 0.6)); [523, 659, 784, 1047].forEach(f => mallet(f, 0.62, 0.12, 1.1)); }
   };
   (m[n] || (() => { }))();
@@ -220,9 +221,17 @@ FZ.bender = (o = {}) => {
     + `</svg>`;
 };
 /* ready-made kids: the player (boy or girl) and friends */
-FZ.me = (pose = 'stand', extra = {}) => FZ.settings.avatar === 'girl'
-  ? FZ.kid(Object.assign({ pose, girl: true, shirt: '#f4609b', shorts: '#3fa7ff', shoe: '#ffd43b', skin: '#d39a66' }, extra))
-  : FZ.kid(Object.assign({ pose, shirt: '#ff7b54', shorts: '#2f7fd6', shoe: '#ffd43b', skin: '#d39a66' }, extra));
+/* dress-up: the player's look is saved in settings.look (old boy/girl choice is carried over) */
+FZ.LOOK_OPTS = {
+  skin:   ['#f6d2a8', '#e0ac69', '#c58a55', '#a86f42', '#7a4b2a'],
+  hair:   ['#241713', '#4a2c1d', '#8a5a2c', '#1a1a1a', '#c0392b'],
+  shirt:  ['#ff7b54', '#4cc46a', '#339af0', '#f4609b', '#a97bff', '#fcc419', '#22c1a6', '#e5383b'],
+  shorts: ['#2f7fd6', '#3a4fc4', '#f6a609', '#e64980', '#2f9e44', '#343a40'],
+  shoe:   ['#ffd43b', '#ff7ab0', '#4dabf7', '#ff6b6b', '#ffffff']
+};
+if (!FZ.settings.look) FZ.settings.look = { girl: FZ.settings.avatar === 'girl' };
+FZ.look = () => Object.assign({ girl: false, skin: '#d39a66', hair: '#241713', shirt: '#ff7b54', shorts: '#2f7fd6', shoe: '#ffd43b' }, FZ.settings.look || {});
+FZ.me = (pose = 'stand', extra = {}) => { const L = FZ.look(); return FZ.kid(Object.assign({ pose, girl: L.girl, skin: L.skin, hair: L.hair, shirt: L.shirt, shorts: L.shorts, shoe: L.shoe }, extra)); };
 FZ.pals = [
   { shirt: '#4cc46a', shorts: '#3a4fc4', skin: '#c58a55', shoe: '#ff7ab0' },
   { shirt: '#a97bff', shorts: '#f6a609', skin: '#dba574', girl: true, shoe: '#4dabf7' },

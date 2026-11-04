@@ -1,7 +1,7 @@
 'use strict';
 /* =====================================================
    GAMES C – Husay (skill) & board games
-   Sipa, Pitik-Bulag, Tsato, Holen, Palosebo, Sungka, Dama
+   Sipa, Tsato, Holen, Palosebo, Sungka, Dama
    ===================================================== */
 
 /* ---------------- SIPA ---------------- */
@@ -53,65 +53,6 @@ FZ.reg({
     $$('button', btns).forEach(b => b.addEventListener('pointerdown', e => { e.preventDefault(); kick(b.dataset.p); }));
     api.on(window, 'keydown', e => { const m = { f: 'foot', k: 'knee', e: 'elbow' }[e.key]; if (m) kick(m); });
     hint();
-  }
-});
-
-/* ---------------- PITIK-BULAG ---------------- */
-FZ.reg({
-  id: 'pitik', cat: 'skill', name: 'Pitik-Bulag', emoji: '👆', color: '#be4bdb',
-  tag: 'Close your eyes and guess the flicked finger!',
-  players: '2 kids', props: 'Just your hands!',
-  real: [
-    '<b>Pitik</b> means "flick" and <b>bulag</b> means "blind". One player closes their eyes (or is blindfolded).',
-    'The other player holds out a hand and gives one finger a quick little <b>pitik</b> (flick).',
-    'The player with closed eyes must guess <b>which finger</b> was flicked.',
-    'If the guess is right, you swap roles! If it is wrong, the same player guesses again.'
-  ],
-  how: [
-    'First YOU guess. Close your eyes 🙈 — then a finger on the hand will flick and play a note 🎵!',
-    'Every finger has its own sound, going up from the thumb to the pinky. Remember the note, then tap the finger!',
-    'Then it\'s your turn to flick a finger of your friend\'s hand — will they guess it?'
-  ],
-  tip: 'In real life, play gently! Do a very light flick. For little kids, make the flick a soft tap with one finger so it never hurts.',
-  start(api) {
-    const names = FZ.lang === 'tl' ? ['Hinlalaki', 'Hintuturo', 'Hinlalato', 'Palasingsingan', 'Hinliliit'] : ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky'];
-    const freq = [262, 330, 392, 494, 587];
-    const top = h(`<div class="eyes"><span>${FZ.pal(0, 'stand')}</span><span class="pst" style="font-size:56px;line-height:1">🙈</span></div>`);
-    const hand = h(`<div class="hand">${names.map((n, i) => `<button type="button" class="finger f${i}" data-i="${i}" aria-label="${i + 1} · ${n}" disabled><b>${i + 1}</b></button>`).join('')}</div>`);
-    const score = h('<div class="score">Points: <span id="pp">0</span>/4</div>');
-    api.stage.append(top); api.stage.append(hand); api.stage.append(score);
-    const fs = $$('.finger', hand), pst = $('.pst', top);
-    let rounds = 0, pts = 0, role = 'guess', target = 0;
-    const enable = on => fs.forEach(f => f.disabled = !on);
-    const clear = () => fs.forEach(f => f.classList.remove('flash', 'ok', 'no'));
-    function flick(i) { fs[i].classList.add('flash'); FZ.tone(freq[i], .3, 'triangle', .18); setTimeout(() => fs[i].classList.remove('flash'), 350); }
-    function next() {
-      clear(); enable(false);
-      if (rounds >= 4) return api.finish(pts >= 3 ? 3 : pts >= 2 ? 2 : 1, `You scored ${pts} out of 4 points!`);
-      role = rounds < 2 ? 'guess' : 'flick';
-      if (role === 'guess') {
-        pst.textContent = '🙈'; api.msg('Close your eyes… 🙈 Your friend will flick one finger!', true);
-        api.later(() => { target = rnd(0, 4); flick(target); pst.textContent = '🤔'; api.msg('Which finger was flicked? Remember the note! 🎵', true); enable(true); }, 2200);
-      } else { pst.textContent = '👀'; api.msg('Your turn! Pick a finger on your friend\'s hand to flick!', true); enable(true); }
-    }
-    function choose(i) {
-      if (fs[i].disabled) return; enable(false);
-      if (role === 'guess') {
-        const ok = i === target; fs[target].classList.add('ok'); if (!ok) fs[i].classList.add('no');
-        if (ok) { pts++; api.sfx('good'); api.msg('Tama! ✅ Correct!', true); } else { api.sfx('oops'); api.msg(`Sayang! It was finger ${target + 1}. 😅`, true); }
-        $('#pp').textContent = pts; api.later(() => { rounds++; next(); }, 1800);
-      } else {
-        flick(i); pst.textContent = '🤔';
-        api.later(() => {
-          const g = Math.random() < .2 ? i : rnd(0, 4); fs[g].classList.add(g === i ? 'ok' : 'no');
-          if (g === i) { api.sfx('oops'); api.msg('Your friend guessed right! Good guess!', true); } else { pts++; api.sfx('good'); api.msg('Your friend guessed wrong! You win a point! 🎉', true); }
-          $('#pp').textContent = pts; api.later(() => { rounds++; next(); }, 1700);
-        }, 1500);
-      }
-    }
-    fs.forEach(f => f.onclick = () => choose(+f.dataset.i));
-    api.on(window, 'keydown', e => { if (/^[1-5]$/.test(e.key)) choose(+e.key - 1); });
-    next();
   }
 });
 
@@ -296,60 +237,114 @@ FZ.reg({
   ],
   tip: 'Make a board from an egg carton and two bowls. Counting shells while sowing is a great way to practise numbers and addition. (This version is turn-by-turn, which is easier than the real game\'s simultaneous first move.)',
   start(api) {
-    const bd = [7, 7, 7, 7, 7, 7, 7, 0, 7, 7, 7, 7, 7, 7, 7, 0];
-    const wrap = h('<div class="sungka"></div>'); api.stage.append(wrap);
-    const els = Array(16);
-    function mk(i, r, c, cls) { const e = h(`<div class="pit ${cls}" style="grid-row:${r};grid-column:${c}"></div>`); e.dataset.i = i; wrap.append(e); els[i] = e; return e; }
-    mk(15, '1 / 3', 1, 'store');
-    for (let i = 0; i < 7; i++) mk(14 - i, 1, i + 2, ''); // top row, opponent (index 14 at left)
-    for (let i = 0; i < 7; i++) mk(i, 2, i + 2, 'mine');
-    mk(7, '1 / 3', 9, 'store');
-    const info = h('<div class="side"></div>'); api.stage.append(info);
-    let turn = 0, busy = false, last = -1;
-    function render() {
-      els.forEach((e, i) => {
-        const n = bd[i], store = i === 7 || i === 15;
-        e.classList.toggle('last', i === last);
-        e.classList.toggle('glow', turn === 0 && !busy && i < 7 && n > 0);
-        e.innerHTML = store ? `<small>${i === 7 ? '🏠 You' : '🏠 Lolo'}</small><b>${n}</b><span class="shells">${'🐚'.repeat(Math.min(n, 12))}</span>` : `${n}<span class="shells">${'🐚'.repeat(Math.min(n, 7))}</span>`;
-      });
-      info.textContent = busy ? '' : turn === 0 ? '👇 Your turn!' : '👴 Lolo is thinking…';
-    }
-    const landing = (side, start, n) => { let pos = start; const skip = side ? 7 : 15; while (n > 0) { pos = (pos + 1) % 16; if (pos === skip) continue; n--; } return pos; };
-    async function play(side, start) {
-      busy = true; const mine = side ? 15 : 7, skip = side ? 7 : 15; let pos = start, n = bd[pos], extra = false; bd[pos] = 0; last = pos; render(); await api.sleep(300);
-      while (true) {
-        while (n > 0) { pos = (pos + 1) % 16; if (pos === skip) continue; bd[pos]++; n--; last = pos; api.sfx('step'); render(); await api.sleep(300); }
-        if (pos === mine) { extra = true; api.msg(side ? '👴 Last shell in Lolo\'s house — another turn!' : 'Last shell in YOUR bahay! Go again! 🎉', true); api.sfx('good'); break; }
-        if (bd[pos] > 1) { n = bd[pos]; bd[pos] = 0; render(); api.msg('Pit had shells — keep sowing! 🐚', false); await api.sleep(450); continue; }
-        const own = side ? (pos >= 8 && pos <= 14) : (pos >= 0 && pos <= 6);
-        if (own && bd[14 - pos] > 0) { const got = bd[14 - pos] + 1; bd[mine] += got; bd[14 - pos] = 0; bd[pos] = 0; api.sfx('good'); api.msg(side ? `👴 Lolo captured ${got} shells!` : `You captured ${got} shells! 🎉`, true); }
-        break;
-      }
-      last = -1; render(); await api.sleep(350);
-      const a = bd.slice(0, 7).reduce((x, y) => x + y, 0), b = bd.slice(8, 15).reduce((x, y) => x + y, 0);
-      if (a === 0 || b === 0) { bd[7] += a; bd[15] += b; for (let i = 0; i < 7; i++) { bd[i] = 0; bd[8 + i] = 0; } render(); return end(); }
-      if (!extra) turn = 1 - turn;
-      busy = false; render(); if (turn === 1) aiTurn();
-    }
-    async function aiTurn() {
-      await api.sleep(900);
-      const opts = []; for (let i = 8; i <= 14; i++) if (bd[i] > 0) opts.push(i);
-      const goodies = opts.filter(i => landing(1, i, bd[i]) === 15);
-      const c = goodies.length && Math.random() < .6 ? pick(goodies) : pick(opts);
-      play(1, c);
-    }
-    function end() {
-      const me = bd[7], op = bd[15];
-      api.finish(me > op ? 3 : me === op ? 2 : 1, me > op ? `You won ${me} to ${op}! 🏆` : me === op ? `A tie, ${me} to ${op}!` : `Lolo won ${op} to ${me}. Play again!`);
-    }
-    wrap.addEventListener('click', e => {
-      const p = e.target.closest('.pit'); if (!p || busy || turn !== 0) return;
-      const i = +p.dataset.i; if (i > 6 || bd[i] === 0) { api.sfx('oops'); return; }
-      play(0, i);
+    /* who to play against: the kids choose, so it is not always Lolo */
+    const OPPS = [
+      { name: 'Lola Nena', emoji: '👵', level: 'easy', en: 'Gentle. She makes simple moves.', tl: 'Mahinahon. Simpleng galaw ang ginagawa niya.' },
+      { name: 'Ate Mae', emoji: '👧', level: 'normal', en: 'A fair match.', tl: 'Patas na laban.' },
+      { name: 'Lolo', emoji: '👴', level: 'normal', en: 'Loves grabbing big piles.', tl: 'Mahilig kumuha ng malalaking tumpok.' },
+      { name: 'Kuya Ben', emoji: '👦', level: 'hard', en: 'A clever player. Watch out!', tl: 'Matalinong kalaro. Mag-ingat!' },
+      { name: 'Kalaro', emoji: '🧑‍🤝‍🧑', level: 'human', en: 'A friend on this device. Take turns.', tl: 'Kaibigan sa device na ito. Magpalitan.' }
+    ];
+    const L = FZ.lang === 'tl' ? 'tl' : 'en';
+    const picker = h(`<div class="oppwrap"><h3 class="opp-title">${L === 'tl' ? 'Sino ang gusto mong kalaban?' : 'Who do you want to play against?'}</h3><div class="oppgrid"></div></div>`);
+    const grid = $('.oppgrid', picker);
+    OPPS.forEach(o => {
+      const b = h(`<button class="oppbtn" type="button"><span class="oe">${o.emoji}</span><b>${o.name}</b><small>${o[L]}</small></button>`);
+      b.onclick = () => { picker.remove(); begin(o); };
+      grid.append(b);
     });
-    api.on(window, 'keydown', e => { if (/^[1-7]$/.test(e.key)) { const p = $(`.pit.mine[data-i="${+e.key - 1}"]`, wrap); if (p) p.click(); } });
-    api.msg('Tap one of your pits (bottom row) to sow the shells!', true); render();
+    api.stage.append(picker);
+    api.msg(L === 'tl' ? 'Pumili ng kalaban! 👇' : 'Pick your opponent! 👇', true);
+
+    function begin(opp) {
+      const OPP = opp.name, human = opp.level === 'human';
+      const bd = [7, 7, 7, 7, 7, 7, 7, 0, 7, 7, 7, 7, 7, 7, 7, 0];   // 0-6 you, 7 your bahay, 8-14 top row, 15 their bahay
+      const wrap = h('<div class="sungka"></div>'); api.stage.append(wrap);
+      const els = Array(16);
+      function mk(i, r, c, cls) { const e = h(`<div class="pit ${cls}" style="grid-row:${r};grid-column:${c}"></div>`); e.dataset.i = i; wrap.append(e); els[i] = e; return e; }
+      mk(15, '1 / 3', 1, 'store');
+      for (let i = 0; i < 7; i++) mk(14 - i, 1, i + 2, '');
+      for (let i = 0; i < 7; i++) mk(i, 2, i + 2, 'mine');
+      mk(7, '1 / 3', 9, 'store');
+      const info = h('<div class="side"></div>'); api.stage.append(info);
+      let turn = 0, busy = false, last = -1;
+
+      function render() {
+        els.forEach((e, i) => {
+          const n = bd[i], store = i === 7 || i === 15;
+          const mine = turn === 0 ? i <= 6 : (human && i >= 8 && i <= 14);
+          e.classList.toggle('last', i === last);
+          e.classList.toggle('glow', !busy && n > 0 && mine);
+          e.innerHTML = store
+            ? `<small>${i === 7 ? '🏠 You' : '🏠 ' + OPP}</small><b>${n}</b><span class="shells">${'🐚'.repeat(Math.min(n, 12))}</span>`
+            : `${n}<span class="shells">${'🐚'.repeat(Math.min(n, 7))}</span>`;
+        });
+        info.textContent = busy ? '' : turn === 0 ? '👇 Your turn!' : human ? `👆 ${OPP}'s turn! (top row)` : `${opp.emoji} ${OPP} is thinking…`;
+      }
+      /* where the last shell lands if it is sown from pit `start` (no animation) */
+      const landing = (side, start, n) => { let pos = start; const skip = side ? 7 : 15; while (n > 0) { pos = (pos + 1) % 16; if (pos === skip) continue; n--; } return pos; };
+      /* simulate a move on a copy of the board: shells gained and whether it gives another turn */
+      function sim(b0, side, start) {
+        const c = b0.slice(), mine = side ? 15 : 7, skip = side ? 7 : 15;
+        let pos = start, n = c[pos], gain = 0, extra = false; c[pos] = 0;
+        for (let guard = 0; guard < 200; guard++) {
+          while (n > 0) { pos = (pos + 1) % 16; if (pos === skip) continue; c[pos]++; n--; if (pos === mine) gain++; }
+          if (pos === mine) { extra = true; break; }
+          if (c[pos] > 1) { n = c[pos]; c[pos] = 0; continue; }
+          const own = side ? (pos >= 8 && pos <= 14) : (pos >= 0 && pos <= 6);
+          if (own && c[14 - pos] > 0) { const got = c[14 - pos] + 1; gain += got; c[14 - pos] = 0; c[pos] = 0; }
+          break;
+        }
+        return { gain, extra };
+      }
+      function aiPick(opts) {
+        if (opp.level === 'easy') return pick(opts);
+        if (opp.level === 'normal') { const goodies = opts.filter(i => landing(1, i, bd[i]) === 15); return goodies.length && Math.random() < .6 ? pick(goodies) : pick(opts); }
+        let best = opts[0], bestScore = -Infinity;      // hard: choose the move that gains the most
+        opts.forEach(i => { const r = sim(bd, 1, i); const sc = r.gain * 2 + (r.extra ? 3 : 0) + Math.random() * .5; if (sc > bestScore) { bestScore = sc; best = i; } });
+        return best;
+      }
+
+      async function play(side, start) {
+        busy = true; const mine = side ? 15 : 7, skip = side ? 7 : 15; let pos = start, n = bd[pos], extra = false; bd[pos] = 0; last = pos; render(); await api.sleep(300);
+        while (true) {
+          while (n > 0) { pos = (pos + 1) % 16; if (pos === skip) continue; bd[pos]++; n--; last = pos; api.sfx('step'); render(); await api.sleep(300); }
+          if (pos === mine) { extra = true; api.msg(side ? `${OPP} got another turn! 🎉` : 'Last shell in YOUR bahay! Go again! 🎉', true); api.sfx('good'); break; }
+          if (bd[pos] > 1) { n = bd[pos]; bd[pos] = 0; render(); api.msg('Pit had shells — keep sowing! 🐚', false); await api.sleep(450); continue; }
+          const own = side ? (pos >= 8 && pos <= 14) : (pos >= 0 && pos <= 6);
+          if (own && bd[14 - pos] > 0) { const got = bd[14 - pos] + 1; bd[mine] += got; bd[14 - pos] = 0; bd[pos] = 0; api.sfx('good'); api.msg(side ? `${OPP} captured ${got} shells!` : `You captured ${got} shells! 🎉`, true); }
+          break;
+        }
+        last = -1; render(); await api.sleep(350);
+        const a = bd.slice(0, 7).reduce((x, y) => x + y, 0), b = bd.slice(8, 15).reduce((x, y) => x + y, 0);
+        if (a === 0 || b === 0) { bd[7] += a; bd[15] += b; for (let i = 0; i < 7; i++) { bd[i] = 0; bd[8 + i] = 0; } render(); return end(); }
+        if (!extra) turn = 1 - turn;
+        busy = false; render(); if (turn === 1 && !human) aiTurn();
+      }
+      async function aiTurn() {
+        await api.sleep(900);
+        const opts = []; for (let i = 8; i <= 14; i++) if (bd[i] > 0) opts.push(i);
+        if (opts.length) play(1, aiPick(opts));
+      }
+      function end() {
+        const me = bd[7], op = bd[15];
+        api.finish(me > op ? 3 : me === op ? 2 : 1, me > op ? `You won ${me} to ${op}! 🏆` : me === op ? `A tie, ${me} to ${op}!` : `${OPP} won ${op} to ${me}. Play again!`);
+      }
+      wrap.addEventListener('click', e => {
+        const p = e.target.closest('.pit'); if (!p || busy) return;
+        const i = +p.dataset.i, ownRange = turn === 0 ? i <= 6 : (i >= 8 && i <= 14);
+        if (!ownRange || (turn === 1 && !human)) return;
+        if (bd[i] === 0) { api.sfx('oops'); return; }
+        play(turn, i);
+      });
+      api.on(window, 'keydown', e => {
+        if (!/^[1-7]$/.test(e.key)) return;
+        const k = +e.key - 1, idx = turn === 0 ? k : 14 - k;      // player 2 counts from their own left
+        const p = $(`.pit[data-i="${idx}"]`, wrap); if (p) p.click();
+      });
+      api.msg(human ? 'Take turns! Tap a pit on your side.' : 'Tap one of your pits (bottom row) to sow the shells!', true);
+      render();
+    }
   }
 });
 

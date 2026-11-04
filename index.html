@@ -47,7 +47,7 @@
     <div class="mascot-row">
       <div class="mascot" aria-hidden="true">🐃</div>
       <div class="bubble" id="mascotSay"></div>
-      <div class="avatar-row"><span data-i18n="choose_me">My player:</span><div id="avatarBtns" style="display:flex;gap:8px"></div></div>
+      <div class="avatar-row"><span data-i18n="choose_me">My player:</span><div id="avatarBtns" style="display:flex;gap:8px"></div><button id="btnDress" class="chip" data-i18n="dress_btn">👕 Dress-up</button></div>
     </div>
 
     <nav class="cats" id="cats" aria-label="Game types"></nav>
@@ -99,6 +99,23 @@
   </section>
 
   <!-- ============ REST TIME ============ -->
+  <!-- ============ DRESS-UP ============ -->
+  <section id="dress" class="screen">
+    <header class="playbar">
+      <button id="dressBack" class="round" aria-label="Back">⬅️</button>
+      <h2 data-i18n="dress_title">👕 Dress-up</h2>
+      <span class="spacer"></span>
+    </header>
+    <div class="dpreview" id="dressPreview"></div>
+    <div class="dgender">
+      <button class="chip" data-g="boy" data-i18n="dress_boy">Boy</button>
+      <button class="chip" data-g="girl" data-i18n="dress_girl">Girl</button>
+      <button class="chip" id="dressSurprise" data-i18n="dress_surprise">🎲 Surprise me</button>
+    </div>
+    <div id="dressParts" class="dparts"></div>
+    <p class="muted" data-i18n="dress_tip">Your player is used in every game!</p>
+  </section>
+
   <section id="rest" class="screen">
     <div class="restbox">
       <div class="rest-em">😴🐃</div>
@@ -111,6 +128,7 @@
 </main>
 
 <div id="modal" class="modal hidden" role="dialog" aria-modal="true"></div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
 <script src="core.js"></script>
 <script src="lang.js"></script>

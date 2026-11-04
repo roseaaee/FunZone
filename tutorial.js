@@ -252,19 +252,7 @@
       st(['Tap 👫 Kaibigan once so your friends lift you to the 🚩!', 'Pindutin ng isang beses ang 👫 Kaibigan para maiangat ka sa 🚩!'], [...pole.map(it => it.ty === 'r' ? { ...it, x: 22 } : it.ty === 'e' ? { ...it, x: it.x - 28 } : it), K(25, 34, 'climb', 26, 'me', 'bob'), ...btn('👫 Kaibigan', 72, 60, 44, '#fff'), tap(82, 68), E('⬆️', 40, 50, 8, 'bob')], 'ui')
     ]); }
 
-  /* ================= PITIK-BULAG ================= */
-  { const fng = (x, y, hi) => [0, 1, 2, 3, 4].map(i => { const hh = [12, 16, 19, 16, 13][i]; return R(x + i * 9, y + 20 - hh, 8, hh, ['#ff8787', '#ffa94d', '#fcc419', '#69db7c', '#4dabf7'][i], 4, hi === i ? 'bob' : 0, hi === i ? 'outline:.8cqw solid #fff' : ''); });
-    D('pitik', [
-      st(['One player closes their eyes. Pitik means "flick", bulag means "blind".', 'Ipipikit ng isang manlalaro ang mata. Ang pitik ay tapik ng daliri at ang bulag ay hindi nakakakita.'], [K(24, 92, 'stand', 42, 'me'), E('🙈', 24, 36, 10, 'bob'), K(76, 92, 'stand', 42, 0), E('🖐️', 56, 62, 11, 'bob')], 'grass'),
-      st(['The friend gives one finger a quick, gentle flick.', 'Pipitikin nang mabilis at dahan-dahan ng kaibigan ang isang daliri.'], [K(24, 92, 'stand', 42, 'me'), E('🙈', 24, 36, 10), K(76, 92, 'stand', 42, 0), E('☝️', 56, 60, 11, 'tap'), E('✨', 62, 50, 8, 'bob')], 'grass'),
-      st(['Open your eyes and guess which finger it was! Right? Swap places!', 'Idilat ang mata at hulaan kung aling daliri! Tama? Magpalit ng puwesto!'], [K(24, 92, 'stand', 42, 'me'), E('🤔', 24, 36, 10, 'bob'), E('❓', 44, 46, 9, 'bob'), K(76, 92, 'stand', 42, 0), E('🖐️', 58, 64, 11), E('👍', 78, 36, 9, 'bob')], 'grass')
-    ], [
-      st(['Close your eyes. A finger flicks and plays a note 🎵.', 'Ipikit ang mata. May daliring pipitikin at tutunog 🎵.'], [E('🙈', 50, 16, 12, 'bob'), ...fng(28, 34, -1), T('1 2 3 4 5', 50, 74, 5)], 'ui'),
-      st(['Every finger has its own sound. Remember the note!', 'May sariling tunog ang bawat daliri. Tandaan ang tunog!'], [...fng(28, 34, 2), E('🎵', 40, 20, 10, 'bob'), E('🎵', 62, 24, 8, 'bob'), T('1 2 3 4 5', 50, 74, 5)], 'ui'),
-      st(['Tap the finger you think it was. Then swap roles!', 'Pindutin ang daliring sa tingin mo ay pinitik. Saka magpalit ng papel!'], [...fng(28, 34, -1), tap(51, 62), E('✅', 82, 36, 10, 'bob'), T('1 2 3 4 5', 50, 74, 5)], 'ui')
-    ]); }
-
-  /* ================= SUNGKA ================= */
+    /* ================= SUNGKA ================= */
   { const pits = (hiRow, shells) => { const out = [R(6, 26, 88, 46, '#a9743f', 5), R(8, 30, 11, 38, '#4a2e12', 50), R(81, 30, 11, 38, '#4a2e12', 50)];
       for (let c = 0; c < 7; c++) [0, 1].forEach(r => out.push(R(23 + c * 8.4, 31 + r * 19, 7, 14, hiRow === r ? '#6b4a22' : '#4a2e12', 50, hiRow === r ? 'pulse' : 0, hiRow === r ? 'outline:.8cqw solid #ffe066' : ''))); if (shells) out.push(...shells); return out; };
     D('sungka', [

@@ -90,6 +90,20 @@ FZ.UI = {
   rest_say:     { en: 'Time to rest! Ask a grown up.', tl: 'Pahinga muna! Magpatulong sa nakatatanda.' },
   unlock_btn:   { en: '👨‍👩‍👧 Grown-up unlock', tl: '👨‍👩‍👧 Buksan ng nakatatanda' },
   hello:        { en: 'Hello!', tl: 'Kumusta!' },
+  dress_btn:    { en: '👕 Dress-up', tl: '👕 Bihis' },
+  dress_title:  { en: '👕 Dress-up', tl: '👕 Bihis' },
+  dress_boy:    { en: 'Boy', tl: 'Lalaki' },
+  dress_girl:   { en: 'Girl', tl: 'Babae' },
+  dress_surprise: { en: '🎲 Surprise me', tl: '🎲 Sorpresahin ako' },
+  dress_skin:   { en: 'Skin', tl: 'Kulay ng balat' },
+  dress_hair:   { en: 'Hair', tl: 'Buhok' },
+  dress_shirt:  { en: 'T-shirt', tl: 'T-shirt' },
+  dress_shorts: { en: 'Shorts', tl: 'Shorts' },
+  dress_shoes:  { en: 'Tsinelas', tl: 'Tsinelas' },
+  dress_tip:    { en: 'Your player is used in every game!', tl: 'Ginagamit ang player mo sa bawat laro!' },
+  digi_title:   { en: '📱 On FunZone it is a little different:', tl: '📱 Sa FunZone, medyo iba:' },
+  badge_new:    { en: 'New badge!', tl: 'Bagong badge!' },
+  total_short:  { en: 'Total', tl: 'Kabuuan' },
   tut_more:     { en: '📝 Read the steps', tl: '📝 Basahin ang mga hakbang' },
   tut_step:     { en: 'Step', tl: 'Hakbang' },
   tut_prev:     { en: 'Previous step', tl: 'Nakaraang hakbang' },
@@ -290,19 +304,6 @@ FZ.TLG = {
       'Paa 🦶, tuhod 🦵 o siko 💪 — bawal ang kamay.',
       'Gumawa ng 8 sipa! May 3 buhay ka (💛). Kapag dumikit sa lupa ang sipa, mababawasan ka ng isa.'],
     tip: 'Gumawa ng sipa mula sa washer at ilang piraso ng plastik na supot. Magsimula sa mababang sipa malapit sa lupa.' },
-  pitik: {
-    tag: 'Ipikit ang mata at hulaan ang piniting daliri!',
-    players: '2 bata', props: 'Mga kamay lang!',
-    real: [
-      'Ang <b>pitik</b> ay tapik gamit ang daliri at ang <b>bulag</b> ay hindi nakakakita. Ipipikit ng isang manlalaro ang mata (o tatakpan).',
-      'Ilalabas ng isa ang kanyang kamay at pipitikin nang mabilis ang isang daliri.',
-      'Huhulaan ng nakapikit kung <b>aling daliri</b> ang piniting.',
-      'Kapag tama ang hula, magpapalit kayo ng papel! Kapag mali, huhula ulit siya.'],
-    how: [
-      'UNA, IKAW ang huhula. Ipikit ang mata 🙈 — saka may daliring pipitikin at tutunog 🎵!',
-      'May sariling tunog ang bawat daliri, pataas mula sa hinlalaki hanggang hinliliit. Tandaan ang tunog, saka pindutin ang daliri!',
-      'Pagkatapos, ikaw naman ang pipitik ng daliri ng kamay ng kaibigan mo — mahuhulaan kaya niya?'],
-    tip: 'Sa totoong laro, dahan-dahan lang! Napakagaan na pitik lang. Para sa maliliit, gawing malambot na tapik gamit ang isang daliri para hindi masaktan.' },
   tsato: {
     tag: 'Pitikin ang maliit na patpat at paluin nang malayo!',
     players: '2–6 bata', props: 'Isang mahabang patpat at isang maikling patpat (gaya ng hawakan ng walis na hinati)',
@@ -449,14 +450,6 @@ const D = {
   'Good try! Keep practising your sipa kicks.': 'Magaling na subok! Magsanay pa sa pagsipa.',
   '🦶 Foot': '🦶 Paa', '🦵 Knee': '🦵 Tuhod', '💪 Elbow': '💪 Siko',
   'Kicks:': 'Sipa:',
-  /* pitik-bulag */
-  'Points:': 'Puntos:',
-  'Close your eyes… 🙈 Your friend will flick one finger!': 'Ipikit ang mata… 🙈 Pipitikin ng kaibigan mo ang isang daliri!',
-  'Which finger was flicked? Remember the note! 🎵': 'Aling daliri ang piniting? Tandaan ang tunog! 🎵',
-  'Your turn! Pick a finger on your friend\'s hand to flick!': 'Ikaw naman! Pumili ng daliri sa kamay ng kaibigan mo na pipitikin!',
-  'Tama! ✅ Correct!': 'Tama! ✅',
-  'Your friend guessed right! Good guess!': 'Tama ang hula ng kaibigan mo! Magaling!',
-  'Your friend guessed wrong! You win a point! 🎉': 'Mali ang hula ng kaibigan mo! May puntos ka! 🎉',
   /* tsato */
   'Missed! The stick fell down. 😅': 'Mintis! Nahulog ang patpat. 😅',
   'Now tap Palo! when it is in the green box!': 'Pindutin ang Palo! kapag nasa berdeng kahon ang patpat!',
@@ -511,11 +504,17 @@ const DYN = [
   [/^You knocked out (\d+) marbles\. Try again!$/, n => `Naipalabas mo ang ${n} holen. Subukan ulit!`],
   [/^You reached the flag in (\d+) seconds! 🚩$/, n => `Naabot mo ang bandila sa loob ng ${n} segundo! 🚩`],
   [/^Buhangin on your hands! 🏖️ \((\d+) left\)$/, n => `May buhangin na sa kamay mo! 🏖️ (${n} pa)`],
-  [/^👴 Lolo captured (\d+) shells!$/, n => `👴 Nakuha ni Lolo ang ${n} sigay!`],
+  [/^(.+) captured (\d+) shells!$/, (a, n) => `Nakuha ni ${a} ang ${n} sigay!`],
+  [/^(.+) got another turn! 🎉$/, a => `${a} may isa pang turn! 🎉`],
+  [/^(.+) is thinking…$/, a => `${a} nag-iisip…`],
+  [/^👆 (.+)'s turn! \(top row\)$/, a => `👆 Turn ni ${a}! (hanay sa itaas)`],
+  [/^You won (\d+) to (\d+)! 🏆$/, (a, b) => `Nanalo ka, ${a} kontra ${b}! 🏆`],
+  [/^Take turns! Tap a pit on your side\.$/, () => 'Magpalitan! Pindutin ang lubak sa panig mo.'],
+  [/^Pick your opponent! 👇$/, () => 'Pumili ng kalaban! 👇'],
   [/^You captured (\d+) shells! 🎉$/, n => `Nakuha mo ang ${n} sigay! 🎉`],
   [/^You won (\d+) to (\d+)! 🏆$/, (a, b) => `Panalo ka, ${a} kontra ${b}! 🏆`],
   [/^A tie, (\d+) to (\d+)!$/, (a, b) => `Tabla, ${a} kontra ${b}!`],
-  [/^Lolo won (\d+) to (\d+)\. Play again!$/, (a, b) => `Nanalo si Lolo, ${a} kontra ${b}. Ulitin!`]
+  [/^(.+) won (\d+) to (\d+)\. Play again!$/, (a, b, c) => `Nanalo si ${a}, ${b} kontra ${c}. Ulitin!`]
 ];
 FZ.tr = s => {
   if (FZ.lang !== 'tl' || !s) return s;
@@ -538,3 +537,28 @@ FZ.watchText = root => {
     });
   }).observe(root, { childList: true, subtree: true, characterData: true });
 };
+
+
+/* ---------- how the digital version differs from real life (one short note per game) ---------- */
+FZ.DIGI = {
+  patintero: { en: "On screen you move one square per tap, and guards take turns. In real life you race with your whole body and guards react as you run.", tl: "Sa screen, isang kahon bawat pindot ang galaw mo at sunod-sunod kumilos ang taya. Sa totoong laro, tumatakbo ka nang buo ang katawan at tumutugon ang taya habang tumatakbo ka." },
+  agawan: { en: "The other team is computer-controlled. In real life players shout, plan together and rescue jailed friends by touching them.", tl: "Kontrolado ng computer ang kabilang koponan. Sa totoong laro, sumisigaw, nagpaplano nang sama-sama at nililigtas ng kakampi ang nakakulong sa pamamagitan ng pagdampi." },
+  langit: { en: "Safe stones are shown on the grid. In real life you find your own raised places like steps, a bench or a rock.", tl: "Nakikita sa grid ang ligtas na bato. Sa totoong laro, ikaw mismo ang humahanap ng nakataas na lugar tulad ng hagdan, bangko o bato." },
+  taguan: { en: "The seeker counting and the hiders are shown as spots. In real life you hide in real places and run to the base yourself.", tl: "Ang nagbibilang na taya at ang mga nagtatago ay nakikita bilang kahon. Sa totoong laro, ikaw mismo ang nagtatago sa totoong lugar at tumatakbo sa base." },
+  araw: { en: "The sun moves along a bar. In real life you watch the real shadows and feel the heat.", tl: "Gumagalaw ang araw sa isang bar. Sa totoong laro, pinagmamasdan mo ang tunay na anino at ramdam ang init." },
+  lawin: { en: "You only move left and right, and the hawk dives on screen. In real life the whole chain of chicks moves together, holding on.", tl: "Kaliwa at kanan lang ang galaw mo at sumisisid ang lawin sa screen. Sa totoong laro, sabay-sabay gumagalaw ang buong hanay ng sisiw na magkakahawak." },
+  bakod: { en: "Safe fences are yellow squares. In real life you hold a real fence, post or wall.", tl: "Ang ligtas na bakod ay dilaw na kahon. Sa totoong laro, humahawak ka sa tunay na bakod, poste o pader." },
+  tinik: { en: "A meter replaces your sense of balance: you tap at the right moment. In real life the thorn is stacked hands and feet that you must not touch.", tl: "Ang metro ang pumapalit sa pakiramdam ng balanse: pindutin sa tamang oras. Sa totoong laro, ang tinik ay mga nakasalansang kamay at paa na hindi dapat mahawakan." },
+  baka: { en: "You hold a button to build power. In real life you judge the jump by looking at the bending friend's back.", tl: "Hawakan ang pindutan para mabuo ang lakas. Sa totoong laro, tinitingnan mo ang likod ng yumuyukong kaibigan para mahulaan ang talon." },
+  garter: { en: "You copy a pattern of buttons. In real life you hop to a rhythm with your feet while the band rises.", tl: "Ginagaya mo ang ayos ng mga pindutan. Sa totoong laro, tumatalon ka sa saliw gamit ang paa habang tumataas ang goma." },
+  piko: { en: "You tap boxes in order, and throwing the stone is a tap too. In real life you really throw the stone and balance on one foot.", tl: "Pindutin ang mga kahon nang sunod-sunod, at pagpindot din ang pagtapon ng bato. Sa totoong laro, talagang itinatapon mo ang bato at nagbabalanse sa isang paa." },
+  kadang: { en: "Two taps make one step. In real life both legs and your balance do the work.", tl: "Dalawang pindot ang isang hakbang. Sa totoong laro, ang dalawang binti at balanse mo ang gumagawa ng lahat." },
+  tumbang: { en: "Throwing is a timing tap on a bar, and Taya is on screen. In real life you really throw the slipper and run to grab it back.", tl: "Ang paghagis ay pagpindot sa tamang oras sa bar, at nasa screen ang taya. Sa totoong laro, talagang ihahagis ang tsinelas at tatakbo para kunin ito." },
+  sipa: { en: "You tap the body part to use. In real life the sipa is kicked with your real foot, knee or elbow.", tl: "Pindutin ang bahagi ng katawan na gagamitin. Sa totoong laro, sisipain mo ang sipa gamit ang tunay mong paa, tuhod o siko." },
+  tsato: { en: "Your tap timing decides the flight. In real life you swing the stick yourself and measure the distance.", tl: "Ang tamang oras ng pindot ang nagtatakda ng lipad. Sa totoong laro, ikaw mismo ang hahampas at susukatin ang layo." },
+  holen: { en: "You drag back and let go on screen. In real life marbles roll on the ground and bump each other with real friction.", tl: "Hilahin pabalik at bitawan sa screen. Sa totoong laro, gumugulong ang holen sa lupa at nagbabanggaan nang totoo." },
+  palosebo: { en: "Taps move you up and grease slows you on screen. In real life teams build human ladders and use real sand for grip.", tl: "Ang pindot ang nagpapaakyat sa iyo at pinabagal ka ng sebo sa screen. Sa totoong laro, bumubuo ng hagdan ng tao ang mga koponan at gumagamit ng buhangin para kumapit." },
+  sungka: { en: "The computer plays your opponent, or a friend takes turns on this device. In real life you sit face to face with real shells.", tl: "Ang computer ang kalaban, o ang kaibigan mo ay nagpapalitan ng turn sa device na ito. Sa totoong laro, magkaharap kayo at tunay na sigay ang gamit." },
+  dama: { en: "The computer makes its moves and highlights the captures you must make. In real life you spot forced captures yourself.", tl: "Ang computer ang gumagawa ng galaw at may ilaw ang mga pagkuha na kailangan mong gawin. Sa totoong laro, ikaw mismo ang dapat makakita ng sapilitang pagkuha." }
+};
+FZ.digi = id => { const e = FZ.DIGI[id]; return e ? (FZ.lang === 'tl' ? e.tl : e.en) : ''; };
