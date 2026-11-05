@@ -46,68 +46,10 @@ FZ.lang = FZ.settings.lang || 'en';           // 'en' | 'tl'
 FZ.tr = s => s;                                // replaced by lang.js
 
 /* =====================================================
-   SOUND – soft, warm "toy xylophone" tones, bubbly pops and gentle footsteps
+   SOUND – removed. Sound effects are off everywhere; FZ.sfx stays as a no-op so existing calls do nothing.
    ===================================================== */
-let AC = null, OUT = null, REV = null, NOISE = null;
-function audio() {
-  if (!FZ.settings.sound) return null;
-  try {
-    if (!AC) {
-      const C = window.AudioContext || window.webkitAudioContext; if (!C) return null;
-      AC = new C();
-      OUT = AC.createGain(); OUT.gain.value = 0.9;
-      const comp = AC.createDynamicsCompressor(); comp.threshold.value = -20; comp.ratio.value = 3;
-      OUT.connect(comp); comp.connect(AC.destination);
-      /* tiny room reverb so tones do not sound dry and "computer-like" */
-      const len = Math.floor(AC.sampleRate * 0.7), ir = AC.createBuffer(2, len, AC.sampleRate);
-      for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
-      const cv = AC.createConvolver(); cv.buffer = ir; REV = AC.createGain(); REV.gain.value = 0.25; REV.connect(cv); cv.connect(OUT);
-      NOISE = AC.createBuffer(1, AC.sampleRate, AC.sampleRate);
-      const nd = NOISE.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-    }
-    if (AC.state === 'suspended') AC.resume();
-    return AC;
-  } catch (e) { return null; }
-}
-/* mallet (marimba / xylophone-like): a pure tone plus quick-fading overtones */
-function mallet(f, when = 0, v = 0.2, dur = 0.55) {
-  const a = audio(); if (!a) return; const t = a.currentTime + when;
-  [[1, 1, dur], [4, 0.26, dur * 0.22], [9.2, 0.07, dur * 0.1]].forEach(([m, amp, dd]) => {
-    const o = a.createOscillator(), g = a.createGain(); o.type = 'sine'; o.frequency.value = f * m;
-    o.connect(g); g.connect(OUT); g.connect(REV);
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v * amp, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + dd);
-    o.start(t); o.stop(t + dd + 0.05);
-  });
-}
-/* smooth pitch glide (bubble pops, boings) */
-function glide(f0, f1, d, v = 0.14, when = 0) {
-  const a = audio(); if (!a) return; const t = a.currentTime + when, o = a.createOscillator(), g = a.createGain();
-  o.type = 'sine'; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + d);
-  o.connect(g); g.connect(OUT); g.connect(REV);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + d + 0.05);
-  o.start(t); o.stop(t + d + 0.08);
-}
-/* soft filtered noise (footsteps, whoosh) */
-function puff(d, f, v = 0.2, when = 0, type = 'lowpass') {
-  const a = audio(); if (!a) return; const t = a.currentTime + when, s = a.createBufferSource(), flt = a.createBiquadFilter(), g = a.createGain();
-  s.buffer = NOISE; flt.type = type; flt.frequency.value = f; flt.Q.value = type === 'bandpass' ? 1.2 : 0.7;
-  s.connect(flt); flt.connect(g); g.connect(OUT);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
-  s.start(t, Math.random() * 0.5); s.stop(t + d + 0.05);
-}
-FZ.tone = (f, d = 0.3, type, v = 0.15, when = 0) => mallet(f, when, Math.min(0.3, v * 1.5), Math.max(0.3, d * 1.6));
-FZ.sfx = n => {
-  const m = {
-    pop: () => glide(520, 980, 0.07, 0.12),
-    step: () => { puff(0.07, 420 + rnd(0, 220), 0.22); glide(150, 90, 0.07, 0.07); },
-    good: () => { mallet(523, 0, 0.2); mallet(659, 0.09, 0.2); mallet(784, 0.18, 0.22, 0.7); },
-    oops: () => { mallet(392, 0, 0.15, 0.35); mallet(294, 0.15, 0.15, 0.5); },
-    jump: () => { glide(240, 620, 0.2, 0.13); puff(0.25, 1400, 0.05, 0, 'bandpass'); },
-    coin: () => { mallet(988, 0, 0.16, 0.2); mallet(1319, 0.08, 0.18, 0.4); mallet(1760, 0.16, 0.12, 0.5); },
-    win: () => { [523, 659, 784, 1047].forEach((f, i) => mallet(f, i * 0.12, 0.2, 0.6)); [523, 659, 784, 1047].forEach(f => mallet(f, 0.62, 0.12, 1.1)); }
-  };
-  (m[n] || (() => { }))();
-};
+FZ.tone = () => { };
+FZ.sfx = () => { };
 
 /* =====================================================
    VOICE – picks the most natural voice the device has, in the chosen language

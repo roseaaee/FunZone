@@ -302,7 +302,6 @@ function renderParent() {
       <div class="row"><label>${FZ.t('lang_title')}</label><div class="langsw"><button data-lang="en" class="${FZ.lang === 'en' ? 'active' : ''}">🇺🇸 English</button><button data-lang="tl" class="${FZ.lang === 'tl' ? 'active' : ''}">🇵🇭 Tagalog</button></div></div>
     </div>
     <div class="pcard"><h3>${FZ.t('snd_title')}</h3>
-      <div class="row"><label for="sSound">${FZ.t('snd_fx')}</label><label class="switch"><input type="checkbox" id="sSound" ${S.sound ? 'checked' : ''}><span></span></label></div>
       <div class="row"><label for="sVoice">${FZ.t('snd_voice')}</label><label class="switch"><input type="checkbox" id="sVoice" ${S.voice ? 'checked' : ''}><span></span></label></div>
       <div class="row"><label for="sVoiceSel">${FZ.t('voice_pick')}</label><span style="display:flex;gap:8px;flex-wrap:wrap"><select id="sVoiceSel">${voiceOptions()}</select><button class="btn ghost" id="sVoiceTest" style="font-size:18px;padding:8px 16px">${FZ.t('voice_test')}</button></span></div>
       <p class="muted" id="voiceNote">${hasLangVoice() ? FZ.t('voice_note') : FZ.t('voice_no_tl')}</p>
@@ -322,7 +321,6 @@ function renderParent() {
     <div class="pcard"><h3>${FZ.t('priv_title')}</h3>
       <ul style="padding-left:22px;display:grid;gap:6px;font-size:17px">${FZ.t('priv').map(t => `<li>${t}</li>`).join('')}</ul>
     </div>`;
-  $('#sSound').onchange = e => { S.sound = e.target.checked; FZ.saveSettings(); FZ.sfx('good'); };
   $('#sVoiceSel').onchange = e => { S.voices = Object.assign({}, S.voices); if (e.target.value) S.voices[FZ.lang] = e.target.value; else delete S.voices[FZ.lang]; FZ.saveSettings(); FZ.say(FZ.t('voice_hi'), true); };
   $('#sVoiceTest').onclick = () => FZ.say(FZ.t('voice_hi'), true);
   $('#sVoice').onchange = e => { S.voice = e.target.checked; FZ.saveSettings(); if (S.voice) FZ.say(FZ.t('hello')); };
@@ -334,15 +332,6 @@ function renderParent() {
   };
   $('#sReset').onclick = () => { if (confirm(FZ.t('confirm_reset'))) { FZ.progress = {}; FZ.saveProgress(); renderParent(); } };
 
-  /* real-life guide */
-  $('#ptab-guide').innerHTML = `<div class="pcard"><h3>${FZ.t('guide_title')}</h3>
-    <p class="muted" style="margin-bottom:8px">${FZ.t('guide_note')}</p>
-    ${FZ.games.map(g => `<details><summary>${g.emoji} ${g.name} <span class="muted" style="font-weight:600">· ${FZ.g(g, 'players')}</span></summary>
-      <div class="tipbox">${FZ.t('you_need')} ${FZ.g(g, 'props')}</div>
-      <b>${FZ.t('in_real')}</b><ul>${FZ.g(g, 'real').map(t => `<li>${t}</li>`).join('')}</ul>
-      <b>${FZ.t('in_game')}</b><ul>${FZ.g(g, 'how').map(t => `<li>${t}</li>`).join('')}</ul>
-      <div class="tipbox">${FZ.t('digi_title')} ${FZ.digi(g.id)}</div>
-      <div class="tipbox">${FZ.t('parent_tip')} ${FZ.g(g, 'tip')}</div></details>`).join('')}</div>`;
 }
 
 /* ---------------- TIME LIMIT / REST ---------------- */
