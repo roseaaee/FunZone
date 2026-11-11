@@ -46,7 +46,7 @@ FZ.reg({
         else { let n = e.r + g.dir; if (n < 1 || n > 5) { g.dir *= -1; n = e.r + g.dir; } e.set(n, e.c); }
       });
       check();
-    }, 540);
+    }, FZ.lv(api.level, 760, 540, 380));
   }
 });
 
@@ -112,7 +112,7 @@ FZ.reg({
         if (p) g.set(p.r, p.c);
       });
       check();
-    }, 640);
+    }, FZ.lv(api.level, 820, 640, 460));
   }
 });
 
@@ -160,7 +160,7 @@ function chase(api, cfg) {
       if (itTicks > 22) { mode = 'run'; it.say(cfg.itEmoji); it.set(0, C - 1); api.msg('Your friend got tired. Back to collecting ⭐!', true); }
     }
     check();
-  }, 650);
+  }, FZ.lv(api.level, 820, 650, 470));
   if (cfg.shift) api.every(() => { cfg.shift(b, st, api); check(); }, cfg.shiftMs);
   refresh();
 }
@@ -246,8 +246,9 @@ FZ.reg({
 
     /* step 2: count, then look for friends in the real-looking place */
     function play(P) {
-      const kids = shuffle([FZ.pal(0, 'stand'), FZ.pal(1, 'stand'), FZ.pal(2, 'stand'), FZ.pal(3, 'stand')]).slice(0, 3);
-      const hide = shuffle(P.spots.map((_, i) => i)).slice(0, 3);
+      const nHide = FZ.lv(api.level, 2, 3, 4);            // how many friends to find: 2, 3 or 4
+      const kids = shuffle([FZ.pal(0, 'stand'), FZ.pal(1, 'stand'), FZ.pal(2, 'stand'), FZ.pal(3, 'stand')]).slice(0, nHide);
+      const hide = shuffle(P.spots.map((_, i) => i)).slice(0, nHide);
       const w = h(`<div class="taguan"><div class="countbox"><div class="countnum">🙈</div><div class="countword">Eyes closed…</div></div>
         <div class="tgscene tg-${P.id}" role="group" aria-label="${P.name}">
           ${P.deco.map(([e, x, y, s]) => `<span class="tgdeco" style="left:${x}%;top:${y}%;font-size:${s}cqw">${e}</span>`).join('')}
@@ -276,15 +277,15 @@ FZ.reg({
         if (!pending) return;
         pending.insertAdjacentHTML('beforeend', '<span class="tick ok">✅</span>'); pending.querySelector('.tick:not(.ok)')?.remove(); pending = null;
         pung.disabled = true; pung.classList.remove('pulse'); base.classList.remove('pulse'); found++; api.sfx('good');
-        if (found >= 3) api.finish(taps <= 5 ? 3 : taps <= 7 ? 2 : 1, 'You found all your friends! Pung! Pung! Pung!');
-        else api.msg('Pung! ✅ ' + (3 - found) + ' more to find…', true);
+        if (found >= nHide) api.finish(taps <= 5 ? 3 : taps <= 7 ? 2 : 1, 'You found all your friends! Pung! Pung! Pung!');
+        else api.msg('Pung! ✅ ' + (nHide - found) + ' more to find…', true);
       };
       api.msg('Close your eyes and count with me!', true);
       let i = 0;
       api.every(() => {
         if (i < 10) { num.textContent = i + 1; word.textContent = words[i]; FZ.say(words[i], false); api.sfx('pop'); i++; }
         else if (i === 10) { i++; num.textContent = '🔦'; word.textContent = 'Here I come!'; ready = true; me.innerHTML = FZ.me('stand'); api.msg('Ready or not, here I come! Tap a place to look. 🔍', true); }
-      }, 850);
+      }, FZ.lv(api.level, 1000, 850, 650));
     }
   }
 });
@@ -318,7 +319,7 @@ FZ.reg({
       const s = $('.sun', api.stage); if (s) s.style.left = (st.d > 0 ? '6%' : '84%');
     };
     chase(api, {
-      R: 7, C: 9, itEmoji: FZ.rival('run'), friendEmoji: FZ.pal(1, 'run'), shiftMs: 9000,
+      R: 7, C: 9, itEmoji: FZ.rival('run'), friendEmoji: FZ.pal(1, 'run'), shiftMs: FZ.lv(api.level, 12000, 9000, 6500),
       build(b, st) {
         st.d = 1; calc(st);
         trees.forEach(([r, c]) => b.cell(r, c).textContent = '🌳');
@@ -348,7 +349,7 @@ FZ.reg({
   how: [
     'You are the Mother Hen. Your 3 chicks follow in a line right behind you, holding on.',
     'The hawk (brown shirt) runs across the top and then DIVES down a column.',
-    'Move left and right to be under the hawk — if you block it, the chicks are safe! Block 7 dives.'
+    'Move left and right to be under the hawk — if you block it, the chicks are safe! Block 5 dives on level 1, 7 on level 2 and 9 on level 3.'
   ],
   tip: 'Chicks hold on firmly (but gently!) and the hen should mirror the hawk. Start slow so little ones can follow along.',
   start(api) {
@@ -367,9 +368,9 @@ FZ.reg({
     b.el.querySelectorAll('.ent').forEach(x => x.style.pointerEvents = 'none');
     api.msg('Stay under the hawk to protect your chicks!', true);
     async function round() {
-      if (dives >= 7) return end();
+      if (dives >= FZ.lv(api.level, 5, 7, 9)) return end();
       let nc; do { nc = rnd(0, C - 1); } while (nc === hawk.c);
-      hawk.set(1, nc); await api.sleep(1100);
+      hawk.set(1, nc); await api.sleep(FZ.lv(api.level, 1400, 1100, 850));
       warn.set(3, nc); warn.el.style.opacity = 1; api.sfx('pop'); await api.sleep(800);
       warn.el.style.opacity = 0; dives++;
       if (hen.c === hawk.c) { hawk.set(3, hawk.c); api.sfx('good'); api.msg('Blocked! Good job, Inahin!'); }

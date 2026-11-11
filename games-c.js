@@ -18,13 +18,14 @@ FZ.reg({
   how: [
     'Watch the sipa fall. When it is inside the yellow zone, tap the body part that the hint asks for!',
     'Foot 🦶, knee 🦵 or elbow 💪 — no hands allowed.',
-    'Make 8 kicks! You have 3 lives (💛). If the sipa touches the ground you lose one.'
+    'Make the number of kicks on the counter: 5, 8 or 12, depending on the level. You have 3 lives (💛). If the sipa touches the ground you lose one.'
   ],
   tip: 'Make a homemade sipa from a washer and a few strips of plastic bag. Start by letting your child kick it low, close to the ground.',
   start(api) {
     const parts = { foot: ['🦶', 'foot'], knee: ['🦵', 'knee'], elbow: ['💪', 'elbow'] };
+    const KICKS = FZ.lv(api.level, 5, 8, 12);            // kicks needed to finish this level
     const arena = h(`<div class="sipaarena"><div class="gnd"></div><div class="zone"></div><div class="kid">${FZ.me('stand')}</div><div class="sipa"><div class="strands"></div><div class="washer"></div></div></div>`);
-    const hud = h('<div class="sipa-cnt">Kicks: <span id="sk">0</span>/8 · <span id="sl">💛💛💛</span></div>');
+    const hud = h(`<div class="sipa-cnt">Kicks: <span id="sk">0</span>/${KICKS} · <span id="sl">💛💛💛</span></div>`);
     const btns = h(`<div class="partbtns">${Object.entries(parts).map(([k, v]) => `<button class="btn big" data-p="${k}">${v[0]} ${v[1][0].toUpperCase() + v[1].slice(1)}</button>`).join('')}</div>`);
     api.stage.append(hud); api.stage.append(arena); api.stage.append(btns);
     const sp = $('.sipa', arena), zone = $('.zone', arena);
@@ -47,7 +48,7 @@ FZ.reg({
       const kidEl = $('.kid', arena); kidEl.innerHTML = FZ.me(p === 'foot' ? 'kick' : p === 'knee' ? 'knee' : 'elbow'); setTimeout(() => { kidEl.innerHTML = FZ.me('stand'); }, 450);
       count++; $('#sk').textContent = count; vy = -Math.sqrt(2 * G * 0.55 * H * 0.55); x = clamp(x + rnd(-60, 60), 30, W - 30); api.sfx('good');
       const plus = h('<div class="plus">+1</div>'); plus.style.left = x + 'px'; plus.style.top = (y - 10) + 'px'; arena.append(plus); setTimeout(() => plus.remove(), 800);
-      if (count >= 8) { api.finish(lives, `You kicked the sipa ${count} times without hands!`); return; }
+      if (count >= KICKS) { api.finish(lives, `You kicked the sipa ${count} times without hands!`); return; }
       want = pick(Object.keys(parts)); hint();
     }
     $$('button', btns).forEach(b => b.addEventListener('pointerdown', e => { e.preventDefault(); kick(b.dataset.p); }));
@@ -101,7 +102,7 @@ FZ.reg({
     };
     tp.onclick = () => {
       if (!flying) return; const err = Math.abs(t - TP); long.classList.add('swing'); api.sfx('pop');
-      end(clamp(Math.round(10 - err * 32), 1, 10));
+      end(clamp(Math.round(10 - err * FZ.lv(api.level, 20, 32, 48)), 1, 10));
     };
     api.on(window, 'keydown', e => { if (e.code === 'Space') { if (!flying && !tk.disabled) tk.onclick(); else if (flying) tp.onclick(); } });
     reset();
@@ -158,7 +159,7 @@ FZ.reg({
     api.frame(dt => {
       balls.forEach(b => {
         if (b.out) return;
-        b.x += b.vx * dt; b.y += b.vy * dt; const f = Math.pow(0.32, dt); b.vx *= f; b.vy *= f;
+        b.x += b.vx * dt; b.y += b.vy * dt; const f = Math.pow(FZ.lv(api.level, 0.2, 0.32, 0.42), dt); b.vx *= f; b.vy *= f;
         const r = b.shooter ? mr * 1.2 : mr;
         if (b.x < r) { b.x = r; b.vx *= -.7; } if (b.x > W - r) { b.x = W - r; b.vx *= -.7; } if (b.y < r) { b.y = r; b.vy *= -.7; } if (b.y > H - r) { b.y = H - r; b.vy *= -.7; }
         if (Math.hypot(b.vx, b.vy) < 10) b.vx = b.vy = 0;
@@ -214,7 +215,7 @@ FZ.reg({
     api.on(window, 'keydown', e => { if (e.repeat && e.code !== 'Space' && e.key !== 'ArrowUp') return; if (e.code === 'Space' || e.key === 'ArrowUp') { e.preventDefault(); $('#pc').dispatchEvent(new Event('pointerdown', { cancelable: true })); } else if (e.key.toLowerCase() === 's') $('#ps').click(); else if (e.key.toLowerCase() === 'f') $('#pf').click(); });
     $('#ps').onclick = () => { if (sandUses <= 0) return; sandUses--; sand = 7; api.sfx('pop'); api.msg(`Buhangin on your hands! 🏖️ (${sandUses} left)`, true); upd(); };
     $('#pf').onclick = () => { if (!friends) return; friends--; p = Math.min(1, p + 0.16); api.sfx('good'); api.msg('Your friends lifted you up! 👫', true); $('#pf').disabled = true; upd(); if (p >= 1) { if (!t0) t0 = performance.now(); win(); } };
-    api.every(() => { if (!t0 || done) return; p = Math.max(0.03, p - (sand > 0 ? 0.005 : 0.017)); if (sand > 0) sand -= 0.45; upd(); }, 450);
+    api.every(() => { if (!t0 || done) return; p = Math.max(0.03, p - (sand > 0 ? 0.005 : FZ.lv(api.level, 0.011, 0.017, 0.024))); if (sand > 0) sand -= 0.45; upd(); }, 450);
     api.msg('Tap Akyat! again and again to climb! The grease makes you slip!', true); upd();
   }
 });
@@ -258,7 +259,8 @@ FZ.reg({
 
     function begin(opp) {
       const OPP = opp.name, human = opp.level === 'human';
-      const bd = [7, 7, 7, 7, 7, 7, 7, 0, 7, 7, 7, 7, 7, 7, 7, 0];   // 0-6 you, 7 your bahay, 8-14 top row, 15 their bahay
+      const S0 = FZ.lv(api.level, 4, 5, 7);                          // shells per pit: fewer on level 1
+      const bd = [S0, S0, S0, S0, S0, S0, S0, 0, S0, S0, S0, S0, S0, S0, S0, 0];   // 0-6 you, 7 your bahay, 8-14 top row, 15 their bahay
       const wrap = h('<div class="sungka"></div>'); api.stage.append(wrap);
       const els = Array(16);
       function mk(i, r, c, cls) { const e = h(`<div class="pit ${cls}" style="grid-row:${r};grid-column:${c}"></div>`); e.dataset.i = i; wrap.append(e); els[i] = e; return e; }
@@ -367,7 +369,8 @@ FZ.reg({
   tip: 'Make a board from cardboard and use two kinds of bottle caps. Let your child play with fewer pieces (6 each) to learn the moves first.',
   start(api) {
     const N = 8; let bd = Array.from({ length: N }, () => Array(N).fill(''));
-    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if ((r + c) % 2 === 1) { if (r < 3) bd[r][c] = 'r'; else if (r > 4) bd[r][c] = 'b'; }
+    const ROWS = FZ.lv(api.level, 2, 3, 3);                     // rows of pieces each: 2 on level 1 (easier), 3 after that
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if ((r + c) % 2 === 1) { if (r < ROWS) bd[r][c] = 'r'; else if (r > N - 1 - ROWS) bd[r][c] = 'b'; }
     const el = h('<div class="dama"></div>'); api.stage.append(el);
     const info = h('<div class="side"></div>'); api.stage.append(info);
     let sel = null, turn = 'b', locked = null, over = false, targets = [];
@@ -430,7 +433,7 @@ FZ.reg({
       await api.sleep(800); if (over) return;
       let jumps = allJumps('r'), pickM;
       if (jumps.length) { const j = pick(jumps); pickM = { from: { r: j.r, c: j.c }, m: pick(j.j) }; }
-      else { const all = []; for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if (bd[r][c] && side(bd[r][c]) === 'r') movesOf(r, c).forEach(m => all.push({ from: { r, c }, m })); if (!all.length) { turn = 'b'; checkEnd(); return; } pickM = pick(all); }
+      else { const all = []; for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if (bd[r][c] && side(bd[r][c]) === 'r') movesOf(r, c).forEach(m => all.push({ from: { r, c }, m })); if (!all.length) { turn = 'b'; checkEnd(); return; } pickM = api.level >= 3 ? all.reduce((a, b) => (b.m.r > a.m.r ? b : a)) : pick(all); }   // level 3: red advances its furthest piece
       let from = pickM.from, m = pickM.m, more;
       while (true) {
         more = doMove(from, m); draw(); await api.sleep(550);

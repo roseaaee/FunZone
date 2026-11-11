@@ -14,6 +14,16 @@ FZ.UI = {
   cat_jump:     { en: 'Jumping', tl: 'Talon' },
   cat_skill:    { en: 'Skills', tl: 'Husay' },
   cat_board:    { en: 'Board', tl: 'Board' },
+  cat_bugtong:  { en: 'Bugtong', tl: 'Bugtong' },
+  cat_riddles:  { en: 'Riddles', tl: 'Riddles' },
+  cat_reading:  { en: 'Reading Area', tl: 'Lugar sa Pagbasa' },
+  cat_coloring: { en: 'Coloring', tl: 'Pangkukulay' },
+  lvl_title:    { en: 'Level', tl: 'Antas' },
+  lvl_locked:   { en: 'Locked: win the level before this one', tl: 'Naka-lock: manalo muna sa nakaraang antas' },
+  lvl_done:     { en: 'Level', tl: 'Antas' },
+  btn_continue: { en: '▶ Continue', tl: '▶ Magpatuloy' },
+  btn_next:     { en: '⏭ Next game', tl: '⏭ Susunod na laro' },
+  btn_back:     { en: '🏠 Back', tl: '🏠 Bumalik' },
   mascot:       { en: ['Hello! I\'m Kabaw. Pick a game to play!', 'Let\'s play like the kids of long ago!', 'Which game do you want to try today?', 'Come on, let\'s play! 🎉'],
                   tl: ['Kumusta! Ako si Kabaw. Pumili ng laro!', 'Laro tayo na parang mga bata noong unang panahon!', 'Anong laro ang gusto mong subukan ngayon?', 'Tara, laro tayo! 🎉'] },
   choose_me:    { en: 'My player:', tl: 'Ang player ko:' },
@@ -37,7 +47,7 @@ FZ.UI = {
   say_great:    { en: 'Great job!', tl: 'Magaling!' },
   read_intro:   { en: ['In real life.', 'In this game.'], tl: ['Sa totoong buhay.', 'Sa larong ito.'] },
   parents_only: { en: 'Parents only', tl: 'Para sa magulang' },
-  enter_pin:    { en: 'Enter your 4-digit PIN', tl: 'Ilagay ang 4-digit na PIN' },
+  enter_pin:    { en: 'Enter your 4-digit PIN (default: 1234)', tl: 'Ilagay ang 4-digit na PIN (default: 1234)' },
   cancel:       { en: 'Cancel', tl: 'Kanselahin' },
   unlock_title: { en: 'Grown-up unlock', tl: 'Para sa nakatatanda' },
   parent_mode:  { en: '👨‍👩‍👧 Parent Mode', tl: '👨‍👩‍👧 Pang-magulang' },
@@ -115,7 +125,12 @@ FZ.UI = {
   voice_no_tl:  { en: 'No Filipino voice found on this device. A similar voice is used for now. Install a Filipino (fil-PH) voice in your device\'s text-to-speech settings for the best result.', tl: 'Walang Filipino na boses sa device na ito. Pansamantalang gagamit ng katulad na boses. Mag-install ng Filipino (fil-PH) na boses sa text-to-speech settings para mas maganda.' }
 };
 FZ.t = (k, ...a) => { const e = FZ.UI[k]; if (!e) return k; const v = e[FZ.lang] !== undefined ? e[FZ.lang] : e.en; return typeof v === 'function' ? v(...a) : v; };
-FZ.g = (g, f) => (FZ.lang === 'tl' && FZ.TLG[g.id] && FZ.TLG[g.id][f]) || g[f];
+/* a game field is either a Tagalog entry in FZ.TLG, or a { en, tl } object, or plain English */
+FZ.g = (g, f) => {
+  if (FZ.lang === 'tl' && FZ.TLG[g.id] && FZ.TLG[g.id][f]) return FZ.TLG[g.id][f];
+  const v = g[f];
+  return v && typeof v === 'object' && !Array.isArray(v) ? (v[FZ.lang] || v.en) : v;
+};
 
 /* ---------- game descriptions in Tagalog ---------- */
 FZ.TLG = {

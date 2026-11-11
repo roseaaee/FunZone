@@ -765,3 +765,46 @@ button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visi
 .sw.on{outline:4px solid var(--purple);outline-offset:3px}
 /* the dress-up page is a scrolling column: the preview and parts must not shrink */
 #dress > * { flex: none; }
+
+/* ===== levels, result buttons, new games (quiz + coloring) ===== */
+.levels{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:4px 0 12px}
+.lvl{background:#fff;border:0;border-radius:999px;padding:10px 18px;min-height:44px;font:800 18px var(--font);color:var(--ink);box-shadow:0 4px 0 rgba(0,0,0,.12);cursor:pointer}
+.lvl.active{background:var(--orange);color:#fff;transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.lvl:disabled{background:#ece9f5;color:var(--muted);cursor:not-allowed;box-shadow:none}
+.toast .tbtns{flex-wrap:wrap;justify-content:flex-end}
+.toast .tbtn{border:0;border-radius:999px;padding:9px 14px;min-height:44px;font:800 15px var(--font);color:#2b2140;box-shadow:0 4px 0 rgba(0,0,0,.14);cursor:pointer;white-space:nowrap}
+.toast .tbtn.go{background:#8ce99a;box-shadow:0 4px 0 #4fae6b}
+.toast .tbtn.next{background:#74c0fc;box-shadow:0 4px 0 #3b8fd0}
+.toast .tbtn.home{background:#ffd8a8;box-shadow:0 4px 0 #d9a05b}
+@keyframes wig{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+.quiz{position:relative;width:min(94vw,600px);margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.qprog{font-weight:800;color:var(--muted);font-size:18px}
+.qart{font-size:min(28vw,120px);line-height:1.1}
+.qart[hidden]{display:none}
+.qtext{margin:0;font-size:clamp(19px,4.4vw,27px);font-weight:800;line-height:1.3;color:var(--ink);background:#fff;border-radius:22px;padding:14px 64px 14px 18px;box-shadow:0 6px 0 rgba(0,0,0,.1)}
+.quiz .qsay{position:absolute;top:0;right:0;width:50px;height:50px;font-size:24px}
+.qopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;width:100%}
+.qopt{position:relative;background:#fff;border:0;border-radius:22px;padding:22px 8px 12px;min-height:118px;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font:800 18px var(--font);color:var(--ink)}
+.qopt:active{transform:translateY(3px)}
+.qopt .qe{font-size:44px;line-height:1}
+.qopt .qe:empty{display:none}
+.qopt kbd{position:absolute;top:6px;left:9px;font-size:12px;color:var(--muted)}
+.qopt.ok{background:#b2f2bb;box-shadow:0 6px 0 #5fbf78}
+.qopt.no{background:#ffc9c9;animation:wig .35s}
+
+.cpal{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:6px 0 12px}
+.cswatch{width:58px;height:58px;border-radius:50%;border:4px solid #fff;background:var(--sw);box-shadow:0 5px 0 rgba(0,0,0,.18);font:900 20px var(--font);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5);cursor:pointer}
+.cswatch.on{outline:4px solid var(--ink);outline-offset:3px;transform:translateY(2px)}
+.cgrid{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:3px;width:min(92vw,400px);margin:0 auto;background:#fff;padding:6px;border-radius:18px;box-shadow:0 7px 0 rgba(0,0,0,.14)}
+.csq{aspect-ratio:1;border:0;border-radius:6px;background:#fff;color:#3b2f63;font:800 clamp(10px,2.6vw,14px) var(--font);padding:0;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);min-width:0}
+.csq.done{cursor:default;color:transparent;box-shadow:none}
+.csq.wiggle{animation:wig .35s}
+.cprog{font-weight:800;color:var(--muted);font-size:18px;text-align:center;margin-top:12px}
+/* phone: the result banner stacks its text above its buttons so three buttons fit */
+@media (max-width:520px){
+  .toast{flex-wrap:wrap;justify-content:center;gap:6px 8px}
+  .toast .tmid{flex:1 1 100%}
+  .toast .tbtns{flex:1 1 100%;justify-content:center}
+  .toast .tbtn{font-size:14px;padding:8px 12px}
+}

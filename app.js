@@ -66,9 +66,14 @@ function goHome() { destroyGame(); renderHome(); show('home'); }
 
 /* ---------------- INTRO (how it is played for real + in the game) ---------------- */
 const bullets = (arr, icon) => arr.map((t, i) => `<li data-i="${icon[i % icon.length]}">${t}</li>`).join('');
+/* levels: the highest level this kid has unlocked for a game (level 1 is open from the start) */
+function unlockedLevel(g) { return clamp((FZ.progress[g.id] || {}).unlocked || 1, 1, FZ.LEVELS); }
+let introLevel = 1;
 function openIntro(g) {
   destroyGame(); curGame = g;
   const sc = $('#intro'), TUT = FZ.tut && FZ.tut[g.id];
+  const unl = unlockedLevel(g); introLevel = unl;
+  const levelChips = Array.from({ length: FZ.LEVELS }, (_, i) => i + 1).map(n => `<button type="button" class="lvl ${n === introLevel ? 'active' : ''}" data-l="${n}" ${n > unl ? `disabled aria-label="${FZ.t('lvl_locked')}"` : ''}>${n > unl ? '🔒' : '⭐'.repeat(n)} ${FZ.t('lvl_title')} ${n}</button>`).join('');
   sc.innerHTML = `
     <div class="ihead">
       <button class="round" id="iBack" aria-label="${FZ.t('back')}">⬅️</button>
@@ -77,6 +82,7 @@ function openIntro(g) {
     </div>
     <p class="tagline">${FZ.g(g, 'tag')}</p>
     <div class="meta"><span class="chip">👥 ${FZ.g(g, 'players')}</span><span class="chip">🧰 ${FZ.g(g, 'props')}</span></div>
+    <div class="levels" role="group" aria-label="${FZ.t('lvl_title')}">${levelChips}</div>
     ${TUT ? `<section class="tutor">
       <div class="tcols">
         <article class="tcol real"><h3>${FZ.t('in_real')}</h3><div class="tpic" id="tsReal"></div><p class="tcap" id="tcReal"></p></article>
@@ -101,8 +107,9 @@ function openIntro(g) {
     </details>`;
   if (TUT) runTutorial(TUT);
   $('#iBack').onclick = goHome;
+  $$('#intro .lvl').forEach(b => b.onclick = () => { if (b.disabled) return; introLevel = +b.dataset.l; $$('#intro .lvl').forEach(x => x.classList.toggle('active', x === b)); FZ.sfx('pop'); });
   $('#iRead').onclick = () => { const [a, b] = FZ.t('read_intro'); const cap = s => s.c[FZ.lang === 'tl' ? 1 : 0]; FZ.say(TUT ? [g.name, FZ.g(g, 'tag'), a, ...TUT.real.map(cap), b, ...TUT.game.map(cap)].join('. ') : [g.name, FZ.g(g, 'tag'), a, ...FZ.g(g, 'real'), b, ...FZ.g(g, 'how')].join('. '), true); };
-  $('#iPlay').onclick = () => { try { window.speechSynthesis.cancel(); } catch (e) { } FZ.sfx('good'); startGame(g); };
+  $('#iPlay').onclick = () => { try { window.speechSynthesis.cancel(); } catch (e) { } FZ.sfx('good'); startGame(g, introLevel); };
   show('intro');
   try { $('#iPlay').focus({ preventScroll: true }); } catch (e) { }          // keyboard users: Enter starts the game
 }
@@ -128,11 +135,11 @@ function runTutorial(T) {
 }
 
 /* ---------------- PLAY ---------------- */
-function makeApi(def) {
+function makeApi(def, level) {
   const T = [], I = [], L = [], F = []; let dead = false;
   const stage = $('#stage'); stage.innerHTML = '';
   const api = {
-    def, stage,
+    def, stage, level: level || 1,
     get dead() { return dead; },
     later(f, ms) { const id = setTimeout(() => { if (!dead) f(); }, ms); T.push(id); return id; },
     every(f, ms) { const id = setInterval(() => { if (!dead) f(); }, ms); I.push(id); return id; },
@@ -151,10 +158,11 @@ function makeApi(def) {
       const p = FZ.progress[def.id] || { stars: 0, plays: 0 };
       const newBadge = stars === 3 && !p.badge;
       p.plays++; p.stars = Math.max(p.stars, stars); if (newBadge) p.badge = 1;
+      p.unlocked = Math.max(p.unlocked || 1, Math.min(FZ.LEVELS, api.level + 1));   // winning opens the next level
       FZ.progress[def.id] = p; FZ.saveProgress();
       api.freeze();                                   // the game stops here, so kids are not interrupted by more moves
       newBadge ? FZ.sfx('win') : FZ.sfx('coin');
-      showResult(def, stars, text, newBadge);
+      showResult(def, stars, text, newBadge, api.level);
     },
     freeze() { dead = true; T.forEach(clearTimeout); I.forEach(clearInterval); F.forEach(s => s.on = false); L.forEach(([t, e, f, o]) => t.removeEventListener(e, f, o)); },
     destroy() { api.freeze(); try { speechSynthesis.cancel(); } catch (e) { } }
@@ -168,26 +176,29 @@ FZ.keys = {
   patintero: [[ARROWS, '🏃']], agawan: [[ARROWS, '🏃']], langit: [[ARROWS, '🏃']], araw: [[ARROWS, '🏃']], bakod: [[ARROWS, '🏃']],
   lawin: [[['←', '→'], '🐔']], taguan: [[['Enter'], '🏁']], tinik: [[['Space'], '🦘']], baka: [[['Space'], '🦘⏳']], garter: [[['←', '↑', '→'], '🦘']],
   kadang: [[['←', '→'], '🥥']], tumbang: [[['Space'], '🩴']], sipa: [[['F', 'K', 'E'], '🦶🦵💪']],
-  tsato: [[['Space'], '🏏']], palosebo: [[['Space'], '🤲'], [['S'], '🏖️'], [['F'], '👫']], sungka: [[['1', '…', '7'], '🐚']]
+  tsato: [[['Space'], '🏏']], palosebo: [[['Space'], '🤲'], [['S'], '🏖️'], [['F'], '👫']], sungka: [[['1', '…', '7'], '🐚']],
+  hulaan: [[['1', '2', '3'], '🧩']], riddle: [[['1', '2', '3', '4'], '💡']], basa: [[['1', '2', '3', '4'], '📖']], kulay: [[['1', '…', '8'], '🎨']]
 };
 function renderKeyHint(g) {
   const el = $('#keyhint'); if (!el) return;
   const groups = (FZ.keys[g.id] || []).concat([[['Esc'], '⬅️']]);
   el.innerHTML = `<span class="kg">⌨️</span>` + groups.map(([ks, ic]) => `<span class="kg">${ks.map(k => `<kbd>${k}</kbd>`).join('')}<span class="ki">${ic}</span></span>`).join('');
 }
-function startGame(g) {
+function startGame(g, level) {
   destroyGame(); curGame = g; renderKeyHint(g);
-  $('#playTitle').textContent = g.emoji + ' ' + g.name;
+  $('#playTitle').textContent = g.emoji + ' ' + g.name + ' · ' + FZ.t('lvl_title') + ' ' + (level || 1);
   $('#hint').textContent = '';
   show('play');
-  curApi = makeApi(g);
+  curApi = makeApi(g, level || 1);
   try { g.start(curApi); } catch (e) { console.error(e); curApi.msg('Oops, something went wrong. Try another game!'); }
 }
 /* ---------------- REWARD BANNER (replaces the full-screen popup) ---------------- */
 let toastTimer = null;
 function hideToast() { const t = $('#toast'); if (!t) return; clearTimeout(toastTimer); t.classList.add('hidden'); t.classList.remove('gone'); }
-function showResult(g, stars, text, badge) {
-  const t = $('#toast'), total = totalStars();
+/* the game after this one in the list (wraps around at the end) */
+function nextGame(g) { const i = FZ.games.indexOf(g); return FZ.games[(i + 1) % FZ.games.length]; }
+function showResult(g, stars, text, badge, level) {
+  const t = $('#toast'), total = totalStars(), hasNextLevel = level < FZ.LEVELS;
   t.innerHTML = `<div class="tstars" aria-label="${stars} stars">${[0, 1, 2].map(i => i < stars ? '⭐' : '☆').join('')}</div>
     <div class="tmid">
       <div class="ttext">${text ? FZ.tr(text) : FZ.t('great_play', g.name)}</div>
@@ -195,15 +206,17 @@ function showResult(g, stars, text, badge) {
       <div class="tcoins">⭐ ${FZ.t('total_short')}: <b>${total}</b></div>
     </div>
     <div class="tbtns">
-      <button class="round small" id="tAgain" aria-label="${FZ.t('again')}">🔁</button>
-      <button class="round small" id="tHome" aria-label="${FZ.t('more')}">🏠</button>
+      ${hasNextLevel ? `<button class="tbtn go" id="tCont">${FZ.t('btn_continue')}</button>` : ''}
+      <button class="tbtn next" id="tNext">${FZ.t('btn_next')}</button>
+      <button class="tbtn home" id="tBack">${FZ.t('btn_back')}</button>
     </div>`;
   t.classList.remove('hidden', 'gone');
   if ($('#totalStars')) $('#totalStars').textContent = total;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.classList.add('gone'); setTimeout(hideToast, 450); }, 5200);
-  $('#tAgain').onclick = () => startGame(g);
-  $('#tHome').onclick = () => goHome();
+  toastTimer = setTimeout(() => { t.classList.add('gone'); setTimeout(hideToast, 450); }, 9000);
+  if (hasNextLevel) $('#tCont').onclick = () => startGame(g, level + 1);
+  $('#tNext').onclick = () => { hideToast(); openIntro(nextGame(g)); };
+  $('#tBack').onclick = () => goHome();
   t.onclick = e => { if (!e.target.closest('button')) hideToast(); };
   FZ.say(FZ.t('say_great'));
 }
@@ -292,7 +305,7 @@ function renderParent() {
       <div class="prow2"><span class="n">${FZ.t('play_time')}</span><b>${Math.round(playedSec / 60)} ${FZ.t('min')}</b></div></div>
     <div class="pcard"><h3>${FZ.t('each_game')}</h3>${FZ.games.map(g => {
       const p = FZ.progress[g.id] || { stars: 0, plays: 0 };
-      return `<div class="prow2"><span style="font-size:28px">${g.emoji}</span><span class="n">${g.name}</span><span>${'⭐'.repeat(p.stars)}${'☆'.repeat(3 - p.stars)}</span><span class="muted">${FZ.t('times_played', p.plays)}</span></div>`;
+      return `<div class="prow2"><span style="font-size:28px">${g.emoji}</span><span class="n">${g.name}</span><span>${'⭐'.repeat(p.stars)}${'☆'.repeat(3 - p.stars)}</span><span class="muted">${FZ.t('times_played', p.plays)} · ${FZ.t('lvl_done')} ${unlockedLevel(g)}/${FZ.LEVELS}</span></div>`;
     }).join('')}</div>`;
 
   /* settings */

@@ -62,7 +62,7 @@ function jumpGame(api, cfg) {
   api.frame(dt => {
     if (busy) return;
     if (cfg.mode === 'hold') val = holding ? Math.min(1, (performance.now() - hold0) / 1300) : 0;
-    else { val += dir * dt * (0.75 + lv * 0.12); if (val >= 1) { val = 1; dir = -1; } if (val <= 0) { val = 0; dir = 1; } }
+    else { val += dir * dt * (FZ.lv(api.level, 0.55, 0.75, 0.95) + lv * 0.12); if (val >= 1) { val = 1; dir = -1; } if (val <= 0) { val = 0; dir = 1; } }
     fill.style.width = (val * 100) + '%'; mark.style.left = (val * 100) + '%';
   });
   showLevel();
@@ -82,14 +82,14 @@ FZ.reg({
   how: [
     'Watch the 🔴 marker slide back and forth on the bar.',
     'Tap <b>Talon!</b> when the marker is past the green ✅ line — that is high enough!',
-    'Each level the thorn gets taller 🦶✋✋. Clear 5 levels!'
+    'Each level the thorn gets taller 🦶✋✋. Level 1 clears 3 heights, level 3 clears all 5!'
   ],
   tip: 'Start with just feet, then add one hand at a time. Always cushion the sitters\' hands: gentle jumps only, and a soft grassy spot is best.',
   start(api) {
     const names = ['Paa (feet)', 'Isang kamay (1 hand)', 'Dalawang kamay (2 hands)', 'Tatlong kamay (3 hands)', 'Apat na kamay (4 hands)'];
     jumpGame(api, {
       mode: 'meter',
-      levels: [1, 2, 3, 4, 5].map((p, i) => ({ p, h: FZ.TINIK_U[i] / 112 * 0.4, need: 0.3 + 0.12 * i, name: names[i] })),
+      levels: [1, 2, 3, 4, 5].map((p, i) => ({ p, h: FZ.TINIK_U[i] / 112 * 0.4, need: 0.3 + 0.12 * i, name: names[i] })).slice(0, FZ.lv(api.level, 3, 4, 5)),
       draw(el, L, scene) {                       // the two friends sit; the pile of feet and hands comes from THEIR arms and legs
         const u = scene.clientHeight * 0.4 / 112;
         el.innerHTML = `<div class="fig" style="height:${63 * u}px">${FZ.tinikFig(L.p)}</div>`;
@@ -115,14 +115,14 @@ FZ.reg({
   how: [
     'Press and HOLD the jump button — the bar fills up with power!',
     'Let go when the bar is past the green ✅ line so you leap high enough.',
-    'Your bending friend gets taller each level. Clear all 4 levels!'
+    'Your bending friend gets taller each level. Level 1 has 2 heights, level 3 has all 4!'
   ],
   tip: 'The cow should tuck their head in and keep their back flat. Teach kids to run first, then push off with both feet.',
   start(api) {
     const names = ['Kamay sa lupa (hands on ground)', 'Kamay sa paa (hands on feet)', 'Kamay sa tuhod (hands on knees)', 'Kamay sa hita (hands on thighs)'];
     jumpGame(api, {
       mode: 'hold',
-      levels: [1, 2, 3, 4].map((lvl, i) => ({ lvl, h: FZ.BAKA_U[i] / 112 * 0.4, need: 0.36 + 0.15 * i, name: names[i] })),
+      levels: [1, 2, 3, 4].map((lvl, i) => ({ lvl, h: FZ.BAKA_U[i] / 112 * 0.4, need: 0.36 + 0.15 * i, name: names[i] })).slice(0, FZ.lv(api.level, 2, 3, 4)),
       draw(el, L, scene) {                       // a real kid bends: hands on the ground, then feet, knees, thighs
         const u = scene.clientHeight * 0.4 / 112;
         el.innerHTML = `<div class="fig" style="height:${80 * u}px;margin-bottom:${-4 * u}px">${FZ.bakaFig(L.lvl)}</div>`;
@@ -152,7 +152,8 @@ FZ.reg({
   ],
   tip: 'Make a loop from rubber bands tied together. Kids love singing a rhythm while they hop — it helps them remember the pattern!',
   start(api) {
-    const levels = [{ h: 0.07, n: 'Ankle (bukong-bukong)' }, { h: 0.17, n: 'Knee (tuhod)' }, { h: 0.28, n: 'Waist (baywang)' }, { h: 0.39, n: 'Chest (dibdib)' }, { h: 0.5, n: 'Head (ulo)' }];
+    const allLevels = [{ h: 0.07, n: 'Ankle (bukong-bukong)' }, { h: 0.17, n: 'Knee (tuhod)' }, { h: 0.28, n: 'Waist (baywang)' }, { h: 0.39, n: 'Chest (dibdib)' }, { h: 0.5, n: 'Head (ulo)' }];
+    const levels = allLevels.slice(0, FZ.lv(api.level, 3, 4, 5));      // level 1 stops at the waist, level 3 goes all the way to the head
     const scene = h(`<div class="jscene"><div class="jground"></div><div class="holder" style="left:3%">${FZ.pal(1, 'wide')}</div><div class="holder" style="right:3%">${FZ.pal(2, 'wide', { flip: true })}</div><div class="garter"></div><div class="jumper" style="left:calc(50% - var(--sh) * .136)">${FZ.me('stand')}</div><div class="jlabel"></div></div>`);
     api.stage.append(scene);
     const rope = $('.garter', scene), jm = $('.jumper', scene), label = $('.jlabel', scene);
@@ -160,9 +161,9 @@ FZ.reg({
     api.stage.append(seqBox); api.stage.append(btns);
     const SYM = { L: '⬅️🦶', R: '🦶➡️', U: '⬆️🦘' };
     let lv = 0, idx = 0, seq = [], mistakes = 0, busy = false;
-    const place = () => { rope.style.bottom = ((0.16 + levels[lv].h) * scene.clientHeight) + 'px'; label.textContent = `Level ${lv + 1}/5 · ${levels[lv].n}`; };
+    const place = () => { rope.style.bottom = ((0.16 + levels[lv].h) * scene.clientHeight) + 'px'; label.textContent = `Level ${lv + 1}/${levels.length} · ${levels[lv].n}`; };
     function newSeq() {
-      const len = 3 + (lv >= 2 ? 1 : 0) + (lv >= 4 ? 1 : 0);
+      const len = FZ.lv(api.level, 2, 3, 4) + (lv >= 2 ? 1 : 0) + (lv >= 4 ? 1 : 0);
       seq = Array.from({ length: len - 1 }, () => pick(['L', 'R'])).concat('U'); idx = 0; draw();
       api.msg('Copy the pattern: tap the buttons in order!', true);
     }
@@ -215,7 +216,7 @@ FZ.reg({
     }
     api.stage.append(board);
     const sq = id => $(`.sq[data-id="${id}"]`, board);
-    const rounds = [1, 4]; // stone goes to step index 1 (box 2) then index 4 (boxes 6-7)
+    const rounds = FZ.lv(api.level, [1], [1, 4], [1, 4, 3]); // stone rounds: box 2, then boxes 6-7, then box 5 (level 3 only)
     let round = 0, queue = [], need = new Set(), mistakes = 0, stone = 0;
     const stoneIds = () => S[stone];
     function clear() { $$('.sq', board).forEach(s => { s.classList.remove('target', 'done', 'stone'); s.innerHTML = s.dataset.id === 'L' ? '🌈 Langit' : s.dataset.id; }); }
@@ -278,8 +279,8 @@ FZ.reg({
   ],
   tip: 'Use thick rope and sturdy shells; start on grass. Count "kaliwa, kanan" out loud together for the rhythm!',
   start(api) {
-    const STEPS = 22;
-    const racers = [{ e: FZ.me('run'), p: 0, me: true }, { e: FZ.pal(0, 'run'), p: 0, sp: 540 }, { e: FZ.pal(1, 'run'), p: 0, sp: 640 }];
+    const STEPS = FZ.lv(api.level, 16, 22, 28);
+    const racers = [{ e: FZ.me('run'), p: 0, me: true }, { e: FZ.pal(0, 'run'), p: 0, sp: FZ.lv(api.level, 800, 540, 420) }, { e: FZ.pal(1, 'run'), p: 0, sp: FZ.lv(api.level, 920, 640, 500) }];
     const wrap = h('<div class="race"></div>');
     racers.forEach(r => { const l = h(`<div class="lane"><div class="rc">${r.e}<span class="coco">🥥</span></div></div>`); r.el = $('.rc', l); wrap.append(l); });
     api.stage.append(wrap);
@@ -335,7 +336,7 @@ FZ.reg({
     const home = () => { slip.style.left = '64%'; slip.style.top = '86%'; };
     home();
     let state = 'aim', x = 0, d = 1, tries = 0, saved = 0, taps = 0;
-    api.frame(dt => { if (state !== 'aim') return; x += d * dt * 1.0; if (x >= 1) { x = 1; d = -1; } if (x <= 0) { x = 0; d = 1; } cur.style.left = (x * 100) + '%'; });
+    api.frame(dt => { if (state !== 'aim') return; x += d * dt * FZ.lv(api.level, 0.8, 1.0, 1.3); if (x >= 1) { x = 1; d = -1; } if (x <= 0) { x = 0; d = 1; } cur.style.left = (x * 100) + '%'; });
     function nextTry() {
       if (tries >= 3) return api.finish(saved === 0 ? 1 : saved === 1 ? 2 : 3, saved ? `You rescued your tsinelas ${saved} time${saved > 1 ? 's' : ''}!` : 'Nice throws! Try again to rescue your slipper.');
       can.classList.remove('down'); home(); tayaEm.style.left = '68%'; tayaEm.style.top = '30%'; bars.style.display = 'none'; aim.style.display = ''; throwBtn.textContent = '🩴 Hagis!'; state = 'aim';
@@ -343,7 +344,7 @@ FZ.reg({
     }
     function doThrow() {
       if (state !== 'aim') return; state = 'busy'; tries++;
-      const hit = Math.abs(x - 0.5) <= 0.11; api.sfx('jump');
+      const hit = Math.abs(x - 0.5) <= FZ.lv(api.level, 0.15, 0.11, 0.08); api.sfx('jump');
       if (hit) { slip.style.left = '50%'; slip.style.top = '42%'; }
       else { slip.style.left = (x < .5 ? 22 : 78) + '%'; slip.style.top = '36%'; }
       api.later(() => {
@@ -353,7 +354,7 @@ FZ.reg({
     }
     function rush() {
       state = 'rush'; taps = 0; aim.style.display = 'none'; bars.style.display = ''; mine.style.width = '0'; taya.style.width = '0';
-      throwBtn.textContent = '🏃 Takbo!'; const t0 = performance.now(), TOTAL = 3800;
+      throwBtn.textContent = '🏃 Takbo!'; const t0 = performance.now(), TOTAL = FZ.lv(api.level, 4800, 3800, 3000);
       tayaEm.style.left = '56%'; tayaEm.style.top = '40%';
       api.frame(() => {
         if (state !== 'rush') return false;

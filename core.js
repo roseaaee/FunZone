@@ -9,7 +9,11 @@ const FZ = {
     { id: 'tag',   key: 'cat_tag',   emoji: '🏃' },
     { id: 'jump',  key: 'cat_jump',  emoji: '🦘' },
     { id: 'skill', key: 'cat_skill', emoji: '🎯' },
-    { id: 'board', key: 'cat_board', emoji: '🎲' }
+    { id: 'board', key: 'cat_board', emoji: '🎲' },
+    { id: 'bugtong', key: 'cat_bugtong', emoji: '🧩' },
+    { id: 'riddles', key: 'cat_riddles', emoji: '💡' },
+    { id: 'reading', key: 'cat_reading', emoji: '📖' },
+    { id: 'coloring', key: 'cat_coloring', emoji: '🎨' }
   ]
 };
 const $ = (s, r = document) => r.querySelector(s);
@@ -20,6 +24,9 @@ const pick = a => a[Math.floor(Math.random() * a.length)];
 const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = rnd(0, i);[a[i], a[j]] = [a[j], a[i]]; } return a; };
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const man = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c);
+/* level picker: FZ.lv(level, easy, medium, hard) -> the value for level 1, 2 or 3 */
+FZ.LEVELS = 3;
+FZ.lv = (level, a, b, c) => [a, b, c][(level || 1) - 1];
 
 /* ---------- storage ---------- */
 const store = {
