@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>FunZone</title>
+<meta name="description" content="Filipino games, storybooks and coloring for preschoolers, in English and Tagalog. Free, no ads, nothing collected.">
+<meta name="theme-color" content="#845ef7">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Pretty moving background -->
+<div class="sky" aria-hidden="true">
+  <span class="cloud c1">☁️</span><span class="cloud c2">☁️</span><span class="cloud c3">☁️</span>
+  <span class="sunny">🌞</span>
+  <span class="hill"></span>
+</div>
+
+<main id="app">
+
+  <!-- ============ FIRST-TIME LANGUAGE CHOICE ============ -->
+  <section id="lang" class="screen">
+    <div class="langbox">
+      <span class="mascot kidmascot" id="langMascot" aria-hidden="true"></span>
+      <h2>Pumili ng wika<br><small>Choose your language</small></h2>
+      <div class="langbtns">
+        <button class="btn tl" data-lang="tl">🇵🇭 Tagalog</button>
+        <button class="btn en" data-lang="en">🇺🇸 English</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHILD MODE: HOME ============ -->
+  <section id="home" class="screen active">
+    <header class="topbar">
+      <h1 class="logo" aria-label="FunZone">
+        <span>F</span><span>u</span><span>n</span><span>Z</span><span>o</span><span>n</span><span>e</span>
+      </h1>
+      <div class="top-right">
+        <div class="langsw" role="group" aria-label="Language">
+          <button data-lang="en">EN</button><button data-lang="tl">TL</button>
+        </div>
+        <button id="btnParent" class="chip parent-btn" data-i18n="parents">🔒 Parents</button>
+      </div>
+    </header>
+
+    <!-- step 1: pick a category first -->
+    <div id="zoneGrid" class="zones"></div>
+  </section>
+
+  <!-- ============ CHILD MODE: GAMES LIST ============ -->
+  <section id="games" class="screen">
+    <header class="playbar">
+      <button id="gamesBack" class="round" data-i18n-aria="back" aria-label="Back">⬅️</button>
+      <h2 data-i18n="zone_games">🎮 Games</h2>
+      <span style="width:58px"></span>
+    </header>
+    <!-- Tala the guide, and the player kids use in every game -->
+    <div class="mascot-row">
+      <div class="mascot kidmascot" id="gMascot" aria-hidden="true"></div>
+      <div class="bubble" id="mascotSay"></div>
+      <div class="avatar-row"><span data-i18n="choose_me">My player:</span><div id="avatarBtns" style="display:flex;gap:8px"></div><button id="btnDress" class="chip" data-i18n="dress_btn">👕 Dress-up</button></div>
+    </div>
+    <div id="gameGrid" class="grid"></div>
+  </section>
+
+  <!-- ============ CHILD MODE: STORIES LIST ============ -->
+  <section id="stories" class="screen">
+    <header class="playbar">
+      <button id="storiesBack" class="round" data-i18n-aria="back" aria-label="Back">⬅️</button>
+      <h2 data-i18n="zone_stories_t">📚 Stories</h2>
+      <span class="spacer" style="width:58px"></span>
+    </header>
+    <p class="tagline" data-i18n="st_pick">Pick a story!</p>
+    <div id="storyGrid" class="grid sgrid"></div>
+  </section>
+
+  <!-- ============ CHILD MODE: BOOK READER ============ -->
+  <section id="reader" class="screen">
+    <header class="rdtop">
+      <button id="rdBack" class="round" data-i18n-aria="back" aria-label="Back">⬅️</button>
+      <h2 id="rdTitle"></h2>
+      <div class="rdlang langsw" role="group" aria-label="Language"><button data-rl="en">EN</button><button data-rl="tl">TL</button></div>
+      <button id="rdVoice" class="round rdvoice" aria-pressed="false" data-i18n-aria="st_read" aria-label="Read to me">🔊</button>
+      <button id="rdFull" class="round" data-i18n-aria="st_full" aria-label="Full screen">⛶</button>
+    </header>
+    <!-- the book: pages are stacked here and turn around the spine -->
+    <div id="rdBook" class="flipbook"></div>
+    <footer class="rdbottom">
+      <button id="rdPrev" class="round big-arrow" data-i18n-aria="st_prev" aria-label="Previous page">◀</button>
+      <div id="rdDots" class="rddots" aria-hidden="true"></div>
+      <button id="rdNext" class="round big-arrow" data-i18n-aria="st_next" aria-label="Next page">▶</button>
+    </footer>
+  </section>
+
+  <!-- ============ CHILD MODE: COLORING (pixel art, colour by number) ============ -->
+  <section id="coloring" class="screen">
+    <header class="playbar">
+      <button id="colorBack" class="round" data-i18n-aria="back" aria-label="Back">⬅️</button>
+      <h2 data-i18n="zone_coloring_t">🎨 Coloring</h2>
+      <span style="width:58px"></span>
+    </header>
+    <p class="tagline" data-i18n="co_pick">Pick a picture to color!</p>
+    <div id="colorGrid" class="pixgrid"></div>
+  </section>
+  <section id="paint" class="screen">
+    <header class="pxtop">
+      <button id="pxBack" class="round" data-i18n-aria="back" aria-label="Back">⬅️</button>
+      <h2 id="pxTitle"></h2>
+      <button id="pxReset" class="round" data-i18n-aria="co_reset" aria-label="Start over">🔄</button>
+      <button id="pxHelp" class="round" data-i18n-aria="co_how" aria-label="How to color">❓</button>
+    </header>
+    <div id="pxBox" class="pxbox">
+      <canvas id="pxCanvas" aria-label="Picture to color"></canvas>
+      <aside id="pxSide" class="pxside" aria-hidden="true"><canvas id="pxMini"></canvas><span data-i18n="co_goal">Finished look</span></aside>
+      <div class="pxzoom">
+        <button id="pxIn" class="round" data-i18n-aria="co_zin" aria-label="Zoom in">＋</button>
+        <button id="pxOut" class="round" data-i18n-aria="co_zout" aria-label="Zoom out">－</button>
+        <button id="pxFit" class="round fitbtn" data-i18n-aria="co_fit" aria-label="Fit the whole picture">⛶</button>
+        <button id="pxPan" class="round" aria-pressed="false" data-i18n-aria="co_move" aria-label="Move the picture">✋</button>
+      </div>
+    </div>
+    <div id="pxPal" class="pxpal" role="group" aria-label="Colours"></div>
+  </section>
+
+  <!-- ============ CHILD MODE: LEVEL PICKER ============ -->
+  <section id="levels" class="screen"></section>
+
+  <!-- ============ CHILD MODE: GAME INTRO ============ -->
+  <section id="intro" class="screen"></section>
+
+  <!-- ============ CHILD MODE: PLAY ============ -->
+  <section id="play" class="screen">
+    <header class="playbar">
+      <button id="btnBack" class="round" data-i18n-aria="back" aria-label="Back">⬅️</button>
+      <h2 id="playTitle"></h2>
+      <button id="btnHow" class="round" data-i18n-aria="how_to" aria-label="How to play">❓</button>
+    </header>
+    <div id="hint" class="hint"></div>
+    <div id="goalbar" class="goalbar" aria-live="polite"></div>
+    <div id="keyhint" class="keyhint" aria-hidden="true"></div>
+    <div id="stage" class="stage"></div>
+  </section>
+
+  <!-- ============ PARENT PIN ============ -->
+  <section id="lock" class="screen">
+    <div class="lockbox">
+      <div class="lock-ico">🔐</div>
+      <h2 id="lockTitle">Parents only</h2>
+      <p class="muted" data-i18n="enter_pin">Enter your 4-digit PIN</p>
+      <div class="pindots" id="pinDots"><i></i><i></i><i></i><i></i></div>
+      <div class="keypad" id="keypad"></div>
+      <button id="lockCancel" class="btn ghost" data-i18n="cancel">Cancel</button>
+    </div>
+  </section>
+
+  <!-- ============ PARENT MODE ============ -->
+  <section id="parent" class="screen">
+    <header class="pbar">
+      <h2 data-i18n="parent_mode">👨‍👩‍👧 Parent Mode</h2>
+      <button id="btnExitParent" class="btn" data-i18n="back_kid">🧒 Back to Kid Mode</button>
+    </header>
+    <nav class="ptabs" id="ptabs">
+      <button data-tab="progress" class="active" data-i18n="tab_progress">📊 Progress</button>
+      <button data-tab="settings" data-i18n="tab_settings">⚙️ Settings</button>
+    </nav>
+    <div id="ptab-progress" class="ptab active"></div>
+    <div id="ptab-settings" class="ptab"></div>
+  </section>
+
+  <!-- ============ REST TIME ============ -->
+  <!-- ============ DRESS-UP ============ -->
+  <section id="dress" class="screen">
+    <header class="playbar">
+      <button id="dressBack" class="round" aria-label="Back">⬅️</button>
+      <h2 data-i18n="dress_title">👕 Dress-up</h2>
+      <span class="spacer"></span>
+    </header>
+    <div class="dpreview" id="dressPreview"></div>
+    <div class="dgender">
+      <button class="chip" data-g="boy" data-i18n="dress_boy">Boy</button>
+      <button class="chip" data-g="girl" data-i18n="dress_girl">Girl</button>
+      <button class="chip" id="dressSurprise" data-i18n="dress_surprise">🎲 Surprise me</button>
+    </div>
+    <div id="dressParts" class="dparts"></div>
+    <p class="muted" data-i18n="dress_tip">Your player is used in every game!</p>
+  </section>
+
+  <section id="rest" class="screen">
+    <div class="restbox">
+      <div class="rest-em">😴🌙</div>
+      <h2 data-i18n="rest_title">Time to rest!</h2>
+      <p data-i18n="rest_text">Time to rest your eyes and go play outside!<br>Ask a grown-up to unlock more play time.</p>
+      <button id="btnUnlock" class="btn big" data-i18n="unlock_btn">👨‍👩‍👧 Grown-up unlock</button>
+    </div>
+  </section>
+
+</main>
+
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true"></div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script src="core.js"></script>
+<script src="lang.js"></script>
+<script src="figures.js"></script>
+  <script src="field.js"></script>
+  <script src="games-a.js"></script>
+<script src="games-b.js"></script>
+<script src="games-c.js"></script>
+<script src="tutorial.js"></script>
+<script src="books.js"></script>
+<script src="gameinfo.js"></script>
+<script src="app.js"></script>
+<script src="reader.js"></script>
+<script src="coloring-data.js"></script>
+<script src="coloring.js"></script>
+</body>
+</html>
