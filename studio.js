@@ -28,7 +28,7 @@
   const sayBefore = FZ.say;
   let localAudio = null;
   FZ.say = (t, force) => {
-    if (FZ.lang === 'tl' && (FZ.settings.voice || force)) {
+    if (FZ.settings.voice || force) {
       const k = FZ.voiceKey(t);
       if (FZ.localVoice.has(k)) {
         try { speechSynthesis.cancel(); } catch (e) { }

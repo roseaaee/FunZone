@@ -105,7 +105,7 @@ FZ.say = (t, force) => {
   if (!clean) return;
   try { speechSynthesis.cancel(); } catch (e) { }
   if (voiceAudio) { voiceAudio.pause(); voiceAudio = null; }
-  if (FZ.lang === 'tl' && FZ.voiceFiles.has(FZ.voiceKey(clean))) {             // a real Filipino voice recording
+  if (FZ.voiceFiles.has(FZ.voiceKey(clean))) {                                // a real Filipino voice recording (also for Tagalog words inside English mode)
     voiceAudio = new Audio(`voice/tl/${FZ.voiceKey(clean)}.mp3`); voiceAudio.play().catch(() => { }); return;
   }
   if (!('speechSynthesis' in window)) return;
