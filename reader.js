@@ -286,7 +286,6 @@ $('#rdBook').addEventListener('click', e => {
   pop.style.top = Math.max(60, r.top - box.top - 14) + 'px';
   setTimeout(() => pop.classList.add('out'), 1500); setTimeout(() => pop.remove(), 1900);
   const L = storyLang(rd.st);
-  if (L === 'tl' && FZ.voiceFiles.has(FZ.voiceKey(word))) { new Audio(`voice/tl/${FZ.voiceKey(word)}.mp3`).play().catch(() => { }); return; }   // a recorded Tagalog word
   if (!('speechSynthesis' in window)) return;
   const u = new SpeechSynthesisUtterance(L === 'tl' ? FZ.tlFix(word) : word);
   const v = FZ.voiceFor(L); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = L === 'tl' ? 'fil-PH' : 'en-US';
@@ -403,14 +402,16 @@ async function openRecPage(i) {
 async function startRec(key, pg) {
   try {
     try { speechSynthesis.cancel(); } catch (e) { }
+    FZ.music.hold('rec');                                              // no music in the recording
     recUI.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
-  } catch (e) { const m = $('#recState'); if (m) m.textContent = FZ.t('rec_denied'); return; }
+  } catch (e) { FZ.music.release('rec'); const m = $('#recState'); if (m) m.textContent = FZ.t('rec_denied'); return; }
   /* 3, 2, 1… then the recording and the moving highlight start together */
   const st_ = $('#recState'), go_ = $('#recGo'); if (go_) go_.disabled = true;
   for (const c of [3, 2, 1]) { if (st_) st_.innerHTML = `<b class="recount">${c}</b><br><small>${FZ.t('rec_getready')}</small>`; FZ.sfx('pop'); await new Promise(r => setTimeout(r, 800)); }
   const chunks = [], mr = new MediaRecorder(recUI.stream);
   mr.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
   mr.onstop = async () => {
+    FZ.music.release('rec');
     recUI.stream.getTracks().forEach(t => t.stop()); clearTimeout(recUI.timer); clearInterval(recUI.clock); clearTimeout(recUI.gt);
     const n = $$('#recWords .w').length || recUI.times.length, times = recUI.times.slice(0, n);
     for (let k = 0; k < n; k++) if (times[k] == null) times[k] = k ? times[k - 1] + .3 : 0;     // any word the highlight never reached

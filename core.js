@@ -34,7 +34,7 @@ FZ.hash = s => {
   b = Math.imul(b ^ (b >>> 16), 2246822507) ^ Math.imul(a ^ (a >>> 13), 3266489909);
   return (4294967296 * (2097151 & b) + (a >>> 0)).toString(36);
 };
-FZ.settings = Object.assign({ sound: true, voice: true, limit: 0, lang: null, avatar: 'boy' }, store.get('settings', {}));
+FZ.settings = Object.assign({ sound: true, music: true, limit: 0, lang: null, avatar: 'boy' }, store.get('settings', {}));
 if (FZ.settings.pin) { FZ.settings.pinHash = FZ.hash(FZ.settings.pin); delete FZ.settings.pin; }   // migrate old plain-text PIN
 if (!FZ.settings.pinHash) FZ.settings.pinHash = FZ.hash('1234');
 store.set('settings', FZ.settings);
@@ -46,10 +46,123 @@ FZ.lang = FZ.settings.lang || 'en';           // 'en' | 'tl'
 FZ.tr = s => s;                                // replaced by lang.js
 
 /* =====================================================
-   SOUND – removed. Sound effects are off everywhere; FZ.sfx stays as a no-op so existing calls do nothing.
+   SOUND – short game sounds and background music, all made inside the app (no sound files).
+   Games never talk: instructions are words on screen; only the stories are read aloud.
    ===================================================== */
+let AC = null, fxBus = null, musicBus = null, musicSrc = null, musicBuf = null, musicMaking = null;
+const audio = () => {
+  if (!AC) {
+    const C = window.AudioContext || window.webkitAudioContext; if (!C) return null;
+    AC = new C(); fxBus = AC.createGain(); fxBus.gain.value = 0.55; fxBus.connect(AC.destination);
+    musicBus = AC.createGain(); musicBus.gain.value = 0; musicBus.connect(AC.destination);
+  }
+  if (AC.state !== 'running') AC.resume().catch(() => { });
+  return AC;
+};
+/* one note: f = pitch (Hz), t = start (s from now), d = length, type, vol, slide = end pitch */
+function note(f, t, d, type = 'triangle', vol = 0.3, slide = 0) {
+  const ac = audio(); if (!ac) return; const t0 = ac.currentTime + t;
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t0); if (slide) o.frequency.exponentialRampToValueAtTime(slide, t0 + d);
+  g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+  o.connect(g); g.connect(fxBus); o.start(t0); o.stop(t0 + d + 0.05);
+}
+function sparkle(t, n = 10) { for (let i = 0; i < n; i++) note(1500 + Math.random() * 1800, t + i * 0.045, 0.12, 'sine', 0.06); }
+const N = m => 440 * Math.pow(2, (m - 69) / 12);          // MIDI note → Hz
+const SFX = {
+  pop: () => note(620, 0, 0.09, 'sine', 0.22, 940),
+  step: () => note(1250, 0, 0.05, 'triangle', 0.12),
+  good: () => { note(N(84), 0, 0.12, 'triangle', 0.22); note(N(88), 0.09, 0.18, 'triangle', 0.22); },
+  coin: () => { note(N(88), 0, 0.08, 'square', 0.1); note(N(95), 0.07, 0.3, 'square', 0.1); },
+  star: () => { [79, 84, 88, 91].forEach((m, i) => note(N(m), i * 0.07, 0.25, 'triangle', 0.2)); sparkle(0.3, 6); },
+  oops: () => note(330, 0, 0.26, 'triangle', 0.28, 165),
+  win: () => {                                            // ta-da! fanfare with sparkles
+    [[72, 0], [76, 0.13], [79, 0.26], [84, 0.42]].forEach(([m, t]) => { note(N(m), t, 0.22, 'square', 0.09); note(N(m), t, 0.3, 'triangle', 0.2); });
+    [72, 76, 79, 84].forEach(m => note(N(m), 0.62, 0.9, 'triangle', 0.13));
+    note(N(48), 0.62, 0.9, 'triangle', 0.25); sparkle(0.6, 14);
+  },
+  fail: () => {                                           // gentle "wah-wah-wah-waaah"
+    [[67, 0], [66, 0.3], [65, 0.6]].forEach(([m, t]) => note(N(m), t, 0.26, 'sawtooth', 0.07));
+    const ac = audio(); if (!ac) return; const t0 = ac.currentTime + 0.9;
+    const o = ac.createOscillator(), g = ac.createGain(), v = ac.createOscillator(), vg = ac.createGain();
+    o.type = 'sawtooth'; o.frequency.value = N(64); v.frequency.value = 6; vg.gain.value = 7; v.connect(vg); vg.connect(o.frequency);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.07, t0 + 0.03); g.gain.setValueAtTime(0.07, t0 + 0.6); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.1);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1400;
+    o.connect(lp); lp.connect(g); g.connect(fxBus); o.start(t0); v.start(t0); o.stop(t0 + 1.2); v.stop(t0 + 1.2);
+  },
+};
 FZ.tone = () => { };
-FZ.sfx = () => { };
+FZ.sfx = name => { if (!FZ.settings.sound) return; try { (SFX[name] || SFX.pop)(); } catch (e) { } };
+
+/* BACKGROUND MUSIC: an original, cheerful tune made once and played as a seamless loop.
+   It keeps playing across every screen until a grown-up turns it off; it gets quieter while a story is read aloud
+   and pauses while someone records their voice. */
+const BPM = 108, BEAT = 60 / BPM, BARS = 16, LOOP = BARS * 4 * BEAT;
+const CHORDS = [[48, 52, 55], [45, 48, 52], [41, 45, 48], [43, 47, 50]];                 // C – Am – F – G
+const MEL = [                                                                            // [beat, note, length] per 2 bars
+  [[0, 76, 1], [1, 79, 0.5], [1.5, 76, 0.5], [2, 74, 1], [3, 72, 1], [4, 72, 0.5], [4.5, 74, 0.5], [5, 76, 1], [6, 74, 2]],
+  [[0, 72, 1], [1, 76, 0.5], [1.5, 77, 0.5], [2, 79, 1], [3, 81, 1], [4, 79, 0.5], [4.5, 77, 0.5], [5, 76, 1], [6, 74, 2]],
+  [[0, 76, 0.5], [0.5, 76, 0.5], [1, 79, 1], [2, 81, 0.5], [2.5, 79, 0.5], [3, 76, 1], [4, 77, 1], [5, 76, 0.5], [5.5, 74, 0.5], [6, 72, 2]],
+  [[0, 74, 1], [1, 76, 1], [2, 79, 1.5], [3.5, 76, 0.5], [4, 74, 1], [5, 71, 1], [6, 72, 2]],
+];
+function makeMusic() {
+  if (musicMaking) return musicMaking;
+  const SR = 22050, len = Math.ceil((LOOP + 2) * SR);
+  const O = window.OfflineAudioContext || window.webkitOfflineAudioContext; if (!O) return Promise.resolve(null);
+  const oc = new O(1, len, SR), out = oc.createGain(); out.gain.value = 0.9; out.connect(oc.destination);
+  const pl = (f, t, d, type, vol, partial) => {                                         // marimba-like pluck
+    [[1, vol], partial ? [partial, vol * 0.25] : null].filter(Boolean).forEach(([m, v]) => {
+      const o = oc.createOscillator(), g = oc.createGain(); o.type = type; o.frequency.value = f * m;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t + d + 0.02);
+    });
+  };
+  const noise = oc.createBuffer(1, SR * 0.1, SR); const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+  const shaker = (t, v) => { const s = oc.createBufferSource(), f = oc.createBiquadFilter(), g = oc.createGain(); s.buffer = noise; f.type = 'highpass'; f.frequency.value = 6000; g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06); s.connect(f); f.connect(g); g.connect(out); s.start(t); };
+  for (let bar = 0; bar < BARS; bar++) {
+    const t = bar * 4 * BEAT, ch = CHORDS[bar % 4], second = bar >= 8;
+    pl(N(ch[0] - 12), t, BEAT * 1.6, 'triangle', 0.32); pl(N(ch[0] - 5), t + 2 * BEAT, BEAT * 1.4, 'triangle', 0.24);      // bass
+    for (let b = 0; b < 4; b++) ch.forEach((m, i) => pl(N(m + 12), t + (b + 0.5) * BEAT, BEAT * 0.45, 'sine', 0.045));     // off-beat chords
+    for (let e = 0; e < 8; e++) shaker(t + e * BEAT / 2, e % 2 ? 0.05 : 0.025);
+    if (bar % 2 === 0) {
+      const phrase = MEL[(bar / 2) % 4];
+      phrase.forEach(([b, m, d]) => pl(N(m + (second && bar % 8 >= 4 ? 0 : 0)), t + b * BEAT, d * BEAT * 0.95 + 0.25, 'sine', second ? 0.15 : 0.13, 4));
+      if (second) phrase.forEach(([b, m, d]) => pl(N(m - 12), t + b * BEAT, d * BEAT * 0.9 + 0.2, 'triangle', 0.035));  // second time: a soft echo below
+    }
+  }
+  musicMaking = oc.startRendering().then(buf => {                                      // fold the ringing tail back to the start → no gap at the loop
+    const n = Math.round(LOOP * SR), d = buf.getChannelData(0), loop = AC.createBuffer(1, n, SR), L = loop.getChannelData(0);
+    for (let i = 0; i < n; i++) L[i] = d[i] + (i + n < d.length ? d[i + n] : 0);
+    return (musicBuf = loop);
+  }).catch(() => null);
+  return musicMaking;
+}
+let musicLevel = 0.2, musicHold = new Set();
+function musicTarget() { return FZ.settings.music && !musicHold.size ? (FZ.screen === 'reader' ? musicLevel * 0.35 : musicLevel) : 0; }
+FZ.music = {
+  update() {
+    const ac = audio(); if (!ac) return;
+    const want = musicTarget();
+    if (want > 0 && !musicSrc) {
+      makeMusic().then(buf => {
+        if (!buf || musicSrc || !musicTarget()) return;
+        musicSrc = AC.createBufferSource(); musicSrc.buffer = buf; musicSrc.loop = true; musicSrc.connect(musicBus); musicSrc.start();
+        FZ.music.update();
+      });
+    }
+    musicBus.gain.cancelScheduledValues(ac.currentTime);
+    musicBus.gain.setTargetAtTime(want, ac.currentTime, 0.4);
+    if (!want && musicSrc && !FZ.settings.music) { const s = musicSrc; musicSrc = null; setTimeout(() => { try { s.stop(); } catch (e) { } }, 1500); }
+  },
+  playing: () => !!musicSrc && musicTarget() > 0,
+  buffer: () => musicBuf,
+  hold(why) { musicHold.add(why); FZ.music.update(); },            // e.g. while recording a voice
+  release(why) { musicHold.delete(why); FZ.music.update(); },
+  toggle(on) { FZ.settings.music = on === undefined ? !FZ.settings.music : on; FZ.saveSettings(); FZ.music.update(); },
+};
+/* browsers only allow sound after the first tap, so start (or wake) the music on every tap */
+['pointerdown', 'keydown', 'touchend'].forEach(ev => window.addEventListener(ev, () => { if (FZ.settings.music || FZ.settings.sound) FZ.music.update(); }, { capture: true, passive: true }));
+document.addEventListener('visibilitychange', () => { if (!document.hidden && AC) { AC.resume().catch(() => { }); FZ.music.update(); } });
 
 /* =====================================================
    VOICE – picks the most natural voice the device has, in the chosen language
@@ -89,34 +202,20 @@ FZ.voiceFor = lang => {
 /* what is actually read out loud (no emoji, no (notes), no HTML) */
 FZ.speakable = t => String(t).replace(/<[^>]+>/g, '').replace(/[\u{1F000}-\u{1FFFF}\u{2190}-\u{2BFF}\u{FE0F}\u{200D}]/gu, '')
   .replace(/\s*\([^)]*\)/g, '').replace(/[_*·]/g, ' ').replace(/\s+/g, ' ').trim();
-/* a short name for a line, used for its recorded voice file: voice/tl/<key>.mp3 */
+/* a short name for a line (used to key a grown-up's own recordings) */
 FZ.voiceKey = t => { let h = 0x811c9dc5; const s = FZ.speakable(t); for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); } return 'v' + (h >>> 0).toString(16).padStart(8, '0'); };
-/* TAGALOG VOICE
-   1) a natural Filipino voice file made with tools/make_tagalog_voice.py (listed in voice/tl/index.json), if there is one;
-   2) otherwise the device voice, with spelling fixes so common words sound right (ng → "nang", mga → "manga"). */
-FZ.voiceFiles = new Set();
-try { fetch('voice/tl/index.json').then(r => r.ok ? r.json() : []).then(l => (l || []).forEach(k => FZ.voiceFiles.add(k))).catch(() => { }); } catch (e) { }
 const TL_SAY = [[/\bng\b/g, 'nang'], [/\bNg\b/g, 'Nang'], [/\bmga\b/g, 'manga'], [/\bMga\b/g, 'Manga']];
 FZ.tlFix = t => TL_SAY.reduce((s, [a, b]) => s.replace(a, b), t);
-let voiceAudio = null;
-FZ.say = (t, force) => {
-  if (!FZ.settings.voice && !force) return;
-  const clean = FZ.speakable(t);
-  if (!clean) return;
-  try { speechSynthesis.cancel(); } catch (e) { }
-  if (voiceAudio) { voiceAudio.pause(); voiceAudio = null; }
-  if (FZ.voiceFiles.has(FZ.voiceKey(clean))) {                                // a real Filipino voice recording (also for Tagalog words inside English mode)
-    voiceAudio = new Audio(`voice/tl/${FZ.voiceKey(clean)}.mp3`); voiceAudio.play().catch(() => { }); return;
-  }
-  if (!('speechSynthesis' in window)) return;
+/* games never speak: FZ.say does nothing (instructions are on screen). Only stories are read aloud (reader.js). */
+FZ.say = () => { };
+/* used by the "test" button of the story voice */
+FZ.readAloud = t => {
+  const clean = FZ.speakable(t); if (!clean || !('speechSynthesis' in window)) return;
   try {
-    const v = FZ.voiceFor(FZ.lang), text = FZ.lang === 'tl' ? FZ.tlFix(clean) : clean;
-    text.split(/(?<=[.!?])\s+/).filter(Boolean).forEach(part => {      // short pieces sound smoother and never get cut off
-      const u = new SpeechSynthesisUtterance(part);
-      if (v) { u.voice = v; u.lang = v.lang; } else u.lang = FZ.lang === 'tl' ? 'fil-PH' : 'en-US';
-      u.rate = FZ.lang === 'tl' ? 0.9 : 0.95; u.pitch = 1.05; u.volume = 1;
-      speechSynthesis.speak(u);
-    });
+    speechSynthesis.cancel();
+    const v = FZ.voiceFor(FZ.lang), u = new SpeechSynthesisUtterance(FZ.lang === 'tl' ? FZ.tlFix(clean) : clean);
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = FZ.lang === 'tl' ? 'fil-PH' : 'en-US';
+    u.rate = FZ.lang === 'tl' ? 0.9 : 0.95; u.pitch = 1.05; speechSynthesis.speak(u);
   } catch (e) { }
 };
 

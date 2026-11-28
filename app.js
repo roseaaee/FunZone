@@ -11,6 +11,7 @@ function show(id) {
   $$('.screen').forEach(s => s.classList.toggle('active', s.id === id));
   const sc = $('#' + id); if (sc) sc.scrollTop = 0;
   FZ.screen = id;
+  if (FZ.music) FZ.music.update();                                     // quieter music while a story is read
 }
 /* ---------------- LEVELS: every game has 30 levels, each a little harder; stars are kept for EACH level ---------------- */
 FZ.LEVELS = 30;
@@ -224,18 +225,18 @@ function openAbout(g) {
     <div class="actions"><button class="btn" id="mClose">${FZ.t('ok')}</button></div></div>`;
   m.classList.remove('hidden'); $('#mClose').onclick = closeModal;
 }
-/* GAME SETTINGS: sound, voice, show tips again, start over */
+/* GAME SETTINGS: sounds, music, show tips again, start over */
 function openGameSettings(g) {
   const m = $('#modal'), S = FZ.settings;
   m.innerHTML = `<div class="mcard setcard"><h2>⚙️ ${FZ.t('gt_settings')}</h2>
     <div class="row"><label for="gSnd">${FZ.t('snd_fx')}</label><label class="switch"><input type="checkbox" id="gSnd" ${S.sound ? 'checked' : ''}><span></span></label></div>
-    <div class="row"><label for="gVoice">${FZ.t('snd_voice')}</label><label class="switch"><input type="checkbox" id="gVoice" ${S.voice ? 'checked' : ''}><span></span></label></div>
+    <div class="row"><label for="gMusic">${FZ.t('snd_music')}</label><label class="switch"><input type="checkbox" id="gMusic" ${S.music ? 'checked' : ''}><span></span></label></div>
     <div class="row"><span>${FZ.t('gt_tips_again')}</span><button class="btn small" id="gTips">💡 ${FZ.t('gt_show')}</button></div>
     <div class="row"><span>${FZ.t('gt_restart')}</span><button class="btn small ghost" id="gReset">🔄 ${FZ.t('gt_reset')}</button></div>
     <div class="actions"><button class="btn" id="mClose">${FZ.t('ok')}</button></div></div>`;
   m.classList.remove('hidden');
   $('#gSnd').onchange = e => { S.sound = e.target.checked; FZ.saveSettings(); FZ.sfx('pop'); };
-  $('#gVoice').onchange = e => { S.voice = e.target.checked; FZ.saveSettings(); if (S.voice) FZ.say(FZ.t('hello')); };
+  $('#gMusic').onchange = e => FZ.music.toggle(e.target.checked);
   $('#gTips').onclick = () => { const sn = FZ.seen(); Object.keys(sn).forEach(k => { if (k === g.id || k.startsWith(g.id + ':')) delete sn[k]; }); FZ.saveSettings(); FZ.sfx('good'); $('#gTips').textContent = '✅'; };
   $('#gReset').onclick = () => { if (confirm(FZ.t('gt_reset_ask', g.name))) { delete FZ.progress[g.id]; FZ.saveProgress(); closeModal(); openIntro(g); } };
   $('#mClose').onclick = () => { closeModal(); if (FZ.screen === 'intro') openIntro(g); };
@@ -309,7 +310,7 @@ function makeApi(def, level) {
       for (let i = 0; i < level; i++) lv[i] = lv[i] || 0;       // no holes in the list
       FZ.saveProgress();
       api.freeze();                                   // the game stops here, so kids are not interrupted by more moves
-      newBadge ? FZ.sfx('win') : FZ.sfx('coin');
+      FZ.sfx('win'); if (newBadge) setTimeout(() => FZ.sfx('star'), 1500);   // every win is celebrated; a new badge gets an extra sparkle
       showResult(def, level, stars, text, newBadge);
     },
     freeze() { dead = true; T.forEach(clearTimeout); I.forEach(clearInterval); F.forEach(s => s.on = false); L.forEach(([t, e, f, o]) => t.removeEventListener(e, f, o)); },
@@ -336,7 +337,7 @@ function showFail(g, level, text) {
   $('#fAgain').onclick = () => { m.classList.add('hidden'); startGame(g, level); };
   $('#fHome').onclick = () => { m.classList.add('hidden'); openIntro(g); };
   try { $('#fAgain').focus({ preventScroll: true }); } catch (e) { }
-  FZ.say(FZ.t('fail_title'));
+  FZ.sfx('fail');
 }
 function destroyGame() { if (curApi) { curApi.destroy(); curApi = null; } $('#modal').classList.add('hidden'); hideToast(); }
 /* keyboard hints for laptop users (shown only when a mouse/keyboard is the main input) */
@@ -508,12 +509,14 @@ function renderParent() {
       <div class="row"><label>${FZ.t('lang_title')}</label><div class="langsw"><button data-lang="en" class="${FZ.lang === 'en' ? 'active' : ''}">🇺🇸 English</button><button data-lang="tl" class="${FZ.lang === 'tl' ? 'active' : ''}">🇵🇭 Tagalog</button></div></div>
     </div>
     <div class="pcard"><h3>${FZ.t('snd_title')}</h3>
-      <div class="row"><label for="sVoice">${FZ.t('snd_voice')}</label><label class="switch"><input type="checkbox" id="sVoice" ${S.voice ? 'checked' : ''}><span></span></label></div>
-      <div class="row"><label for="sVoiceSel">${FZ.t('voice_pick')}</label><span style="display:flex;gap:8px;flex-wrap:wrap"><select id="sVoiceSel">${voiceOptions()}</select><button class="btn ghost" id="sVoiceTest" style="font-size:18px;padding:8px 16px">${FZ.t('voice_test')}</button></span></div>
+      <div class="row"><label for="sSnd">${FZ.t('snd_fx')}</label><label class="switch"><input type="checkbox" id="sSnd" ${S.sound ? 'checked' : ''}><span></span></label></div>
+      <div class="row"><label for="sMusic">${FZ.t('snd_music')}</label><label class="switch"><input type="checkbox" id="sMusic" ${S.music ? 'checked' : ''}><span></span></label></div>
+    </div>
+    <div class="pcard"><h3>${FZ.t('st_voice_title')}</h3>
+      <div class="row"><label for="sVoiceSel">${FZ.t('voice_pick')}</label><span style="display:flex;gap:8px;flex-wrap:wrap"><select id="sVoiceSel">${voiceOptions()}</select><button class="btn ghost" id="sVoiceTest" style="font-size:18px;padding:8px 14px">▶</button></span></div>
       <p class="muted" id="voiceNote">${hasLangVoice() ? FZ.t('voice_note') : FZ.t('voice_no_tl')}</p>
       <p class="muted">${FZ.t('voice_tl_tip')}</p>
     </div>
-    <div class="pcard" id="studioCard"></div>
     <div class="pcard" id="recCard"></div>
     <div class="pcard"><h3>${FZ.t('limit_title')}</h3>
       <div class="row"><label for="sLimit">${FZ.t('limit_lbl')}</label>
@@ -530,11 +533,11 @@ function renderParent() {
     <div class="pcard"><h3>${FZ.t('priv_title')}</h3>
       <ul style="padding-left:22px;display:grid;gap:6px;font-size:17px">${FZ.t('priv').map(t => `<li>${t}</li>`).join('')}</ul>
     </div>`;
-  $('#sVoiceSel').onchange = e => { S.voices = Object.assign({}, S.voices); if (e.target.value) S.voices[FZ.lang] = e.target.value; else delete S.voices[FZ.lang]; FZ.saveSettings(); FZ.say(FZ.t('voice_hi'), true); };
-  $('#sVoiceTest').onclick = () => FZ.say(FZ.t('voice_hi'), true);
+  $('#sVoiceSel').onchange = e => { S.voices = Object.assign({}, S.voices); if (e.target.value) S.voices[FZ.lang] = e.target.value; else delete S.voices[FZ.lang]; FZ.saveSettings(); FZ.readAloud(FZ.t('voice_hi')); };
+  $('#sVoiceTest').onclick = () => FZ.readAloud(FZ.t('voice_hi'));
   if (FZ.renderRecCard) FZ.renderRecCard($('#recCard'));
-  if (FZ.renderStudioCard) FZ.renderStudioCard($('#studioCard'));
-  $('#sVoice').onchange = e => { S.voice = e.target.checked; FZ.saveSettings(); if (S.voice) FZ.say(FZ.t('hello')); };
+  $('#sSnd').onchange = e => { S.sound = e.target.checked; FZ.saveSettings(); FZ.sfx('pop'); };
+  $('#sMusic').onchange = e => FZ.music.toggle(e.target.checked);
   $('#sLimit').onchange = e => { S.limit = +e.target.value; FZ.saveSettings(); playedSec = 0; };
   $('#sPinSave').onclick = () => {
     const v = $('#sPin').value.trim();
@@ -562,7 +565,7 @@ function toggleFold(t) {
 }
 $('#ptab-settings').addEventListener('click', e => { const t = e.target.closest('.pcard.fold > h3'); if (t) toggleFold(t); });
 $('#ptab-settings').addEventListener('keydown', e => { const t = e.target.closest('.pcard.fold > h3'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggleFold(t); } });
-new MutationObserver(() => { if ($$('#recCard, #studioCard').some(c => c.firstElementChild && !c.querySelector(':scope > h3[role]'))) foldSettings(); }).observe($('#ptab-settings'), { childList: true, subtree: true });
+new MutationObserver(() => { if ($$('#recCard').some(c => c.firstElementChild && !c.querySelector(':scope > h3[role]'))) foldSettings(); }).observe($('#ptab-settings'), { childList: true, subtree: true });
 
 /* ---------------- TIME LIMIT / REST ---------------- */
 setInterval(() => {
@@ -611,6 +614,11 @@ function renderDress() {
   renderAvatars();
 }
 $('#btnDress').onclick = () => { FZ.sfx('pop'); openDress(); };
+/* music on/off button on the home screen */
+const musicBtn = () => { const b = $('#btnMusic'); if (!b) return; b.textContent = FZ.settings.music ? '🎵' : '🔇'; b.setAttribute('aria-pressed', !!FZ.settings.music); b.setAttribute('aria-label', FZ.t('snd_music')); b.title = FZ.t('snd_music'); };
+$('#btnMusic').onclick = () => { FZ.music.toggle(); musicBtn(); };
+const _toggle = FZ.music.toggle; FZ.music.toggle = on => { _toggle(on); musicBtn(); };
+musicBtn();
 $('#dressBack').onclick = () => goGames();
 $$('#dress .dgender button[data-g]').forEach(b => b.onclick = () => { FZ.settings.gender = b.dataset.g; FZ.saveSettings(); dressOpen = null; FZ.sfx('pop'); renderDress(); });
 $('#dressSurprise').onclick = () => {
