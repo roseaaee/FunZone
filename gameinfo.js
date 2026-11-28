@@ -11,7 +11,7 @@ FZ.HIST = {
     tl: 'Ang patintero ay isa sa pinakakilalang larong kalye sa Pilipinas. Madalas iugnay ang pangalan nito sa "tinta," dahil minamarkahan noon ang mga linya sa lupa; ngayon ay iginuguhit ito ng tisa, patpat o tubig. Paborito ito sa kalye at sa paaralan, lalo na sa malamig na gabi.' },
   agawan: {
     en: 'Agawan Base means "steal the base". Two teams each guard a base, such as a tree, post or pole, and try to touch the other team\'s base without being caught. Base-stealing games are played around the world, and Filipino children have played this one in schoolyards for generations.',
-    tl: 'Ang ibig sabihin ng Agawan Base ay "agawan ng base." May sariling base ang bawat koponan, tulad ng puno, poste o haligi, at sinusubukan nilang mahawakan ang base ng kalaban nang hindi nahuhuli. Nilalaro ang ganitong laro sa buong mundo, at matagal na itong nilalaro ng mga batang Pilipino sa paaralan.' },
+    tl: 'Ang ibig sabihin ng Agawan Base ay "agawan ng base." May sariling base ang bawat grupo, tulad ng puno, poste o haligi, at sinusubukan nilang mahawakan ang base ng kalaban nang hindi nahuhuli. Nilalaro ang ganitong laro sa buong mundo, at matagal na itong nilalaro ng mga batang Pilipino sa paaralan.' },
   langit: {
     en: 'Langit-Lupa means "heaven and earth". The taya can only tag players on the ground (lupa); anyone standing on something raised (langit) is safe, but only for a little while. Kids often pick the first taya by chanting "Langit, lupa, impyerno…" while pointing at each player.',
     tl: 'Ang ibig sabihin ng Langit-Lupa ay "langit at lupa." Ang mga nasa lupa lang ang puwedeng mataya; ligtas ang nakatayo sa mataas na lugar (langit), pero sandali lang. Madalas pinipili ang unang taya sa pagbigkas ng "Langit, lupa, impyerno…" habang itinuturo ang bawat manlalaro.' },
@@ -29,7 +29,7 @@ FZ.HIST = {
     tl: 'Ang ibig sabihin ng Kapitang Bakod ay "kumapit sa bakod." Ligtas sa taya ang sinumang nakahawak sa bakod, pader o poste, pero kailangang bumitaw at tumakbo papunta sa ibang bakod. Simpleng larong habulan ito na nabuo sa mga lugar na maraming bakod at tarangkahan.' },
   tinik: {
     en: 'Luksong Tinik means "jump over the thorns". Two players sit facing each other and stack their feet and hands to make the "thorns", which grow taller every round. It is one of the classic laro ng lahi and is often played at school during Buwan ng Wika celebrations.',
-    tl: 'Ang ibig sabihin ng Luksong Tinik ay "luksuhin ang tinik." Magkaharap na nakaupo ang dalawang manlalaro at pinagpapatong ang kanilang paa at kamay para maging "tinik," na tumataas bawat round. Isa ito sa mga klasikong laro ng lahi at madalas laruin sa paaralan tuwing Buwan ng Wika.' },
+    tl: 'Ang ibig sabihin ng Luksong Tinik ay "luksuhin ang tinik." Magkaharap na nakaupo ang dalawang manlalaro at pinagpapatong ang kanilang paa at kamay para maging "tinik," na tumataas bawat round. Isa ito sa mga paboritong larong Pinoy at madalas laruin sa paaralan tuwing Buwan ng Wika.' },
   baka: {
     en: 'Luksong Baka means "jump over the cow". One player, the "baka", bends over and stands a little taller after every round, while the others leap over using their hands. It is like leapfrog, which children play in many countries.',
     tl: 'Ang ibig sabihin ng Luksong Baka ay "luksuhin ang baka." Yumuyuko ang isang manlalaro, ang "baka," at tumataas nang kaunti bawat round, habang lumulukso ang iba gamit ang kanilang kamay. Kahawig ito ng leapfrog na nilalaro ng mga bata sa maraming bansa.' },
@@ -45,7 +45,7 @@ FZ.HIST = {
     tl: 'Ang ibig sabihin ng Tumbang Preso ay "patumbahin ang preso." Ibinabato ng mga manlalaro ang kanilang tsinelas para patumbahin ang lata na binabantayan ng taya, saka tatakbo para kunin ang tsinelas bago mataya. Sikat ito dahil lata at tsinelas lang ang kailangan.' },
   sipa: {
     en: 'Sipa means "kick". Players keep a small weighted toy in the air, traditionally a washer or coin with colourful strips of paper or plastic, using their feet, knees and elbows. Sipa is very old and was often called the Philippine national sport, until arnis was named the national martial art and sport in 2009.',
-    tl: 'Ang ibig sabihin ng sipa ay "kick." Pinananatili ng mga manlalaro sa ere ang maliit na laruang may pabigat, karaniwang washer o barya na may makukulay na papel o plastik, gamit ang paa, tuhod at siko. Napakatanda na ng sipa at madalas itong tawaging pambansang laro ng Pilipinas, hanggang ideklara ang arnis na pambansang sining at isport noong 2009.' },
+    tl: 'Ang ibig sabihin ng sipa ay "kick." Sinisipa pataas ng mga manlalaro, at hindi pinababagsak, ang maliit na laruang may pabigat, karaniwang washer o barya na may makukulay na papel o plastik, gamit ang paa, tuhod at siko. Napakatanda na ng sipa at madalas itong tawaging pambansang laro ng Pilipinas, hanggang ideklara ang arnis na pambansang sining at isport noong 2009.' },
   holen: {
     en: 'Holen is the Filipino name for marbles. Players flick their marble with the thumb to knock other marbles out of a circle drawn on the ground. Marble games are thousands of years old, and Filipino kids also play tatsing, a similar game with coins.',
     tl: 'Ang holen ay ang Pilipinong tawag sa marbles. Pinipitik ng manlalaro ang kanyang holen gamit ang hinlalaki para mapalabas ang ibang holen sa bilog na iginuhit sa lupa. Libu-libong taon na ang mga larong holen, at naglalaro rin ang mga batang Pilipino ng tatsing, isang katulad na laro gamit ang barya.' },
@@ -64,17 +64,17 @@ FZ.TRICKS = {
            { at: 8, emoji: '🏃🏃🏃', en: 'New! Three red players now. And touch their base TWO times!', tl: 'Bago! Tatlo na ang kalaban. At hawakan ang base nila nang DALAWANG beses!' },
            { at: 11, emoji: '🧤', en: 'New! One red player now stays near their flag like a goalkeeper. Fake one way, then run around the other way!', tl: 'Bago! May isang kalabang nagbabantay malapit sa bandila nila. Lumihis sa isang direksiyon, saka umikot sa kabila!' },
            { at: 12, emoji: '🏃🏃🏃🏃', en: 'New! FOUR red players now. Use your base to rest, then run!', tl: 'Bago! APAT na ang kalaban. Magpahinga sa base ninyo, saka tumakbo!' },
-           { at: 15, emoji: '🏳️', en: 'New! A red runner now tries to steal YOUR base. Tag them before they reach it!', tl: 'Bago! May kalabang susubok umagaw ng base NINYO. Tayaan siya bago niya ito maabot!' },
+           { at: 15, emoji: '🏳️', en: 'New! A red runner now tries to steal YOUR base. Tag them before they reach it!', tl: 'Bago! May kalabang susubok umagaw ng base NINYO. Tayain siya bago niya ito maabot!' },
            { at: 16, emoji: '🏃🏃🏃🏃🏃', en: 'New! FIVE red players. Be patient and wait for your chance!', tl: 'Bago! LIMA na ang kalaban. Maging matiyaga at hintayin ang tamang pagkakataon!' }],
   taguan: [{ at: 1, emoji: '🙈', en: 'Your turn to HIDE! Walk to a hiding place and tap it while Taya counts. Then sneak back to the base!', tl: 'Ikaw naman ang MAGTATAGO! Pumunta sa taguan at i-tap ito habang nagbibilang si Taya. Saka pumuslit pabalik sa base!' },
            { at: 10, emoji: '🤫', en: 'New! Hiders don\'t wiggle anymore. Look carefully everywhere!', tl: 'Bago! Hindi na gumagalaw ang mga nakatago. Hanapin nang mabuti!' },
            { at: 12, emoji: '🌙', en: 'New! Now we play at night, under the moon. You can only see close by!', tl: 'Bago! Gabi na tayo maglalaro, sa ilalim ng buwan. Malapit lang ang nakikita mo!' },
            { at: 14, emoji: '🏃', en: 'New! Hiders may sneak back to the base when you are far away. Stay close to the base!', tl: 'Bago! Puwedeng pumuslit pabalik sa base ang mga nagtatago kapag malayo ka. Huwag lumayo sa base!' }],
   lawin: [{ at: 8, emoji: '🐥', en: 'New! Four chicks now — a longer line to protect!', tl: 'Bago! Apat na sisiw na — mas mahabang pila ang babantayan!' },
-          { at: 16, emoji: '🐥', en: 'New! Five chicks! The hawk also fakes left and right now.', tl: 'Bago! Limang sisiw! Nanlilinlang na rin ang lawin pakaliwa\'t pakanan.' },
+          { at: 16, emoji: '🐥', en: 'New! Five chicks! The hawk also fakes left and right now.', tl: 'Bago! Limang sisiw! Nanloloko na rin ang lawin pakaliwa\'t pakanan.' },
           { at: 24, emoji: '🐥', en: 'New! Six chicks! Stay close and move fast.', tl: 'Bago! Anim na sisiw! Manatiling malapit at gumalaw nang mabilis.' }],
-  tinik: [{ at: 10, emoji: '🟩', en: 'New! Don\'t jump too hard now. Stop the bar inside the green zone!', tl: 'Bago! Huwag masyadong malakas ang talon. Itigil ang bar sa loob ng berdeng bahagi!' }],
-  baka: [{ at: 10, emoji: '🟩', en: 'New! Don\'t hold too long now. Let go inside the green zone!', tl: 'Bago! Huwag masyadong matagal pumindot. Bumitaw sa loob ng berdeng bahagi!' }],
+  tinik: [{ at: 10, emoji: '🟩', en: 'New! Don\'t jump too hard now. Stop the bar inside the green zone!', tl: 'Bago! Huwag masyadong malakas ang talon. Patigilin ang bar sa berde!' }],
+  baka: [{ at: 10, emoji: '🟩', en: 'New! Don\'t hold too long now. Let go inside the green zone!', tl: 'Bago! Huwag masyadong matagal pumindot. Bumitaw kapag nasa berde!' }],
   garter: [{ at: 6, emoji: '🎀', en: 'The rope is higher now, and the patterns get longer. Watch the chips carefully!', tl: 'Mas mataas na ang garter, at humahaba ang ayos. Tingnang mabuti ang mga chip!' }],
   piko: [{ at: 15, emoji: '🧠', en: 'New! The boxes don\'t glow anymore. Remember: one foot, one foot, two feet…', tl: 'Bago! Hindi na umiilaw ang mga kahon. Tandaan: isang paa, isang paa, dalawang paa…' }],
   sipa: [{ at: 10, emoji: '🌬️', en: 'New! The sipa drifts more to the sides now. Swipe fast to get under it!', tl: 'Bago! Mas lumilihis na ang sipa sa gilid. Mag-swipe nang mabilis para masalo ito!' },
@@ -87,5 +87,5 @@ FZ.TRICKS = {
           { at: 23, emoji: '👴', en: 'Lolo Ambo is here, the best shooter in town. Shoot again by staying inside the circle!', tl: 'Narito si Lolo Ambo, ang pinakamagaling tumira. Manatili sa loob ng bilog para makatira ulit!' }],
   sungka: [{ at: 10, emoji: '👧', en: 'New players to beat! They are better at counting shells.', tl: 'Bagong kalaban! Mas magaling silang magbilang ng sigay.' },
            { at: 20, emoji: '👦', en: 'Kuya Ben is here, the cleverest player. Plan your moves!', tl: 'Narito si Kuya Ben, ang pinakamatalinong kalaro. Planuhin ang iyong galaw!' }],
-  dama: [{ at: 10, emoji: '🔴', en: 'New! A full board now: 12 pieces each. Red also plays more carefully.', tl: 'Bago! Buong tabla na: tig-12 piyesa. Mas maingat na ring maglaro si Pula.' }]
+  dama: [{ at: 10, emoji: '🔴', en: 'New! A full board now: 12 pieces each. Red also plays more carefully.', tl: 'Bago! Buong board na: tig-12 takip. Mas maingat na ring maglaro si Pula.' }]
 };

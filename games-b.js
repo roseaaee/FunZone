@@ -20,8 +20,14 @@ function jumpGame(api, cfg) {
   /* GOAL: clear the height 1, 2 or 3 times in a row (more every 10 levels) before your hearts run out */
   const CLEARS = 1 + Math.floor(api.level / 10), HEARTS = Math.round(api.lv(4, 3, 3, 2));
   const needed = () => cfg.levels[lv].need !== undefined ? cfg.levels[lv].need : (cfg.levels[lv].h + 0.07) / MAXJ;
+  /* one size unit for the player, the friends and the jump, so everything fits together on any screen
+     (on tall phones it is limited by the width, so nobody gets too big) */
+  let S = 200;
+  const unit = () => { const H = scene.clientHeight; S = Math.max(120, Math.min(H, scene.clientWidth * .85)); scene.style.setProperty('--sh', S + 'px'); scene.style.setProperty('--gh', Math.max(H * .16, H - S * 1.2) + 'px'); return S; };
+  const redraw = () => { unit(); if (!busy) cfg.draw(obst, cfg.levels[lv], scene, S); };
+  api.on(window, 'resize', () => api.later(redraw, 30));
   function showLevel() {
-    cfg.draw(obst, cfg.levels[lv], scene);
+    unit(); cfg.draw(obst, cfg.levels[lv], scene, S);
     label.textContent = cfg.levels[lv].name;
     const N2 = cfg.names && cfg.names[lv], nm = N2 ? (FZ.lang === 'tl' ? N2.tl : N2.en).toLowerCase() : '';     // e.g. "knee" / "tuhod" 
     api.goal({ en: `Jump over the ${cfg.what || 'obstacle'}${nm ? ` (${nm})` : ''}${CLEARS > 1 ? ` ${CLEARS} times` : ''}`, tl: `Lundagan ang ${cfg.whatTl || 'harang'}${nm ? ` (${nm})` : ''}${CLEARS > 1 ? ` nang ${CLEARS} beses` : ''}`, hearts: HEARTS });
@@ -37,7 +43,7 @@ function jumpGame(api, cfg) {
     api.sfx('jump'); setPose('run');
     const run = jm.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${xt}px,0)` }], { duration: 350, fill: 'forwards', easing: 'ease-in' });
     run.onfinish = () => {
-      const endX = ok ? xe : W * 0.37, hh = ok ? power * MAXJ * Hh : Math.min(power * MAXJ * Hh, cfg.levels[lv].h * Hh * 0.85);
+      const endX = ok ? xe : W * 0.37, hh = ok ? power * MAXJ * S : Math.min(power * MAXJ * S, cfg.levels[lv].h * S * 0.85);
       const fr = []; for (let i = 0; i <= 20; i++) { const t = i / 20; fr.push({ transform: `translate(${xt + (endX - xt) * t}px,${-4 * hh * t * (1 - t)}px)` }); }
       setPose('jump');
       const j = jm.animate(fr, { duration: ok ? 850 : 600, fill: 'forwards' });
@@ -97,8 +103,8 @@ FZ.reg({
       names: this.levels,
       mode: 'meter',
       levels: [1, 2, 3, 4, 5].map((p, i) => ({ p, h: FZ.TINIK_U[i] / 112 * 0.4, need: 0.3 + 0.12 * i, name: names[i] })),
-      draw(el, L, scene) {                       // the two friends sit; the pile of feet and hands comes from THEIR arms and legs
-        const u = scene.clientHeight * 0.4 / 112;
+      draw(el, L, scene, S) {                    // the two friends sit; the pile of feet and hands comes from THEIR arms and legs
+        const u = S * 0.4 / 112;
         el.innerHTML = `<div class="fig" style="height:${63 * u}px">${FZ.tinikFig(L.p)}</div>`;
       },
       what: 'thorn', whatTl: 'tinik',
@@ -133,8 +139,8 @@ FZ.reg({
       names: this.levels,
       mode: 'hold',
       levels: [1, 2, 3, 4].map((lvl, i) => ({ lvl, h: FZ.BAKA_U[i] / 112 * 0.4, need: 0.36 + 0.15 * i, name: names[i] })),
-      draw(el, L, scene) {                       // a real kid bends: hands on the ground, then feet, knees, thighs
-        const u = scene.clientHeight * 0.4 / 112;
+      draw(el, L, scene, S) {                    // a real kid bends: hands on the ground, then feet, knees, thighs
+        const u = S * 0.4 / 112;
         el.innerHTML = `<div class="fig" style="height:${80 * u}px;margin-bottom:${-4 * u}px">${FZ.bakaFig(L.lvl)}</div>`;
       },
       what: 'cow', whatTl: 'baka',
@@ -170,9 +176,9 @@ FZ.reg({
       names: this.levels,
       mode: 'hold',
       levels: PARTS.map((p, i) => ({ h: p * 0.4, name: '🎀 ' + names[i] })),         // the garter rises every 3 levels
-      draw(el, L, scene) {
-        const Hh = scene.clientHeight, W = scene.clientWidth, kh = Hh * .4, g0 = Hh * .16;
-        const x1 = W * .4, x2 = W * .64, y = Hh - g0 - L.h * Hh;      // two friends stand apart; the garter stretches between them
+      draw(el, L, scene, S) {
+        const Hh = scene.clientHeight, W = scene.clientWidth, kh = S * .4, g0 = parseFloat(scene.style.getPropertyValue('--gh')) || Hh * .16;
+        const x1 = Math.max(W * .4, W * .06 + kh * 1.25), x2 = Math.min(W - kh * .55, x1 + Math.max(W * .24, kh * .7)), y = Hh - g0 - L.h * S;   // keep clear of the jumper on narrow phones      // two friends stand apart; the garter stretches between them
         el.innerHTML = `<div class="kid" style="left:${x1 - kh * .5}px;bottom:${g0}px;height:${kh}px">${FZ.pal(1, 'stand')}</div>
           <div class="kid" style="left:${x2 - kh * .18}px;bottom:${g0}px;height:${kh}px">${FZ.pal(2, 'stand', { flip: true })}</div>
           <svg class="gband" width="${W}" height="${Hh}" style="position:absolute;left:0;top:0;pointer-events:none"><path d="M${x1} ${y} Q${(x1 + x2) / 2} ${y + 3} ${x2} ${y}" fill="none" stroke="#ff6b6b" stroke-width="7" stroke-linecap="round"/><path d="M${x1} ${y} Q${(x1 + x2) / 2} ${y + 3} ${x2} ${y}" fill="none" stroke="#ffd43b" stroke-width="3" stroke-dasharray="6 6"/></svg>`;
@@ -207,9 +213,9 @@ FZ.reg({
     'Then throw to box 2, and so on. Stepping on a line, or into the stone\'s box, ends your turn.'
   ],
   how: [
-    'First TAP the glowing box to throw the 🪨 stone there.',
-    'Then tap the glowing boxes in order to hop: one box = one foot 🦶, two side-by-side boxes = both feet 🦶🦶.',
-    'Skip the stone box, rest in Langit 🌈, hop back, and tap the stone to pick it up!'
+    '<b>Swipe anywhere</b> (or tap the glowing box). Swipe ⬆️ to throw the 🪨 stone, and ⬆️ again to hop on ONE foot 🦶.',
+    'Two boxes side by side? Swipe ⬅️ or ➡️ to land on BOTH feet 🦶🦶. The big arrow shows the next swipe.',
+    'Skip the stone box, rest in Langit 🌈, hop back, and swipe ⬇️ to bend down and pick up the stone!'
   ],
   tip: 'Draw a grid with chalk on the pavement. Little ones can use both feet on every box first, then learn the one-foot hops.',
   start(api) {
@@ -244,7 +250,7 @@ FZ.reg({
     api.on(window, 'resize', () => kidAt !== null && hopTo(kidAt, null));
     const rounds = Array.from({ length: Math.min(8, 1 + Math.floor(api.level / 4)) }, (_, i) => (api.level + i * 2) % 6);   // one more throw every 4 levels, landing further along
     const HEARTS = Math.round(api.lv(5, 4, 3, 2));
-    api.later(() => { api.goal({ en: `Throw the stone and hop through ${rounds.length} time${rounds.length > 1 ? 's' : ''} (${BAL.toFixed(1)} seconds on each box)`, tl: `Ihagis ang bato at tumalon nang ${rounds.length} beses (${BAL.toFixed(1)} segundo sa bawat kahon)`, hearts: HEARTS }); api.progress(`🪨 0 / ${rounds.length}`); }, 0);
+    api.later(() => { api.goal({ en: `Throw the stone and hop through ${rounds.length} time${rounds.length > 1 ? 's' : ''} (${BAL.toFixed(1)} seconds on each box)`, tl: `Ihagis ang bato at lumundag nang ${rounds.length} beses (${BAL.toFixed(1)} segundo sa bawat kahon)`, hearts: HEARTS }); api.progress(`🪨 0 / ${rounds.length}`); }, 0);
     const NOGLOW = api.level >= 15;                    // from level 16: remember the hops yourself (no glowing boxes)
     const BAL = api.lv(7, 4.5, 3, 2);                 // seconds you can balance on one foot before you wobble: shorter every level
     let round = 0, queue = [], need = new Set(), mistakes = 0, stone = 0, balT = null;
@@ -279,8 +285,7 @@ FZ.reg({
         else queue.push({ ids: S[i], msg: S[i].length === 1 ? `Hop back on ONE foot 🦶 → box ${S[i][0]}` : `Hop back on TWO feet 🦶🦶 → boxes ${S[i].join(' & ')}` });
       }
     }
-    api.on(board, 'click', e => {
-      const s = e.target.closest('.sq'); if (!s) return;
+    function press(s) {
       const id = s.dataset.id;
       if (need.has(id)) {
         need.delete(id); s.classList.remove('target');
@@ -289,7 +294,26 @@ FZ.reg({
         if (!need.size) { const st = cur; hopTo(st.ids, st.pick ? 'kick' : st.ids.length > 1 || st.ids[0] === 'L' ? 'wide' : 'knee'); if (st.pick) { const sb = $('.sq.stone', board); if (sb) { sb.classList.remove('stone'); sb.innerHTML = sb.dataset.id; } } }
         if (!need.size) api.later(next, 250);
       } else { mistakes++; api.sfx('oops'); if (!api.loseHeart()) return api.fail(FZ.lang === 'tl' ? 'Naubos ang puso. Laktawan ang kahong may bato!' : 'Out of hearts. Remember to skip the box with the stone!'); s.classList.add('wiggle'); setTimeout(() => s.classList.remove('wiggle'), 400); }
+    }
+    let swipedAt = 0;
+    api.on(board, 'click', e => { if (performance.now() - swipedAt < 400) return; const s = e.target.closest('.sq'); if (s) press(s); });   // a swipe that ends on a box is not a tap
+    /* SWIPE ANYWHERE: ⬆️ throw / hop on one foot / into Langit, ⬅️➡️ two feet on a pair of boxes, ⬇️ bend down for the stone */
+    const ges = h('<div class="pges" aria-hidden="true"></div>'); board.append(ges);
+    const want = () => phase === 'throw' ? 'up' : !cur ? null : cur.pick ? 'down' : cur.ids.length > 1 ? 'side' : 'up';
+    const ARW = { up: '⬆️', side: '⬅️➡️', down: '⬇️' };
+    api.every(() => { const w = want(); ges.textContent = w && !NOGLOW ? ARW[w] : ''; ges.dataset.w = w || ''; }, 150);
+    let sw = null;
+    api.on(api.stage, 'pointerdown', e => { sw = { x: e.clientX, y: e.clientY, id: e.pointerId }; });
+    api.on(window, 'pointerup', e => {
+      if (!sw || e.pointerId !== sw.id) return; const dx = e.clientX - sw.x, dy = e.clientY - sw.y; sw = null;
+      if (Math.hypot(dx, dy) < 34) return;                                         // a tap, not a swipe (taps on boxes still work)
+      swipedAt = performance.now();
+      const g = Math.abs(dx) > Math.abs(dy) ? 'side' : dy < 0 ? 'up' : 'down', w = want(); if (!w || !need.size) return;
+      if (g === w) [...need].forEach(id => press(sq(id)));
+      else { const wrong = $$('.sq', board).find(x => !need.has(x.dataset.id)); if (wrong) press(wrong); }
     });
+    api.on(window, 'keydown', e => { const m = { ArrowUp: 'up', ArrowLeft: 'side', ArrowRight: 'side', ArrowDown: 'down' }[e.key]; if (!m) return; e.preventDefault(); const w = want(); if (!w || !need.size) return;
+      if (m === w) [...need].forEach(id => press(sq(id))); else { const wrong = $$('.sq', board).find(x => !need.has(x.dataset.id)); if (wrong) press(wrong); } });
     startRound();
   }
 });
@@ -320,7 +344,7 @@ FZ.reg({
     const PLACE = api.level < 9 ? 3 : api.level < 19 ? 2 : 1, HEARTS = 3;
     const NAME = BAMBOO ? (L ? 'kawayan' : 'bamboo stilts') : (L ? 'bao' : 'coconut shells');
     api.goal(PLACE === 3 ? { en: `Reach the 🏁 finish on ${NAME} (${STEPS} steps)`, tl: `Umabot sa 🏁 dulo gamit ang ${NAME} (${STEPS} hakbang)`, hearts: HEARTS }
-      : PLACE === 2 ? { en: `Finish 1st or 2nd on ${NAME} (${STEPS} steps)`, tl: `Matapos nang 1st o 2nd gamit ang ${NAME} (${STEPS} hakbang)`, hearts: HEARTS }
+      : PLACE === 2 ? { en: `Finish 1st or 2nd on ${NAME} (${STEPS} steps)`, tl: `Maging 1st o 2nd gamit ang ${NAME} (${STEPS} hakbang)`, hearts: HEARTS }
       : { en: `Win the race on ${NAME} (${STEPS} steps)`, tl: `Manalo sa karera gamit ang ${NAME} (${STEPS} hakbang)`, hearts: HEARTS });
     const scene = h(`<div class="kdg ${BAMBOO ? 'bamboo' : 'bao'}"><div class="ksky"></div>
       <svg class="kvlanes" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="33,24 39,24 18,100 0,100" fill="#d9b382"/><polygon points="47,24 53,24 62,100 38,100" fill="#d9b382"/><polygon points="61,24 67,24 100,100 82,100" fill="#d9b382"/></svg>
@@ -365,7 +389,7 @@ FZ.reg({
       if (r.me) {
         if (n <= PLACE) return api.finish(Math.min(api.heartStars(), n === 1 ? 3 : n === 2 ? 2 : 1), n === 1 ? (L ? 'Nanalo ka sa karera! 🥇' : 'You won the race! 🥇') : (L ? `Nakarating ka! Ika-${n} ka.` : `You made it! You came ${n === 2 ? '2nd' : '3rd'}.`));
       }
-      if (!finished.includes(me) && finished.length >= PLACE) api.fail(L ? 'Naunahan ka. Kaliwa, kanan — at hakbang kapag nasa berde!' : 'The others were faster. Left, right — and step when the marker is in the green!');
+      if (!finished.includes(me) && finished.length >= PLACE) api.fail(L ? 'Naunahan ka. Kaliwa, kanan — at humakbang kapag nasa berde!' : 'The others were faster. Left, right — and step when the marker is in the green!');
     }
     /* your steps */
     let go = false, ph = Math.random() * 6, mk_ = 0, wob = 0, busy = 0, hearts = HEARTS;
@@ -373,8 +397,8 @@ FZ.reg({
       r.fall = 1.3; r.lean = r.lean >= 0 ? 1.3 : -1.3; r.lift = null; api.sfx('oops');
       if (r.me) {
         hearts--; api.loseHeart(); wob = 0; r.p = Math.max(0, r.p - 2);
-        if (hearts <= 0) return api.fail(L ? 'Nahulog ka nang 3 beses. Hakbang lang kapag nasa berde ang marka!' : 'You fell off 3 times. Only step when the marker is in the green!');
-        api.msg(L ? 'Nahulog! Aakyat ulit… (bumalik nang 2 hakbang)' : 'You fell off! Climbing back on… (2 steps back)', true);
+        if (hearts <= 0) return api.fail(L ? 'Nahulog ka nang 3 beses. Humakbang lang kapag nasa berde ang marka!' : 'You fell off 3 times. Only step when the marker is in the green!');
+        api.msg(L ? 'Nahulog! Aakyat ulit… (2 hakbang pabalik)' : 'You fell off! Climbing back on… (2 steps back)', true);
       }
     }
     function step(f) {
@@ -383,7 +407,7 @@ FZ.reg({
       busy = STEPT; me.lift = f; api.later(() => { me.lift = null; }, STEPT * 900);
       if (same || !good) {
         wob += same ? .5 : .45; me.lean = (mk_ >= 0 ? 1 : -1) * (.4 + wob * .5); api.sfx('pop');
-        api.msg(same ? (L ? 'Pagewang! Salitan: kaliwa, kanan!' : 'Wobble! Take turns: left, right!') : (L ? 'Pagewang! Hintaying nasa berde ang marka.' : 'Wobble! Wait for the marker to be in the green.'));
+        api.msg(same ? (L ? 'Pagewang! Salitan dapat: kaliwa, kanan!' : 'Wobble! Take turns: left, right!') : (L ? 'Pagewang! Hintaying nasa berde ang marka.' : 'Wobble! Wait for the marker to be in the green.'));
         if (wob >= 1) fallOff(me);
         return;
       }
@@ -422,7 +446,7 @@ FZ.reg({
     let c = 3; api.msg(L ? 'Humanda… sumakay sa ' + NAME + '!' : 'Get ready… climb on your ' + NAME + '!', true);
     const id = api.every(() => {
       if (c > 0) { api.msg(String(c), false); FZ.say(String(c)); api.sfx('pop'); c--; }
-      else { api.stopEvery(id); go = true; api.msg(L ? 'TAKBO! Kaliwa, kanan — hakbang kapag nasa berde!' : 'GO! Left, right — step when the marker is in the green!', true); }
+      else { api.stopEvery(id); go = true; api.msg(L ? 'TAKBO! Kaliwa, kanan — humakbang kapag nasa berde!' : 'GO! Left, right — step when the marker is in the green!', true); }
     }, 900);
     FZ.kadangPeek = () => ({ go, mk: mk_, GZ, busy, wob, me: me.p, fall: me.fall, last: me.last, others: rs.slice(0, 2).map(r => r.p), STEPS });
   }
@@ -492,7 +516,7 @@ FZ.reg({
     const me = F.me = F.actor({ x: W / 2, y: LINE + 12, make: MK.me(), speed: 32, locked: true });
     const taya = F.actor({ x: CAN.x + 12, y: CAN.y + 2, make: MK.rival(), speed: TS, tag: 'Taya', tagBg: '#e03131', tagFg: '#fff' });
     const pals = [0, 1].map(i => F.actor({ x: i ? W - 16 : 16, y: LINE + 10, make: MK.pal(i + 1), speed: 20, solid: false }));
-    api.goal({ en: `Knock down the can ${NEED} time${NEED > 1 ? 's' : ''} and get your slipper back safely`, tl: `Patumbahin ang lata nang ${NEED} beses at makuha ang tsinelas nang ligtas`, hearts: HEARTS });
+    api.goal({ en: `Knock down the can ${NEED} time${NEED > 1 ? 's' : ''} and get your slipper back safely`, tl: `Patumbahin ang lata nang ${NEED} beses at kunin ang tsinelas nang hindi nataya`, hearts: HEARTS });
     const prog = () => api.progress(`🥫 ${downs} / ${NEED}`);
     prog();
     api.msg(L2('Drag from your player toward the can 🥫, then let go to throw!', 'I-drag mula sa iyo papunta sa lata 🥫, saka bitawan para ihagis!'), true);
@@ -530,7 +554,7 @@ FZ.reg({
           roll = { x: clamp(CAN.x + Math.cos(ang) * 8 + (Math.random() - .5) * 8, 6, W - 6), y: clamp(CAN.y + Math.sin(ang) * 8, 6, LINE - 8) };
           slip.x = clamp(slip.x + Math.cos(ang) * 24 + (Math.random() < .5 ? -1 : 1) * (6 + Math.random() * 10), 5, W - 5); slip.y = clamp(slip.y + Math.sin(ang) * 24, 5, H - 5);
           api.msg(L2('TUMBA! 🥫 Run and get your 🩴, then back behind the line!', 'TUMBA! 🥫 Takbo, kunin ang 🩴, saka bumalik sa likod ng linya!'), true); }
-        else { api.sfx('oops'); api.msg(what === 'taya' ? L2('Taya blocked it! Now go get your 🩴 — carefully!', 'Naharang ni Taya! Kunin ang 🩴 mo — mag-ingat!') : L2('Mintis! Missed. Go get your 🩴 — watch out for Taya!', 'Mintis! Kunin ang 🩴 mo — bantayan si Taya!'), true); }
+        else { api.sfx('oops'); api.msg(what === 'taya' ? L2('Taya blocked it! Now go get your 🩴 — carefully!', 'Naharang ni Taya! Kunin ang 🩴 mo — mag-ingat!') : L2('Mintis! Missed. Go get your 🩴 — watch out for Taya!', 'Sablay! Kunin ang 🩴 mo — bantayan si Taya!'), true); }
         state = 'fetch'; me.locked = false; F.goal = null; carrying = false; fixT = 0;
       };
     }
@@ -539,7 +563,7 @@ FZ.reg({
     function tagged() {
       api.sfx('oops'); safeT = 1.5;
       if (!api.loseHeart()) { F.frozen = true; return api.fail(L2('Taya tagged you too many times. Throw, then run fast to your slipper!', 'Maraming beses kang nataya. Ihagis, saka tumakbo nang mabilis sa tsinelas mo!')); }
-      api.msg(L2('Natayaan! 😅 Taya tagged you. Back to the line — try again!', 'Natayaan! 😅 Balik sa linya — subukan ulit!'), true);
+      api.msg(L2('Nataya ka! 😅 Taya tagged you. Back to the line — try again!', 'Nataya ka! 😅 Balik sa linya — subukan ulit!'), true);
       backToLine(false);
     }
     function backToLine(ok) {

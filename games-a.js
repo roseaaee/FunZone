@@ -38,7 +38,7 @@ function safeTag(api, cfg) {
   let taya = F.actor({ x: 18, y: 14, make: MK.rival(), speed: TS, tag: 'Taya', tagBg: '#e03131', tagFg: '#fff' });
   const friends = [0, 1, 3].map((i, k) => F.actor({ x: 30 + k * 50, y: 40 + k * 20, make: MK.pal(i), speed: FS, zone: null, wait: 0 }));
   let role = 'run', hops = 0, last = null, stay = 0, tagged = 0, inv = 1.5, prey = null, warned = false;
-  const hud = () => { hudSet(F, role === 'run' ? '' : chip('🏃 ' + L2('You are Taya! Tag a friend', 'Ikaw ang Taya! Tayaan ang kaibigan'), 'red')); api.progress(`⭐ ${hops} / ${HOPS} · ⏱️ ${Math.ceil(tleft)}`); };
+  const hud = () => { hudSet(F, role === 'run' ? '' : chip('🏃 ' + L2('You are Taya! Tag a friend', 'Ikaw ang Taya! Tayain ang kaibigan'), 'red')); api.progress(`⭐ ${hops} / ${HOPS} · ⏱️ ${Math.ceil(tleft)}`); };
   api.goal({ en: cfg.goalEn(HOPS) + ` in ${TLIM} seconds`, tl: cfg.goalTl(HOPS) + ` sa loob ng ${TLIM} segundo`, hearts: HEARTS });
   hud();
   api.msg(cfg.startMsg, true);
@@ -51,7 +51,7 @@ function safeTag(api, cfg) {
       const c = zz.c(F); f.target = { x: c.x + (Math.random() - .5) * 4, y: c.y + (Math.random() - .5) * 3 }; f.nextZone = zz;
     }
     F.goTo(f, f.target.x, f.target.y, dt, f.speed, 1);
-    const z2 = zoneAt(f.x, f.y); if (z2 && z2 !== f.zone) { f.zone = z2; f.wait = 1 + Math.random() * LIM; f.target = null; }
+    const z2 = zoneAt(f.x, f.y); if (z2 && z2 !== f.zone) { f.zone = z2; f.wait = .6 + Math.random() * LIM * .55; f.target = null; }
   }
   function tick(dt) {
     inv -= dt; cfg.tick && cfg.tick(dt, F);
@@ -68,10 +68,15 @@ function safeTag(api, cfg) {
       if (tired && !warned) { warned = true; api.sfx('oops'); api.msg(cfg.countMsg || L2('Taya counted to 5! Run to another spot!', 'Nagbilang na si Taya ng lima! Lumipat ng puwesto!'), true); }
       /* Taya: chases you when you are not safe, waits close by when you are */
       if (!safe) F.goTo(taya, me.x + me.vx * LEAD, me.y + me.vy * LEAD, dt, TS, 0.3);
-      else { const a = Math.atan2(taya.y - me.y, taya.x - me.x), R = api.lv(26, 14); F.goTo(taya, me.x + Math.cos(a) * R, me.y + Math.sin(a) * R, dt, TS * .6, 1); }
-      friends.forEach(f => npcRoam(f, dt));
+      else {
+        /* you are safe: Taya goes after a friend who is out in the open (like the real game), and stays close to you otherwise */
+        const open = friends.filter(f => !zoneAt(f.x, f.y) && F.dist(f, taya) < 45).sort((a, b) => F.dist(a, taya) - F.dist(b, taya))[0];
+        if (open && stay < LIM - 2) { F.goTo(taya, open.x, open.y, dt, TS * .85, .3); if (F.dist(taya, open) < 4.5 && !open.oops) { open.oops = 1.4; open.tag = '😅'; open.target = null; api.sfx('pop'); } }
+        else { const a = Math.atan2(taya.y - me.y, taya.x - me.x), R = api.lv(26, 14); F.goTo(taya, me.x + Math.cos(a) * R, me.y + Math.sin(a) * R, dt, TS * .6, 1); }
+      }
+      friends.forEach(f => { if (f.oops) { f.oops -= dt; if (f.oops <= 0) { f.oops = 0; f.tag = null; } } npcRoam(f, dt, f.oops ? taya : null); });
       if (!safe && inv <= 0 && F.dist(taya, me) < 5) {
-        tagged++; if (!api.loseHeart()) { F.frozen = true; return api.fail(L2('Taya tagged you too many times. Move before the count ends!', 'Ilang beses kang natayaan. Lumipat bago matapos ang bilang!')); }
+        tagged++; if (!api.loseHeart()) { F.frozen = true; return api.fail(L2('Taya tagged you too many times. Move before the count ends!', 'Ilang beses kang nataya. Lumipat bago matapos ang bilang!')); }
         role = 'it'; api.sfx('oops'); me.ring = null; me.tag = 'Taya'; me.tagBg = '#e03131'; me.tagFg = '#fff';
         taya.tag = null; friends.push(taya); prey = null; inv = 1;
         api.msg(cfg.caughtMsg, true); hud();
@@ -147,7 +152,7 @@ FZ.reg({
     }
     const boss = BOSS ? F.actor({ x: 50, y: lines[0], make: MK.me({ shirt: '#7048e8', shorts: '#212529', girl: false, hairStyle: 'short', top: 'tee', bottom: 'shorts' }), pose: 'arms', speed: GS * api.lv(.6, .9), solid: false, tag: L2('Head', 'Patotot') }) : null;
     /* two teammates run too, like the real game: a tagger blocks whichever runner is closest to its line */
-    const mates = [0, 1].map(i => F.actor({ x: 30 + i * 40, y: BOT + 8, make: MK.pal(i), speed: 26, solid: false, up: true, wait: 1 + i * 1.5, tx: 50 }));
+    const mates = [0, 1].map(i => F.actor({ x: 30 + i * 40, y: BOT + 8, make: MK.pal(i), speed: 26, solid: false, up: true, wait: .4 + i * .9, tx: 50 }));
     let phase = 'out', trips = 0, safeT = 2.2, seenX = me.x, seenY = me.y;     // taggers react to where you WERE a moment ago, so quick fakes work
     api.goal({
       en: `Get past ${guards.length + (boss ? 1 : 0)} taggers on ${NL} lines to ⭐ and back to 🏠${TRIPS > 1 ? ` ${TRIPS} times` : ''}`,
@@ -163,8 +168,8 @@ FZ.reg({
         const yGoal = m.up ? TOP - 8 : BOT + 8;
         const g = guards.filter(g => m.up ? g.y < m.y - 1 : g.y > m.y + 1).sort((a, b) => Math.abs(a.y - m.y) - Math.abs(b.y - m.y))[0];
         if (g && Math.abs(g.y - m.y) < 12 && Math.abs(g.x - m.x) < 12) { if (Math.random() < dt * 1.5) m.tx = clamp(m.x + (m.x > g.x ? 22 : -22), X0 + 4, X1 - 4); F.goTo(m, m.tx, m.y + (m.up ? 2 : -2), dt, 22, .5); }
-        else if (F.goTo(m, m.tx, yGoal, dt, 24, 1.5)) { m.up = !m.up; m.wait = 1 + Math.random() * 2; m.tx = 20 + Math.random() * 60; }
-        if (guards.some(g => Math.abs(m.x - g.x) < REACH * .9 && Math.abs(m.y - g.y) < REACH * .6)) { m.y = m.up ? BOT + 8 : TOP - 8; m.up = !m.up; m.wait = 1.5; }   // a tagged teammate starts over
+        else if (F.goTo(m, m.tx, yGoal, dt, 24, 1.5)) { m.up = !m.up; m.wait = .4 + Math.random() * .9; m.tx = 20 + Math.random() * 60; }
+        if (guards.some(g => Math.abs(m.x - g.x) < REACH * .9 && Math.abs(m.y - g.y) < REACH * .6)) { m.y = m.up ? BOT + 8 : TOP - 8; m.up = !m.up; m.wait = .8; }   // a tagged teammate starts over
       });
       guards.forEach(g => {
         /* a tagger stays on its own line and always tries to stand right in front of you: it watches where you are heading,
@@ -188,9 +193,9 @@ FZ.reg({
         const hit = guards.some(g => Math.abs(me.x - g.x) < REACH && Math.abs(me.y - g.y) < REACH * .55) || (boss && Math.abs(me.x - boss.x) < REACH * .7 && Math.abs(me.y - boss.y) < REACH);
         if (hit) {
           api.sfx('oops'); const left = api.loseHeart(); F.goal = null;
-          if (!left) { F.frozen = true; return api.fail(L2('The taggers caught you too many times. Watch them, then fake and dash!', 'Ilang beses kang natayaan. Bantayan sila, lumihis, saka tumakbo!')); }
+          if (!left) { F.frozen = true; return api.fail(L2('The taggers caught you too many times. Watch them, then fake and dash!', 'Ilang beses kang nataya. Bantayan sila, lumihis, saka tumakbo!')); }
           safeT = 1.6; me.x = me.x < 50 ? 28 : 72; me.y = phase === 'out' ? BOT + 10 : TOP - 8;
-          api.msg(L2('Touched! 😅 Try that part again.', 'Natayaan! 😅 Ulitin ang bahaging iyan.'), true); return;
+          api.msg(L2('Touched! 😅 Try that part again.', 'Nataya ka! 😅 Ulitin ang bahaging iyan.'), true); return;
         }
       }
       if (phase === 'out' && me.y < TOP - 2) { phase = 'back'; api.sfx('good'); hud(); api.msg(L2('You crossed! ⭐ Now run back home 🏠!', 'Nakatawid ka! ⭐ Ngayon, takbo pabalik sa 🏠!'), true); }
@@ -255,7 +260,7 @@ FZ.reg({
     const hud = () => { hudSet(F, chip('🚩 ' + L2('Touch their base!', 'Hawakan ang base nila!')) + (RAID ? chip('🏳️ ' + L2('Guard yours', 'Bantayan ang inyo')) : '')); api.progress(`🚩 ${caps} / ${CAP}`); };
     api.goal({ en: `Touch the red base${CAP > 1 ? ` ${CAP} times` : ''} · ${N} red player${N > 1 ? 's' : ''} chasing`, tl: `Hawakan ang pulang base${CAP > 1 ? ` nang ${CAP} beses` : ''} · ${N} kalabang humahabol`, hearts: HEARTS });
     hud();
-    api.msg(L2('Run to the red 🚩 base! The red team chases you anywhere — only your own base is safe.', 'Takbo sa pulang 🚩 base! Hahabulin ka nila kahit saan — ligtas ka lang sa sarili ninyong base.'), true);
+    api.msg(L2('Run to the red 🚩 base! The red team chases you anywhere — only your own base is safe.', 'Takbo sa pulang 🚩 base! Hahabulin ka nila kahit saan — ligtas ka lang sa base ninyo.'), true);
     function goJail() {
       caught++; api.sfx('oops');
       if (!api.loseHeart()) { F.frozen = true; return api.fail(L2('The red team caught you too many times. Wait for a gap, then run!', 'Ilang beses kang nahuli. Maghintay ng puwang, saka tumakbo!')); }
@@ -305,7 +310,16 @@ FZ.reg({
           }
         }
       }
-      pals.forEach((p, i) => { if (p !== friend) F.goTo(p, 22 + Math.sin(F.t * .7 + i * 3) * 10, i ? 84 : 28, dt, 12, 1); });
+      /* your teammates really play: they run out toward the red side, back off when a red player comes close, then try again */
+      pals.forEach((p, i) => {
+        if (p === friend) return;
+        p.wait = (p.wait || 0) - dt;
+        const near = reds.find(r => F.dist(r, p) < 15);
+        if (near && p.state !== 'home') { p.state = 'home'; p.ty = i ? 80 : 32; }
+        if (p.state === 'home') { if (F.goTo(p, 16 + i * 6, p.ty, dt, p.speed, 1.5)) { p.state = 'rest'; p.wait = 1 + Math.random() * 2; } }
+        else if (p.state === 'rest' || !p.state) { if (p.wait <= 0) { p.state = 'out'; p.tx = MID + 6 + Math.random() * 30; p.ty = 18 + Math.random() * (H - 36); } }
+        else if (F.goTo(p, p.tx, p.ty, dt, p.speed * .8, 2)) { p.state = 'home'; p.ty = 20 + Math.random() * (H - 40); }
+      });
       if (!jailed && F.dist(me, EBASE) < 6.5) {
         caps++; api.sfx('good'); hud();
         if (caps >= CAP) { F.frozen = true; return api.finish(api.heartStars(), L2('You captured the red base! 🚩', 'Naagaw mo ang pulang base! 🚩')); }
@@ -361,7 +375,7 @@ FZ.reg({
       W, H, zones, props, ground: GRASS(),
       goalEn: n => `Reach ${n} different high places (langit)`, goalTl: n => `Umabot sa ${n} iba't ibang mataas na lugar (langit)`,
       startMsg: L2('Stand on high places (langit) to be safe. Keep hopping to new ones!', 'Tumayo sa matataas na lugar (langit) para ligtas. Lumipat-lipat!'),
-      caughtMsg: L2('Tagged on the lupa! Now YOU are Taya — tag a friend!', 'Nataya ka sa lupa! Ikaw na ang Taya — tayaan ang kaibigan!'),
+      caughtMsg: L2('Tagged on the lupa! Now YOU are Taya — tag a friend!', 'Nataya ka sa lupa! Ikaw na ang Taya — tayain ang kaibigan!'),
       winMsg: L2('You hopped from langit to langit like a pro!', 'Ang galing mong lumipat-lipat ng langit!')
     });
   }
@@ -440,7 +454,7 @@ FZ.reg({
       const kids = hideIn.map((s, i) => { s.who = i; return F.actor({ x: s.x, y: s.y + 4, make: MK.pal(i), speed: SPF, hidden: true, name: names[i], spot: s, state: 'hid' }); });
       let pung = 0, saved = 0, busy = false, pend = null, lastSneak = 0;
       const hud = () => { hudSet(F, chip('🔍 ' + L2('Seeker', 'Taya')) + chip('⏱️ ' + Math.ceil(timeLeft)) + (saved ? chip(`🏃 ${saved}`) : '') + chip(`👀 ${NK - pung - saved}`)); api.progress(`✅ ${pung} / ${NEED}`); };
-      api.goal({ en: `Find and "Pung!" at least ${NEED} of ${NK} friends in ${TIME} seconds`, tl: `Hanapin at "Pung!" ang hindi bababa sa ${NEED} sa ${NK} kaibigan sa loob ng ${TIME} segundo` });
+      api.goal({ en: `Find and "Pung!" at least ${NEED} of ${NK} friends in ${TIME} seconds`, tl: `Hanapin at "Pung!" ang ${NEED} o higit pa sa ${NK} kaibigan sa loob ng ${TIME} segundo` });
       F.frozen = true; me.pose = 'arms';
       api.msg(L2(`${P.name}: you are Taya! Close your eyes and count…`, `${P.name}: ikaw ang Taya! Pumikit at magbilang…`), true);
       count(api.lv(800, 650), () => { F.frozen = false; me.pose = null; hud(); api.msg(L2('Ready or not, here I come! Walk around and tap a hiding place to look. 🔍', 'Handa man o hindi, hahanapin ko kayo! Maglakad at i-tap ang taguan para silipin. 🔍'), true); }, true);
@@ -466,7 +480,7 @@ FZ.reg({
       let hudT = 0;
       tickFn = dt => {
         timeLeft -= dt; hudT += dt; if (hudT > .5) { hudT = 0; hud(); }
-        if (timeLeft <= 0) { F.frozen = true; return pung >= NEED ? api.finish(saved === 0 ? 2 : 1, L2('Time is up! You found enough friends.', 'Tapos na ang oras! Sapat ang nahanap mo.')) : api.fail(L2('Time is up! Look faster — check places near you first.', 'Tapos na ang oras! Bilisan — silipin muna ang malalapit.')); }
+        if (timeLeft <= 0) { F.frozen = true; return pung >= NEED ? api.finish(saved === 0 ? 2 : 1, L2('Time is up! You found enough friends.', 'Tapos na ang oras! Sapat ang nahanap mo.')) : api.fail(L2('Time is up! Look faster — check places near you first.', 'Tapos na ang oras! Sa susunod, silipin muna ang malalapit.')); }
         spots.forEach(s => { s.wig = Math.max(0, s.wig - dt); if (HINT && s.who !== null && Math.random() < dt * .3) s.wig = .45; });
         if (SNEAK && F.t - lastSneak > 5) {                                   // a hider sneaks home when you are far away
           const k = kids.find(k => k.state === 'hid' && F.dist(me, k) > 70 && F.dist(me, BASE) > 30);
@@ -577,7 +591,7 @@ FZ.reg({
       tick(dt) { ang += dt * SUN; if (ang > Math.PI - .2) ang = .2; },
       goalEn: n => `Run to ${n} different shadows`, goalTl: n => `Tumakbo sa ${n} iba't ibang lilim`,
       startMsg: L2('Stay in the shade! The shadows move with the sun ☀️.', 'Manatili sa lilim! Gumagalaw ang anino kasama ng araw ☀️.'),
-      caughtMsg: L2('Tagged in the sunshine! Now YOU are Taya — tag a friend!', 'Nataya ka sa araw! Ikaw na ang Taya — tayaan ang kaibigan!'),
+      caughtMsg: L2('Tagged in the sunshine! Now YOU are Taya — tag a friend!', 'Nataya ka sa araw! Ikaw na ang Taya — tayain ang kaibigan!'),
       winMsg: L2('You played tag in the sun and the shade!', 'Ang galing mo sa araw at lilim!')
     });
   }
@@ -611,7 +625,7 @@ FZ.reg({
     const taken = [];
     let left = DUR, lost = 0;
     const hud = () => { hudSet(F, chip('⏱️ ' + Math.ceil(left))); api.progress('🐥 ' + chicks.length + ' / ' + N); };
-    api.goal({ en: `Keep at least ${N - MAYLOSE} of ${N} chicks safe for ${DUR} seconds`, tl: `Ingatan ang hindi bababa sa ${N - MAYLOSE} sa ${N} sisiw sa loob ng ${DUR} segundo`, hearts: MAYLOSE + 1 });
+    api.goal({ en: `Keep at least ${N - MAYLOSE} of ${N} chicks safe for ${DUR} seconds`, tl: `Iligtas ang ${N - MAYLOSE} o higit pa sa ${N} sisiw sa loob ng ${DUR} segundo`, hearts: MAYLOSE + 1 });
     api.msg(L2('Protect your chicks! Stay between the hawk and the last chick.', 'Protektahan ang mga sisiw! Pumagitna sa lawin at sa huling sisiw.'), true);
     function tick(dt) {
       left -= dt; hud();
@@ -682,7 +696,7 @@ FZ.reg({
       W, H, zones, props, solids: fences.map(f => f.r ? { x: f.x, y: f.y, r: f.r } : { x: f.x, y: f.y, w: f.w, h: f.h }), ground: GRASS('#a9df8a', '#98d27a'),
       goalEn: n => `Touch ${n} different fences or posts`, goalTl: n => `Humawak sa ${n} iba't ibang bakod o poste`,
       startMsg: L2('Touch a fence or post to be safe. Keep moving to new ones!', 'Humawak sa bakod o poste para ligtas. Lumipat-lipat!'),
-      caughtMsg: L2('Tagged away from the fence! Now YOU are Taya — tag a friend!', 'Nataya ka malayo sa bakod! Ikaw na ang Taya — tayaan ang kaibigan!'),
+      caughtMsg: L2('Tagged away from the fence! Now YOU are Taya — tag a friend!', 'Nataya ka malayo sa bakod! Ikaw na ang Taya — tayain ang kaibigan!'),
       countMsg: L2('Taya counted! Let go and run to another fence!', 'Nagbilang na si Taya! Bitaw at takbo sa ibang bakod!'),
       winMsg: L2('You are a fence-hugging champion!', 'Kampeon ka sa Kapitang Bakod!')
     });

@@ -238,7 +238,7 @@ FZ.reg({
       const again = gotThisShot > 0 && shotBy.inRing;                         // real rule: knocked one out AND your pamato stayed inside → shoot again
       if (!again) { turn = turn === 'me' ? 'op' : 'me'; }
       if (turn === 'me') api.msg(again ? (L ? `Nakakuha ka ng ${gotThisShot}! Tira ulit mula sa kinatigilan ng pamato mo.` : `You won ${gotThisShot}! Shoot again from where your pamato stopped.`) : (L ? 'Ikaw na! Pumili ng puwesto sa gilid ng bilog o tumira mula sa pamato mo.' : 'Your turn! Pick a spot on the edge of the circle, or shoot from your pamato.'), true);
-      else api.msg(again ? (L ? `Nakakuha si ${OPP.n} — tira ulit siya.` : `${OPP.n} won one — shooting again.`) : (L ? `Si ${OPP.n} naman.` : `${OPP.n}'s turn.`), true);
+      else api.msg(again ? (L ? `Nakakuha si ${OPP.n} — titira ulit siya.` : `${OPP.n} won one — shooting again.`) : (L ? `Si ${OPP.n} naman.` : `${OPP.n}'s turn.`), true);
       api.later(startTurn, 900);
     }
     function startTurn() {
@@ -285,7 +285,7 @@ FZ.reg({
     api.on(cv, 'pointerup', rel); api.on(cv, 'pointercancel', rel);
     const F_peek = () => ({ VW, VH, OX, OY, phase, turn, moving, me: { x: me.x, y: me.y, inRing: me.inRing }, won, left: balls.filter(b => !b.gone).map(b => ({ x: b.x, y: b.y })), C, RR, lag: lagDone });
     FZ.holenPeek = F_peek;                                                      // (for automatic tests)
-    api.msg(L ? 'Pitik sa guhit! Hilahin pababa at bitawan — sino ang pinakamalapit sa guhit ang mauuna.' : 'Shoot to the line first! Pull back (down) and let go — closest to the line goes first.', true);
+    api.msg(L ? 'Pitik sa guhit! Hilahin pababa at bitawan — ang pinakamalapit sa guhit ang mauuna.' : 'Shoot to the line first! Pull back (down) and let go — closest to the line goes first.', true);
     api.progress(`🔵 0 · 🔴 0`);
   }
 });
@@ -309,11 +309,11 @@ FZ.reg({
   start(api) {
     /* who to play against: the kids choose, so it is not always Lolo */
     const OPPS = [
-      { name: 'Lola Nena', emoji: '👵', level: 'easy', en: 'Gentle. She makes simple moves.', tl: 'Mahinahon. Simpleng galaw ang ginagawa niya.' },
+      { name: 'Lola Nena', emoji: '👵', level: 'easy', en: 'Gentle. She makes simple moves.', tl: 'Mabait. Simple lang ang mga galaw niya.' },
       { name: 'Ate Mae', emoji: '👧', level: 'normal', en: 'A fair match.', tl: 'Patas na laban.' },
-      { name: 'Lolo', emoji: '👴', level: 'normal', en: 'Loves grabbing big piles.', tl: 'Mahilig kumuha ng malalaking tumpok.' },
+      { name: 'Lolo', emoji: '👴', level: 'normal', en: 'Loves grabbing big piles.', tl: 'Mahilig kumuha ng maraming sigay.' },
       { name: 'Kuya Ben', emoji: '👦', level: 'hard', en: 'A clever player. Watch out!', tl: 'Matalinong kalaro. Mag-ingat!' },
-      { name: 'Kalaro', emoji: '🧑‍🤝‍🧑', level: 'human', en: 'A friend plays on the same phone or tablet. Take turns.', tl: 'Kaibigang kalaro sa iisang telepono o tablet. Magpalitan.' }
+      { name: 'Kalaro', emoji: '🧑‍🤝‍🧑', level: 'human', en: 'A friend plays on the same phone or tablet. Take turns.', tl: 'Kaibigan mo ang kalaro, sa iisang telepono o tablet. Magsalitan kayo.' }
     ];
     const L = FZ.lang === 'tl' ? 'tl' : 'en';
     const lvOpps = OPPS;                                   // no levels: the opponent you pick sets how hard it is
@@ -343,15 +343,28 @@ FZ.reg({
       let turn = saved ? saved.turn : 0, busy = false, last = -1;
       const keep = () => api.save({ opp: OPPS.indexOf(opp), bd: bd.slice(), turn });
 
+      /* shells scattered in a pit: they get smaller when there are many, so they always fit */
+      function shellPile(n, store, px) {
+        if (!n) return '';
+        const k = Math.min(n, store ? 60 : 30);                                       // how many we draw (a very full pit just looks full)
+        const sz = store ? Math.max(10, 34 / Math.sqrt(Math.max(1, k / 3))) : Math.max(12, 44 / Math.sqrt(Math.max(1, k / 1.3)));
+        let out = '';
+        for (let j = 0; j < k; j++) {
+          const r = k === 1 ? 0 : Math.sqrt((j + .5) / k) * (store ? 40 : 34), t = j * 2.39996;
+          out += `<i style="left:${50 + Math.cos(t) * r}%;top:${52 + Math.sin(t) * r * (store ? 1 : .92)}%;font-size:${Math.round(sz * px) / 100}px;transform:translate(-50%,-50%) rotate(${(j * 47) % 360}deg)">🐚</i>`;
+        }
+        return '<span class="shpile">' + out + '</span>';
+      }
+      api.on(window, 'resize', () => api.later(render, 60));                          // pits change size: redraw the shells to fit
       function render() {
         els.forEach((e, i) => {
           const n = bd[i], store = i === 7 || i === 15;
           const mine = turn === 0 ? i <= 6 : (human && i >= 8 && i <= 14);
           e.classList.toggle('last', i === last);
           e.classList.toggle('glow', !busy && n > 0 && mine);
-          e.innerHTML = store
-            ? `<small>${i === 7 ? '🏠 You' : '🏠 ' + OPP}</small><b>${n}</b><span class="shells">${'🐚'.repeat(Math.min(n, 12))}</span>`
-            : `${n}<span class="shells">${'🐚'.repeat(Math.min(n, 7))}</span>`;
+          /* real shells, no numbers: the child sees (and can count) the shells themselves */
+          e.setAttribute('aria-label', `${n} ${n === 1 ? 'shell' : 'shells'}`);
+          e.innerHTML = (store ? `<small>${i === 7 ? '🏠 ' + (L === 'tl' ? 'Ikaw' : 'You') : '🏠 ' + OPP}</small>` : '') + shellPile(n, store, store ? Math.min(e.clientWidth, e.clientHeight) * 1.25 : e.clientWidth);
         });
         info.textContent = busy ? '' : turn === 0 ? '👇 Your turn!' : human ? `👆 ${OPP}'s turn! (top row)` : `${opp.emoji} ${OPP} is thinking…`;
       }
@@ -445,7 +458,7 @@ FZ.reg({
     const OPPS = [
       { name: 'Bunso', emoji: '🧒', rows: 2, smart: 0, en: 'Small game (8 caps each). Just learning!', tl: 'Maliit na laro (8 takip bawat isa). Nag-aaral pa lang!' },
       { name: 'Ate Mae', emoji: '👧', rows: 3, smart: .5, en: 'Full game. A fair match.', tl: 'Buong laro. Patas na laban.' },
-      { name: 'Lolo', emoji: '👴', rows: 3, smart: 1, en: 'Never leaves a cap for you to jump!', tl: 'Hindi nag-iiwan ng takip na matatalunan mo!' }
+      { name: 'Lolo', emoji: '👴', rows: 3, smart: 1, en: 'Never leaves a cap for you to jump!', tl: 'Hindi siya nag-iiwan ng takip na puwede mong kainin!' }
     ];
     if (api.saved && api.saved.bd) return play(OPPS[api.saved.opp] || OPPS[0], api.saved);
     const picker = h(`<div class="oppwrap"><h3 class="opp-title">${L === 'tl' ? 'Sino ang gusto mong kalaban?' : 'Who do you want to play against?'}</h3><div class="oppgrid"></div></div>`);

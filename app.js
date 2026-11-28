@@ -142,6 +142,7 @@ function openIntro(g) {
         <button class="round gt-back" id="iBack" aria-label="${FZ.t('back')}">⬅️</button>
         <div class="gt-title"><h1><span>${g.emoji}</span> ${g.name}</h1><p>${FZ.g(g, 'tag')}</p></div>
       </div>
+      <div class="gt-low">
       ${g.match ? `<div class="gt-two">${saved ? `<button class="gt-play" id="iCont">▶ ${FZ.t('gt_continue')}</button>` : ''}<button class="gt-play ${saved ? 'alt' : ''}" id="iNew">✨ ${FZ.t('gt_new')}</button></div>`
         : `<button class="gt-play" id="iPlay">▶ ${FZ.t('level')} ${nl + 1}</button>`}
       <div class="gt-row">
@@ -152,6 +153,7 @@ function openIntro(g) {
       <div class="gt-corner">
         <button class="round" id="iSound" aria-label="${FZ.t('snd_fx')}" aria-pressed="${!!FZ.settings.sound}">${FZ.settings.sound ? '🔊' : '🔇'}</button>
         <button class="round" id="iSet" aria-label="${FZ.t('gt_settings')}">⚙️</button>
+      </div>
       </div>
     </div>`;
   $('#iBack').onclick = goGames;
@@ -342,7 +344,7 @@ const ARROWS = ['←', '↑', '↓', '→'];
 FZ.keys = {
   patintero: [[ARROWS, '🏃']], agawan: [[ARROWS, '🏃']], langit: [[ARROWS, '🏃']], araw: [[ARROWS, '🏃']], bakod: [[ARROWS, '🏃']],
   lawin: [[ARROWS, '🐓']], taguan: [[ARROWS, '🚶']], tinik: [[['Space'], '🦘']], baka: [[['Space'], '🦘⏳']], garter: [[['Space'], '🦘⏳']],
-  kadang: [[['←', '→'], '🦶']], tumbang: [[['🖱️ drag'], '🩴'], [ARROWS, '🏃']], sipa: [[['←', '→'], '🏃'], [['Space'], '🦶']],
+  piko: [[['↑'], '🦶'], [['←', '→'], '🦶🦶'], [['↓'], '🪨']], kadang: [[['←', '→'], '🦶']], tumbang: [[['🖱️ drag'], '🩴'], [ARROWS, '🏃']], sipa: [[['←', '→'], '🏃'], [['Space'], '🦶']],
   palosebo: [[['Space'], '🤲'], [['S'], '🏖️'], [['F'], '👫']], sungka: [[['1', '…', '7'], '🐚']]
 };
 function renderKeyHint(g) {
@@ -369,6 +371,11 @@ function startGame(g, level = 0, ready = false) {
 /* ---------------- FILL THE SCREEN ----------------
    Every game's main area (the board, the scene, the court…) gets all the free space under the top bar,
    on phones, tablets and computers, upright or sideways. We measure the space and hand it over as --fh / --fw. */
+/* no "Download / Share / Translate…" browser menu when a child presses and holds on anything
+   (typing boxes and the grown-up corner still work normally) */
+addEventListener('contextmenu', e => { if (!e.target.closest('input, textarea, select, #parent .ptab a')) e.preventDefault(); }, { capture: true });
+addEventListener('selectstart', e => { if (!e.target.closest('input, textarea')) e.preventDefault(); });
+addEventListener('dragstart', e => { if (e.target.tagName === 'IMG' || e.target.closest('svg')) e.preventDefault(); });
 const MAIN = ':scope > :is(.jscene,.sipaarena,.piko,.sungka,.dama,.board,.holen2,.kdg)';
 let fitting = false, fitT = null;
 function fitFree(tell) {

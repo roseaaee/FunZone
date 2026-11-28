@@ -185,23 +185,31 @@ async function readPage() {
   if (rd.page > n) return;
   const pg = rd.page === 0 ? 'cover' : rd.page - 1;
   const blob = FZ.rec ? await FZ.rec.get(recKey(rd.st.id, rd.lang, pg)) : null;
+  const times = blob ? await FZ.rec.get(recKey(rd.st.id, rd.lang, pg) + '|t') : null;     // when each word was read (saved while recording)
   if (token !== rd.token || FZ.screen !== 'reader') return;
-  if (blob) return playAudio(URL.createObjectURL(blob), true, speakPage);
+  if (blob) return playAudio(URL.createObjectURL(blob), true, speakPage, times);
   const nar = rd.st.narration && rd.st.narration[rd.lang];
   if (nar) return playAudio(`${nar}${pg === 'cover' ? 'cover' : pg + 1}.mp3`, false, speakPage);
   speakPage();
 }
-/* play a recording and light up the words in step with it (spread by word length) */
-function playAudio(url, revoke, fallback) {
+/* play a recording and light up the words in step with it:
+   with the word times saved while recording when we have them, otherwise spread by word length */
+function playAudio(url, revoke, fallback, times) {
   const spans = $$('#rdText .w'), total = spans.reduce((a, s) => a + s.textContent.length + 1, 0);
   const ends = []; let acc = 0; spans.forEach(s => { acc += s.textContent.length + 1; ends.push(acc / total); });
   const a = new Audio(url); rd.audio = a; const token = rd.token;
   const light = i => spans.forEach((s, k) => s.classList.toggle('hl', k === i));
-  a.ontimeupdate = () => { if (!a.duration || !isFinite(a.duration)) return; const f = a.currentTime / a.duration; light(ends.findIndex(e => f <= e)); };
+  const timed = !!(times && times.w && times.w.length === spans.length);
+  let raf = 0;
+  const follow = () => { if (rd.audio !== a || a.paused) return; light(FZ.wordAt(times, a.currentTime)); raf = requestAnimationFrame(follow); };
+  if (timed) a.onplaying = () => { cancelAnimationFrame(raf); follow(); };
+  a.ontimeupdate = () => { if (timed) return; if (!a.duration || !isFinite(a.duration)) return; const f = a.currentTime / a.duration; light(ends.findIndex(e => f <= e)); };
   a.onended = () => { light(-1); if (revoke) URL.revokeObjectURL(url); };
   a.onerror = () => { if (revoke) URL.revokeObjectURL(url); if (token === rd.token && fallback) fallback(); };
   a.play().catch(() => { if (token === rd.token && fallback) fallback(); });
 }
+/* which word is being read at time t (seconds): the last word that has started; none before the first or after the last one ends */
+FZ.wordAt = (T, t) => { const times = T && T.w || T || []; let i = -1; for (let k = 0; k < times.length; k++) if (times[k] != null && t >= times[k]) i = k; if (i === times.length - 1 && T.end && t > T.end + .2) i = -1; return i; };
 function speakPage() {
   if (!('speechSynthesis' in window) || FZ.screen !== 'reader') return;
   const box = $('#rdText'); if (!box) return;
@@ -279,7 +287,11 @@ FZ.rec = (() => {
   };
 })();
 
-const recUI = { story: 0, lang: 'en', mr: null, page: null, stream: null, timer: null, card: null, open: null, t0: 0 };
+const recUI = { story: 0, lang: 'en', mr: null, page: null, stream: null, timer: null, card: null, open: null, t0: 0,
+  pace: store.get('recPace', 'normal'), gi: -1, times: [], gt: null, count: 0 };
+/* how long the highlight stays on a word: longer words take longer, and we pause at , and . ! ? */
+const PACE = { slow: 1.4, normal: 1, fast: .72 };
+const wordMs = w => { let ms = 230 + 62 * w.replace(/[^\p{L}\p{N}]/gu, '').length; if (/[,;:]$/.test(w)) ms += 280; if (/[.!?…"”]$/.test(w)) ms += 520; return ms * PACE[recUI.pace]; };
 const recText = (st, i) => i < st.pages.length ? (st.pages[i].en || '') : (st.lesson ? st.lesson.en : FZ.t('rec_end'));
 /* the list in Parent Mode: one row per page; "Record" opens the page in a big window */
 FZ.renderRecCard = async card => {
@@ -311,8 +323,9 @@ async function openRecPage(i) {
   m.innerHTML = `<div class="mcard recdlg" role="dialog" aria-label="${FZ.t('rec_page')} ${i + 1}">
     <div class="rechead"><b>${st.title.en}</b><span>${i < n ? `${FZ.t('rec_page')} ${i + 1} / ${n}` : FZ.t('rec_end')}</span></div>
     ${img}
-    <div class="recfull">${recText(st, i)}</div>
-    <div class="recstate ${live ? 'live' : ''}" id="recState">${live ? '🔴 ' + FZ.t('rec_now') + ' <span id="recClock">0:00</span>' : has ? '✅ ' + FZ.t('rec_saved') : FZ.t('rec_ready')}</div>
+    <div class="recfull ${live ? 'live' : ''}" id="recWords">${words(recText(st, i))}</div>
+    <div class="recpace" ${live ? 'hidden' : ''}><span>${FZ.t('rec_pace')}</span>${['slow', 'normal', 'fast'].map(p => `<button class="chip ${recUI.pace === p ? 'on' : ''}" data-p="${p}">${FZ.t('rec_' + p)}</button>`).join('')}</div>
+    <div class="recstate ${live ? 'live' : ''}" id="recState">${live ? '🔴 ' + FZ.t('rec_now') + ' <span id="recClock">0:00</span><br><small>' + FZ.t('rec_follow') + '</small>' : has ? '✅ ' + FZ.t('rec_saved') : FZ.t('rec_ready2')}</div>
     <button class="btn big recbig ${live ? 'stop' : ''}" id="recGo">${live ? FZ.t('rec_stop') : has ? '⏺ ' + FZ.t('rec_again') : FZ.t('rec_start')}</button>
     <div class="recnav">
       <button class="round" id="recPrev" aria-label="${FZ.t('rec_prev')}" ${i > 0 && !live ? '' : 'disabled'}>◀</button>
@@ -323,10 +336,21 @@ async function openRecPage(i) {
     <div class="actions"><button class="btn" id="recClose" ${live ? 'disabled' : ''}>✔ ${FZ.t('rec_done')}</button></div></div>`;
   m.classList.remove('hidden');
   $('#recGo').onclick = () => recUI.mr ? stopRec() : startRec(key, pg);
+  $$('.recpace .chip', m).forEach(b => b.onclick = () => { recUI.pace = b.dataset.p; store.set('recPace', recUI.pace); FZ.sfx('pop'); openRecPage(i); });
+  /* while recording: tap the word you are reading if the highlight is ahead or behind */
+  $('#recWords').addEventListener('click', e => { const w = e.target.closest('.w'); if (!w || !recUI.mr || recUI.gi < 0) return; guideTo($$('#recWords .w').indexOf(w), true); });
+  if (live) lightRec(recUI.gi);
   $('#recPrev').onclick = () => openRecPage(i - 1);
   $('#recNext').onclick = () => openRecPage(i + 1);
-  $('#recPlay').onclick = async () => { const b = await FZ.rec.get(key); if (b) { const u = URL.createObjectURL(b), a = new Audio(u); a.onended = () => URL.revokeObjectURL(u); a.play().catch(() => { }); } };
-  $('#recDel').onclick = async () => { await FZ.rec.del(key); openRecPage(i); FZ.renderRecCard(recUI.card); };
+  /* listen back, with the words lighting up just like in the story */
+  $('#recPlay').onclick = async () => {
+    const b = await FZ.rec.get(key), times = await FZ.rec.get(key + '|t'); if (!b) return;
+    const u = URL.createObjectURL(b), a = new Audio(u), spans = $$('#recWords .w'); let raf = 0;
+    const tick = () => { if (a.paused) return; const k = times && times.w ? FZ.wordAt(times, a.currentTime) : -1; spans.forEach((s, j) => s.classList.toggle('hl', j === k)); raf = requestAnimationFrame(tick); };
+    a.onplaying = tick; a.onended = () => { cancelAnimationFrame(raf); spans.forEach(s => s.classList.remove('hl')); URL.revokeObjectURL(u); };
+    a.play().catch(() => { });
+  };
+  $('#recDel').onclick = async () => { await FZ.rec.del(key); await FZ.rec.del(key + '|t'); openRecPage(i); FZ.renderRecCard(recUI.card); };
   $('#recClose').onclick = () => { recUI.open = null; m.classList.add('hidden'); FZ.renderRecCard(recUI.card); };
 }
 async function startRec(key, pg) {
@@ -334,18 +358,44 @@ async function startRec(key, pg) {
     try { speechSynthesis.cancel(); } catch (e) { }
     recUI.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
   } catch (e) { const m = $('#recState'); if (m) m.textContent = FZ.t('rec_denied'); return; }
+  /* 3, 2, 1… then the recording and the moving highlight start together */
+  const st_ = $('#recState'), go_ = $('#recGo'); if (go_) go_.disabled = true;
+  for (const c of [3, 2, 1]) { if (st_) st_.innerHTML = `<b class="recount">${c}</b><br><small>${FZ.t('rec_getready')}</small>`; FZ.sfx('pop'); await new Promise(r => setTimeout(r, 800)); }
   const chunks = [], mr = new MediaRecorder(recUI.stream);
   mr.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
   mr.onstop = async () => {
-    recUI.stream.getTracks().forEach(t => t.stop()); clearTimeout(recUI.timer); clearInterval(recUI.clock);
-    if (chunks.length) await FZ.rec.set(key, new Blob(chunks, { type: mr.mimeType || 'audio/webm' }));
-    recUI.mr = null; recUI.page = null;
+    recUI.stream.getTracks().forEach(t => t.stop()); clearTimeout(recUI.timer); clearInterval(recUI.clock); clearTimeout(recUI.gt);
+    const n = $$('#recWords .w').length || recUI.times.length, times = recUI.times.slice(0, n);
+    for (let k = 0; k < n; k++) if (times[k] == null) times[k] = k ? times[k - 1] + .3 : 0;     // any word the highlight never reached
+    times.end = (performance.now() - recUI.t0) / 1000;
+    if (chunks.length) { await FZ.rec.set(key, new Blob(chunks, { type: mr.mimeType || 'audio/webm' })); await FZ.rec.set(key + '|t', { w: times, end: times.end }); }
+    recUI.mr = null; recUI.page = null; recUI.gi = -1;
     if (recUI.open !== null) openRecPage(recUI.open);
     FZ.renderRecCard(recUI.card);
   };
-  recUI.mr = mr; recUI.page = pg; recUI.t0 = Date.now(); mr.start();
+  recUI.mr = mr; recUI.page = pg; recUI.times = []; recUI.gi = -1;
+  mr.onstart = () => { recUI.t0 = performance.now(); guideTo(0); };
+  mr.start();
   recUI.timer = setTimeout(stopRec, 90000);                      // one page is never longer than a minute and a half
   await openRecPage(recUI.open);
-  recUI.clock = setInterval(() => { const c = $('#recClock'), t = Math.floor((Date.now() - recUI.t0) / 1000); if (c) c.textContent = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; }, 500);
+  recUI.clock = setInterval(() => { const c = $('#recClock'), t = Math.floor((performance.now() - recUI.t0) / 1000); if (c) c.textContent = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; }, 500);
 }
-function stopRec() { if (recUI.mr && recUI.mr.state !== 'inactive') recUI.mr.stop(); }
+function stopRec() { clearTimeout(recUI.gt); if (recUI.mr && recUI.mr.state !== 'inactive') recUI.mr.stop(); }
+/* the moving highlight that the reader follows; its timing is saved with the recording */
+function lightRec(i) { const ws = $$('#recWords .w'); ws.forEach((w, k) => { w.classList.toggle('hl', k === i); w.classList.toggle('read', k < i); }); if (ws[i]) ws[i].scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+function guideTo(i, tapped) {
+  if (!recUI.mr) return;
+  const ws = $$('#recWords .w'), now = (performance.now() - recUI.t0) / 1000;
+  clearTimeout(recUI.gt);
+  if (i >= ws.length) {                                          // all words read: wait a moment, then stop by itself
+    recUI.gi = ws.length; lightRec(-1);
+    const s = $('#recState'); if (s) s.innerHTML = '🔴 ' + FZ.t('rec_finish');
+    recUI.gt = setTimeout(stopRec, 2500); return;
+  }
+  if (tapped && i > recUI.gi + 1 && recUI.gi >= 0) {            // jumped ahead: spread the skipped words evenly
+    const a = recUI.times[recUI.gi], gap = (now - a) / (i - recUI.gi);
+    for (let k = recUI.gi + 1; k < i; k++) recUI.times[k] = a + gap * (k - recUI.gi);
+  }
+  recUI.times[i] = now; recUI.times.length = i + 1; recUI.gi = i; lightRec(i);
+  recUI.gt = setTimeout(() => guideTo(i + 1), wordMs(ws[i].textContent));
+}
