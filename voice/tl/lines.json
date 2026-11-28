@@ -1,3042 +1,1466 @@
 [
 {
-"key": "veba37d3b",
-"text": "Magulang"
-},
-{
-"key": "v24cfe877",
-"text": "Lahat"
-},
-{
-"key": "v7b98a612",
-"text": "Habulan"
-},
-{
-"key": "v7010e237",
-"text": "Talon"
-},
-{
-"key": "v4848e4e9",
-"text": "Husay"
-},
-{
-"key": "vc18f13cb",
-"text": "Board"
-},
-{
+"n": 1,
 "key": "v9ee3f111",
-"text": "Kumusta! Ako si Tala. Pumili ng laro!"
+"text": "Kumusta! Ako si Tala. Pumili ng laro!",
+"show": "Kumusta! Ako si Tala. Pumili ng laro!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
+"n": 2,
 "key": "v90e7ee23",
-"text": "Laro tayo na parang mga bata noong unang panahon!"
+"text": "Laro tayo na parang mga bata noong unang panahon!",
+"show": "Laro tayo na parang mga bata noong unang panahon!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
+"n": 3,
 "key": "v6961f1df",
-"text": "Anong laro ang gusto mong subukan ngayon?"
+"text": "Anong laro ang gusto mong subukan ngayon?",
+"show": "Anong laro ang gusto mong subukan ngayon?",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
+"n": 4,
 "key": "vf4519e05",
-"text": "Tara, laro tayo!"
+"text": "Tara, laro tayo!",
+"show": "Tara, laro tayo! 🎉",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "vb1d78fdc",
-"text": "Ang player ko:"
-},
-{
-"key": "ve8fcc049",
-"text": "Lalaki"
-},
-{
-"key": "va732cffc",
-"text": "Babae"
-},
-{
-"key": "v42b13101",
-"text": "Laro ng Lahi Mga laro ng mga Pilipino"
-},
-{
-"key": "v8bb67c4a",
-"text": "Pumili ng wika"
-},
-{
-"key": "v1d12c4f3",
-"text": "Pumili ng wika / Pick a language"
-},
-{
-"key": "v5513aa4a",
-"text": "Sa totoong buhay"
-},
-{
-"key": "v550d2cbe",
-"text": "Sa FunZone"
-},
-{
-"key": "v3d6096c3",
-"text": "Laro Tayo!"
-},
-{
-"key": "vd8623e04",
-"text": "Basahin para sa akin"
-},
-{
-"key": "v2b607086",
-"text": "Bumalik"
-},
-{
-"key": "vea560e6b",
-"text": "Paano laruin"
-},
-{
-"key": "v36788983",
-"text": "Paano laruin:"
-},
-{
-"key": "v9e325c8c",
-"text": "Sige!"
-},
-{
-"key": "v28c05284",
-"text": "Galing!"
-},
-{
-"key": "v6c2dc466",
-"text": "Bravo!"
-},
-{
-"key": "v6dd35072",
-"text": "Magaling!"
-},
-{
-"key": "vb991dd1a",
-"text": "Hooray!"
-},
-{
-"key": "va297ff46",
-"text": "Ang husay mo!"
-},
-{
-"key": "vd49d61ca",
-"text": "Ulitin"
-},
-{
-"key": "vb7b8f3e1",
-"text": "Iba pang laro"
-},
-{
-"key": "v51f53b6c",
-"text": "Sa totoong buhay."
-},
-{
-"key": "vbe76a804",
-"text": "Sa larong ito."
-},
-{
-"key": "v35ee5031",
-"text": "Para sa magulang"
-},
-{
-"key": "v37276eff",
-"text": "Ilagay ang 4 na numerong lihim na code"
-},
-{
-"key": "v92365dc5",
-"text": "Kanselahin"
-},
-{
-"key": "v7582fb53",
-"text": "Para sa nakatatanda"
-},
-{
-"key": "ved05dfd6",
-"text": "Pang-magulang"
-},
-{
-"key": "v99113e3c",
-"text": "Balik sa Pambata"
-},
-{
-"key": "v3636cd7a",
-"text": "Progreso"
-},
-{
-"key": "v8cedeb98",
-"text": "Mga Setting"
-},
-{
-"key": "vc121aa6b",
-"text": "Buod"
-},
-{
-"key": "v3888164e",
-"text": "Kabuuang bituin"
-},
-{
-"key": "vd7bdf3b1",
-"text": "Mga larong nasubukan"
-},
-{
-"key": "v692a9d78",
-"text": "Oras ng paglalaro ngayon"
-},
-{
-"key": "vc98f4557",
-"text": "min"
-},
-{
-"key": "v9cf58c1c",
-"text": "Bawat laro"
-},
-{
-"key": "v2a883b4b",
-"text": "Tunog at boses"
-},
-{
-"key": "v4de5bc31",
-"text": "Mga tunog"
-},
-{
-"key": "v77ae6f27",
-"text": "Basahin nang malakas ang mga hint"
-},
-{
-"key": "v83497129",
-"text": "Wika"
-},
-{
-"key": "vf6dc27ed",
-"text": "Limitasyon sa oras ng paglalaro"
-},
-{
-"key": "vf402cfdd",
-"text": "Paalalahanang magpahinga pagkatapos ng"
-},
-{
-"key": "v97885038",
-"text": "Walang limitasyon"
-},
-{
-"key": "v11cefc90",
-"text": "Kapag tapos na ang oras, magpapakita ang FunZone ng pahingang screen. Ang nakatatanda lang ang makakabukas nito gamit ang lihim na code."
-},
-{
-"key": "v9aefdddd",
-"text": "Lihim na code ng magulang"
-},
-{
-"key": "v003d7d16",
-"text": "Bagong 4 na numerong code"
-},
-{
-"key": "v9fa0475f",
-"text": "I-save ang code"
-},
-{
-"key": "va91220af",
-"text": "Na-save na ang code!"
-},
-{
-"key": "v7b74ab39",
-"text": "Maglagay ng eksaktong 4 na numero."
-},
-{
-"key": "v207e0d2f",
-"text": "Magsimula ulit"
-},
-{
-"key": "v76941c44",
-"text": "Burahin ang lahat ng bituin at progreso"
-},
-{
-"key": "v46d28b00",
-"text": "Buburahin ang lahat ng bituin at progreso?"
-},
-{
-"key": "v7d85581c",
-"text": "Paunawa sa privacy"
-},
-{
-"key": "v22a3eee4",
-"text": "Walang kinokolekta. Walang account sa FunZone at hindi nito hinihingi ang pangalan, edad, larawan, boses o lokasyon ng anak mo."
-},
-{
-"key": "v562e5276",
-"text": "Nananatili ang lahat sa teleponong o tablet na ito. Ang mga bituin, pinili at lihim na code ay naka-save lang dito. Walang ipinapadala kahit saan, at walang ads."
-},
-{
-"key": "v5d21ff7c",
-"text": "Ang pagbasa nang malakas ay gumagamit ng boses na kasama ng telepono o tablet mo. Sa ilang telepono, maaaring kailangan ng internet ng boses na iyon."
-},
-{
-"key": "v43fe5b8e",
-"text": "Burahin anumang oras: pindutin ang \"Magsimula ulit\" sa itaas para burahin ang lahat ng bituin at progreso."
-},
-{
-"key": "v6c32eb6b",
-"text": "Kailangan:"
-},
-{
-"key": "va04a5848",
-"text": "Tip para sa magulang:"
-},
-{
-"key": "v6f755dcb",
-"text": "Pahinga muna!"
-},
-{
-"key": "vd7f3e11d",
-"text": "Magpahinga muna ang mata at maglaro sa labas!Magpatulong sa nakatatanda para magbukas ng dagdag na oras."
-},
-{
-"key": "v32d13c06",
-"text": "Pahinga muna! Magpatulong sa nakatatanda."
-},
-{
-"key": "v2a3f8a12",
-"text": "Buksan ng nakatatanda"
-},
-{
-"key": "va5d225b6",
-"text": "Kumusta!"
-},
-{
-"key": "va918536c",
-"text": "Bihis"
-},
-{
-"key": "v690fb22e",
-"text": "Sorpresahin ako"
-},
-{
-"key": "v3560f7b2",
-"text": "Kulay ng balat"
-},
-{
-"key": "v510f2021",
-"text": "Kulay ng buhok"
-},
-{
-"key": "v540bcd67",
-"text": "Istilo ng buhok"
-},
-{
-"key": "v9da786c8",
-"text": "Maikli"
-},
-{
-"key": "v1584ef62",
-"text": "Tayo-tayo"
-},
-{
-"key": "va209dc40",
-"text": "Kulot"
-},
-{
-"key": "vfeea3195",
-"text": "Semikal"
-},
-{
-"key": "vebcba174",
-"text": "Bob"
-},
-{
-"key": "vaaed88bd",
-"text": "Mahaba"
-},
-{
-"key": "v9952a8f9",
-"text": "Nakapuyod"
-},
-{
-"key": "v8b996427",
-"text": "Dalawang puyod"
-},
-{
-"key": "v42b09aef",
-"text": "Nakapusod"
-},
-{
-"key": "v118b6d95",
-"text": "Kulay ng pang-itaas"
-},
-{
-"key": "v73b316a2",
-"text": "Kulay ng pang-ibaba"
-},
-{
-"key": "v39ed4a38",
-"text": "Pang-itaas"
-},
-{
-"key": "v15b7aa6a",
-"text": "Buhok"
-},
-{
-"key": "v86e074a6",
-"text": "Sapin sa paa"
-},
-{
-"key": "vb135a25a",
-"text": "Palitan ang kulay"
-},
-{
-"key": "vdb98f485",
-"text": "Filipiniana"
-},
-{
-"key": "v41c50872",
-"text": "Tsinelas"
-},
-{
-"key": "v1255eff7",
-"text": "Rubber shoes"
-},
-{
-"key": "vb724436d",
-"text": "Sandalyas"
-},
-{
-"key": "v5a6326ed",
-"text": "Bota"
-},
-{
-"key": "vbc662250",
-"text": "Sapatos"
-},
-{
-"key": "v8312eede",
-"text": "Nakayapak"
-},
-{
-"key": "v4c740f4b",
-"text": "Pang-ibaba"
-},
-{
-"key": "vd5138bc1",
-"text": "Natatakpan ito ng bestida. Pumili ng ibang pang-itaas para maisuot ang mga ito."
-},
-{
-"key": "va8136946",
-"text": "T-shirt"
-},
-{
-"key": "vec042a84",
-"text": "Sando"
-},
-{
-"key": "vd9b62411",
-"text": "Polo"
-},
-{
-"key": "v78805a88",
-"text": "Mahabang manggas"
-},
-{
-"key": "vd4c34ff1",
-"text": "Hoodie"
-},
-{
-"key": "vc420e811",
-"text": "Bestida"
-},
-{
-"key": "v9c2037fc",
-"text": "Barong"
-},
-{
-"key": "vf042f072",
-"text": "Shorts"
-},
-{
-"key": "v65285ed0",
-"text": "Pantalon"
-},
-{
-"key": "v6db30039",
-"text": "Palda"
-},
-{
-"key": "v403d1b91",
-"text": "Oberols"
-},
-{
-"key": "vbd9719e3",
-"text": "Ginagamit ang player mo sa bawat laro!"
-},
-{
-"key": "v0a82b2f4",
-"text": "Sa FunZone, medyo iba:"
-},
-{
-"key": "v83115459",
-"text": "Bagong badge!"
-},
-{
-"key": "v7d5c8068",
-"text": "Kabuuan"
-},
-{
-"key": "v1f7d7db4",
-"text": "Mga Laro"
-},
-{
-"key": "v3bf9434f",
-"text": "Mga Kuwento"
-},
-{
-"key": "vc52e26eb",
-"text": "Pagkukulay"
-},
-{
-"key": "v36cb581d",
-"text": "Pumili ng larawang kukulayan!"
-},
-{
-"key": "vb2f05f1d",
-"text": "Kulay"
-},
-{
-"key": "vef141469",
-"text": "Paano magkulay"
-},
-{
-"key": "v29e0e855",
-"text": "Mag-zoom para makita ang mga numero: kurutin gamit ang dalawang daliri, o pindutin ang ＋ at －. Igalaw ang larawan gamit ang dalawang daliri, o pindutin muna ang ."
-},
-{
-"key": "v11ad311d",
-"text": "Pumili ng numero ng kulay sa ibaba. Magiging madilim na abo ang lahat ng kahong may numerong iyon para madali mo silang mahanap."
-},
-{
-"key": "v27de68e1",
-"text": "Pindutin ang madidilim na kahon, o idaan ang daliri sa kanila, para makulayan!"
-},
-{
-"key": "v23119771",
-"text": "Kapag tapos na ang isang kulay, magkakaroon ito ng at pipiliin ang susunod na kulay. Pindutin ang para makita ang buong larawan."
-},
-{
-"key": "v5332e127",
-"text": "Nakulayan mo ang buong larawan! Ang ganda!"
-},
-{
-"key": "v3e1f17ff",
-"text": "Iba pang larawan"
-},
-{
-"key": "v502594fe",
-"text": "Simulan ulit"
-},
-{
-"key": "v268f76ae",
-"text": "Burahin ang kulay ng larawang ito at magsimula ulit?"
-},
-{
-"key": "v4da23ad4",
-"text": "Palakihin"
-},
-{
-"key": "vc900bfdb",
-"text": "Paliitin"
-},
-{
-"key": "v2c531d8d",
-"text": "Ipakita ang buong larawan"
-},
-{
-"key": "ve4ed81f2",
-"text": "Tingnan ang tapos na larawan"
-},
-{
-"key": "vd2045919",
-"text": "Ganito ang magiging itsura!"
-},
-{
-"key": "v4fe58453",
-"text": "Makinis"
-},
-{
-"key": "v2ab32b77",
-"text": "Pixel"
-},
-{
-"key": "v6a27ca8c",
-"text": "Igalaw ang larawan"
-},
-{
-"key": "v1817364a",
-"text": "Malapit na"
-},
-{
-"key": "v4bda30d4",
-"text": "Pumili ng kuwento!"
-},
-{
-"key": "vf92bab44",
-"text": "Kuwentong Pinoy"
-},
-{
-"key": "vd05712dc",
-"text": "Pabula at engkanto"
-},
-{
-"key": "vec904f44",
-"text": "Mga klasiko"
-},
-{
-"key": "ve876e675",
-"text": "Ano ang paborito mong bahagi ng kuwento? Bakit?"
-},
-{
-"key": "v11f8b3c0",
-"text": "Pampublikong pag-aari ang orihinal na kuwento."
-},
-{
-"key": "v12804160",
-"text": "Mga larawan: mula sa koleksiyon ng mga aklat-kuwento ng FunZone."
-},
-{
-"key": "vfedd9a5a",
-"text": "Nabasa na"
-},
-{
-"key": "vaf015a38",
-"text": "Pahina"
-},
-{
-"key": "vbf2a2118",
-"text": "pahina"
-},
-{
-"key": "vcc3fb2dd",
-"text": "Basahin ulit"
-},
-{
-"key": "v1f8c8f4c",
-"text": "Iba pang kuwento"
-},
-{
-"key": "v688711c1",
-"text": "Tungkol sa kuwentong ito"
-},
-{
-"key": "vd652c4c4",
-"text": "Mga larawan: gawa ng FunZone."
-},
-{
-"key": "v6a871324",
-"text": "Nakaraang pahina"
-},
-{
-"key": "v512f4274",
-"text": "Susunod na pahina"
-},
-{
-"key": "v8411a3e0",
-"text": "Basahin sa akin"
-},
-{
-"key": "v6c844282",
-"text": "Buong screen"
-},
-{
-"key": "vdd3b98a4",
-"text": "Pindutin ang kahit anong salita para marinig kung paano ito bigkasin!"
-},
-{
-"key": "v5211f0ba",
-"text": "Mga natapos na kuwento"
-},
-{
+"n": 5,
 "key": "va945ff17",
-"text": "Malapit na iyan! Maglaro muna tayo."
+"text": "Malapit na iyan! Maglaro muna tayo.",
+"show": "Malapit na iyan! Maglaro muna tayo.",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "v79bd9032",
-"text": "Antas"
-},
-{
-"key": "v288fd0c5",
-"text": "Mga antas"
-},
-{
-"key": "v195aab5c",
-"text": "Muntik na! Subukan ulit"
-},
-{
-"key": "v8a5fcc23",
-"text": "Hindi mo pa naabot ang layunin. Kaya mo 'yan!"
-},
-{
-"key": "v693f60ea",
-"text": "Subukan ulit"
-},
-{
-"key": "v2fdfd39b",
-"text": "Ituloy ang laro"
-},
-{
-"key": "vdd4e3a37",
-"text": "Bagong laro"
-},
-{
-"key": "v40cb8093",
-"text": "Bahay ng laro"
-},
-{
-"key": "vcf571c55",
-"text": "Tungkol"
-},
-{
-"key": "v4b058728",
-"text": "Settings"
-},
-{
-"key": "vba2c570c",
-"text": "Kasaysayan"
-},
-{
-"key": "vf64dc402",
-"text": "Tip para sa nakatatanda"
-},
-{
-"key": "v5c6cd0c8",
-"text": "May bago!"
-},
-{
-"key": "v145904ed",
-"text": "Ipakita ulit ang paano maglaro at mga bagong tip"
-},
-{
-"key": "v90927064",
-"text": "Ipakita ulit"
-},
-{
-"key": "v6705b542",
-"text": "Simulan ulit ang larong ito mula Antas 1"
-},
-{
-"key": "va973d5c3",
-"text": "Madali"
-},
-{
-"key": "v08d5b1aa",
-"text": "Katamtaman"
-},
-{
-"key": "vcc1bc81f",
-"text": "Mahirap"
-},
-{
-"key": "v79ac42de",
-"text": "Pumili ng antas!"
-},
-{
-"key": "vda74d810",
-"text": "nakakandado"
-},
-{
+"n": 6,
 "key": "v55018a20",
-"text": "Tapusin muna ang naunang antas para mabuksan ito!"
+"text": "Tapusin muna ang naunang antas para mabuksan ito!",
+"show": "Tapusin muna ang naunang antas para mabuksan ito!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "vf3774c5e",
-"text": "Susunod na antas"
+"n": 7,
+"key": "va5d225b6",
+"text": "Kumusta!",
+"show": "Kumusta!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "vc11c113b",
-"text": "Lahat ng antas"
+"n": 8,
+"key": "v195aab5c",
+"text": "Muntik na! Subukan ulit",
+"show": "Muntik na! Subukan ulit",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "v64789bc6",
-"text": "Basahin ang mga hakbang"
+"n": 9,
+"key": "v6dd35072",
+"text": "Magaling!",
+"show": "Magaling!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "vb9565475",
-"text": "Hakbang"
+"n": 10,
+"key": "v9f9e7f09",
+"text": "Pahinga muna! Tawagin si Nanay o Tatay.",
+"show": "Pahinga muna! Tawagin si Nanay o Tatay.",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "vc54c9fd1",
-"text": "Nakaraang hakbang"
+"n": 11,
+"key": "v36cb581d",
+"text": "Pumili ng larawang kukulayan!",
+"show": "Pumili ng larawang kukulayan!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "v4e4e3ba1",
-"text": "Susunod na hakbang"
+"n": 12,
+"key": "v5332e127",
+"text": "Nakulayan mo ang buong larawan! Ang ganda!",
+"show": "Nakulayan mo ang buong larawan! Ang ganda!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "va6fbe958",
-"text": "Ipagpatuloy"
+"n": 13,
+"key": "v4bda30d4",
+"text": "Pumili ng kuwento!",
+"show": "Pumili ng kuwento!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "vbba5af56",
-"text": "Ihinto"
-},
-{
-"key": "v1d7e659f",
-"text": "Boses"
-},
-{
-"key": "ve2c3b1c0",
-"text": "Boses sa Tagalog: Gumagamit ang FunZone ng tunay na boses na Pilipino para sa mga salitang Tagalog kapag naidagdag na ito. Kung hindi pa, gagamitin nito ang sariling boses ng telepono o tablet, kaya pumili ng boses na Filipino sa itaas kung mayroon. Sa mga kuwento, puwedeng i-record ng nakatatanda ang sariling boses sa ibaba."
-},
-{
-"key": "v9c359265",
-"text": "Mag-record ng tunay na tagabasa"
-},
-{
-"key": "v93cf3f69",
-"text": "Puwedeng basahin nang malakas at i-record ng magulang, guro o nakatatandang kapatid ang bawat pahina ng kuwento. Ito na ang patutugtugin ng kuwento. Nasa teleponong o tablet na ito lang ang mga recording at hindi ipinapadala kahit saan."
-},
-{
-"key": "ve6fa2a1c",
-"text": "Kuwento"
-},
-{
-"key": "v2cb41bd6",
-"text": "Wakas"
-},
-{
-"key": "vf83f2e2a",
-"text": "I-record"
-},
-{
-"key": "v8854d851",
-"text": "Itigil"
-},
-{
-"key": "vd15298fd",
-"text": "Patugtugin"
-},
-{
-"key": "vf88da5fc",
-"text": "Burahin"
-},
-{
-"key": "vb91f23f6",
-"text": "pahinang na-record"
-},
-{
-"key": "v4c3fd99f",
-"text": "Pakinggan o ulitin"
-},
-{
-"key": "v95324de0",
-"text": "Basahin nang malakas ang mga salita sa itaas. Pindutin ang I-record para magsimula."
-},
-{
-"key": "v04fec9c5",
-"text": "Nire-record…"
-},
-{
-"key": "v5886d634",
-"text": "Naitabi na! Pindutin ang Patugtugin para makinig."
-},
-{
-"key": "vfbbf433a",
-"text": "I-record ulit"
-},
-{
-"key": "v6d76ed8d",
-"text": "Tapos na"
-},
-{
-"key": "v93ef8c5f",
-"text": "Hindi puwedeng mag-record dito. Buksan ang FunZone mula sa web address nito sa Chrome, Edge o Safari at payagan ang mikropono."
-},
-{
-"key": "v22b442d9",
-"text": "Hindi pinayagang gamitin ng FunZone ang mikropono. Pindutin ang kandado o settings sa tabi ng web address, payagan ang mikropono, saka subukan ulit."
-},
-{
-"key": "v7f4c9e33",
-"text": "Awtomatiko"
-},
-{
-"key": "v8824b93a",
-"text": "Subukan"
-},
-{
+"n": 14,
 "key": "vb1145410",
-"text": "Kumusta! Laro tayo!"
+"text": "Kumusta! Laro tayo!",
+"show": "Kumusta! Laro tayo!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "v0bced298",
-"text": "Tip: ang mga boses na may markang \"Natural\" o \"Online\" ang kadalasang pinakakatunog ng tunay na tao. Puwede kang magdagdag ng boses sa settings ng telepono o tablet, sa bahaging speech o boses."
+"n": 15,
+"key": "vbddee2c9",
+"text": "Palakihin para makita ang mga numero: ibuka ang dalawang daliri, o pindutin ang ＋ at －. Para ilipat ang larawan, gamitin ang dalawang daliri, o pindutin muna ang . Pumili ng numero ng kulay sa ibaba. Magiging kulay-abo ang lahat ng kahon na may ganoong numero, para madali mong makita. Pindutin ang mga kahong kulay-abo, o idaan ang daliri mo sa mga ito, para makulayan!",
+"show": "Palakihin para makita ang mga numero: ibuka ang dalawang daliri, o pindutin ang ＋ at －. Para ilipat ang larawan, gamitin ang dalawang daliri, o pindutin muna ang ✋. Pumili ng numero ng kulay sa ibaba. Magiging kulay-abo ang lahat ng kahon na may ganoong numero, para madali mong makita. Pindutin ang mga kahong kulay-abo, o idaan ang daliri mo sa mga ito, para makulayan!",
+"section": "Pangunahing salita (menu at papuri)",
+"note": ""
 },
 {
-"key": "v2f19744b",
-"text": "Walang nakitang boses na Filipino sa teleponong o tablet na ito, kaya katulad na boses muna ang gamit. Para sa pinakamagandang tunog, magdagdag ng boses na Filipino sa settings nito, sa bahaging speech o boses."
-},
-{
-"key": "ve181532f",
-"text": "Tumawid sa mga linya… at huwag magpahuli sa taya!"
-},
-{
-"key": "v2f1f688b",
-"text": "6–10 bata"
-},
-{
-"key": "v3f87cffa",
-"text": "Tisa o patpat na pangguhit ng mga linya sa lupa"
-},
-{
-"key": "v1c518357",
-"text": "Dalawang koponan ang naglalaro sa mga linyang iginuhit sa lupa: ilang linyang magkakatabi at isang mahabang linya sa gitna."
-},
-{
-"key": "vcdff1224",
-"text": "Nakatayo ang mga bantay SA mga linya, at puwede lang silang gumalaw sa kanilang linya. Ang patotot ang nagbabantay sa mahabang linya sa gitna."
-},
-{
-"key": "vf0e8ee02",
-"text": "Ang mga tumatawid ay kailangang makatawid sa lahat ng linya, makarating sa dulo, at makabalik nang hindi nahahawakan."
-},
-{
-"key": "v11fc5bc9",
-"text": "Kapag may natayaan, magpapalit ng puwesto ang mga koponan. Bawat makabalik nang ligtas ay may puntos!"
-},
-{
-"key": "v60468e3d",
-"text": "Ikaw ang tumatawid. I-drag ang daliri sa laruan para tumakbo. Puwede ring i-tap ang lugar na gusto mong puntahan."
-},
-{
-"key": "v6d6bfbd1",
-"text": "Nasa kanilang linya lang ang mga bantay at gumagalaw pakaliwa at pakanan para hawakan ka. Mula antas 4, binabantayan ng patotot ang mahabang linya sa gitna. May dalawang kakampi kang tumatakbo rin, at bawat antas ay may dagdag na linya, balikan o mas mabilis na bantay."
-},
-{
-"key": "v345ffcf0",
-"text": "Tawirin ang lahat ng linya papunta sa , saka tumakbo pabalik sa . Kapag nahawakan ka, babalik ka sa simula."
-},
-{
-"key": "vb7203a2d",
-"text": "Gumuhit ng 3 linya na may layong 3 malalaking hakbang, at isang mahabang linya sa gitna. Hayaang maging tumatawid muna ang bata, saka maging bantay para maranasan niya ang dalawa."
-},
-{
-"key": "v308f674e",
-"text": "Agawin ang base ng kabilang koponan!"
-},
-{
-"key": "vd6b06197",
-"text": "8–16 bata"
-},
-{
-"key": "v88437ab2",
-"text": "Dalawang \"base\" na magkalayo"
-},
-{
-"key": "v5fd6a8a9",
-"text": "May base ang bawat koponan. Magkalayo ang mga base, at may linya sa gitna ng dalawang teritoryo."
-},
-{
-"key": "v88a509d9",
-"text": "Lalabas ang mga manlalaro para tayain ang kalaban. Ang huling umalis sa base ang puwedeng tumaya sa naunang umalis."
-},
-{
-"key": "vcc7c1bad",
-"text": "Ang natayang manlalaro ay mapupunta sa kulungan sa tabi ng base ng kalaban. Puwede siyang iligtas ng kakampi sa pamamagitan ng paghawak sa kanya nang hindi natataya."
-},
-{
-"key": "vef581c1a",
-"text": "Panalo ka kapag nahawakan mo ang base ng kalaban o nabilanggo mo ang lahat ng kalaban."
-},
-{
-"key": "v0389e070",
-"text": "Nasa asul na koponan ka. I-drag o i-tap kung saan tatakbo. Layunin: hawakan ang base ng pulang koponan sa dulong kanan."
-},
-{
-"key": "v72bbe0aa",
-"text": "Binabantayan ng pulang koponan ang panig nila. Hahabulin ka lang nila kapag tumawid ka sa gitnang linya."
-},
-{
-"key": "v5a78906f",
-"text": "Nahuli? Sa kulungan ka nila. Pindutin ang \"Tawagin ang kakampi\" para palayain ka. Mula antas 16, may kalabang susubok umagaw ng base NINYO: tayaan siya sa inyong panig!"
-},
-{
-"key": "v18feedd8",
-"text": "Gumamit ng puno o dalawang balde bilang base. Para sa maliliit na bata, tayahan at kulungan lang ang gawin at huwag munang sundin ang \"huling umalis\"."
-},
-{
-"key": "v66813440",
-"text": "Manatili sa mataas na lugar para hindi matayaan!"
-},
-{
-"key": "v29f293d7",
-"text": "4–12 bata"
-},
-{
-"key": "va4ffef1d",
-"text": "Hagdan, bato, bangko, o anumang mataas sa lupa"
-},
-{
-"key": "v434de942",
-"text": "Isa ang Taya. Ang iba ay nasa paligid ng matataas na lugar gaya ng hagdan, bato o bangko."
-},
-{
-"key": "v6313cf68",
-"text": "Ang langit ay ang nakataas na lugar — ligtas ka kapag nakatayo ka rito. Ang lupa ay ang patag na lupa."
-},
-{
-"key": "v4ba1a33d",
-"text": "Palipat-lipat ng puwesto ang mga manlalaro, at hahabulin ng Taya ang sinumang nasa lupa."
-},
-{
-"key": "vfe9b1c6b",
-"text": "Kapag natayaan ka sa lupa, ikaw na ang susunod na Taya!"
-},
-{
-"key": "v066fbea4",
-"text": "I-drag para tumakbo. Ang matataas na lugar — bato, bangko, hagdan at tuod — ay Langit: tumayo roon para ligtas."
-},
-{
-"key": "vf8868fe5",
-"text": "Nagbibilang si Taya kapag matagal ka! Kapag naubos ang bilang mo, lumipat sa IBANG langit. Bawat bagong langit ay isang ."
-},
-{
-"key": "v0c988a2e",
-"text": "Kapag nahawakan ka ni Taya sa lupa, ikaw na ang Taya: habulin at tayaan ang isang kaibigan!"
-},
-{
-"key": "vd1833e0c",
-"text": "Dapat bahagyang nakataas ang ligtas na lugar. Magdagdag ng patakarang hanggang bilang na 5 lang puwedeng tumayo sa langit para lagi silang gumagalaw!"
-},
-{
-"key": "v7e497075",
-"text": "Ang Pilipinong bersyon ng hide-and-seek!"
-},
-{
-"key": "v3eafb230",
-"text": "3 o higit pang bata"
-},
-{
-"key": "vf8333ac9",
-"text": "Isang \"base\" at magagandang taguan"
-},
-{
-"key": "v9d9f2b9f",
-"text": "Isa ang Taya. Tatakpan niya ang mata sa base at magbibilang nang malakas — \"Isa, dalawa, tatlo…\""
-},
-{
-"key": "vc72d2ea8",
-"text": "Tatakbo ang lahat para magtago. Madalas itong nilalaro sa dapithapon o sa liwanag ng buwan, may kantang: \"Tagu-taguan, maliwanag ang buwan…\""
-},
-{
-"key": "v68467a9c",
-"text": "Pagkatapos magbilang, sisigaw ang Taya na hahanapin na niya sila."
-},
-{
-"key": "vae8f330e",
-"text": "Kapag nakita ng Taya ang isa, tatakbo siya pabalik sa base at sisigaw ng \"Pung!\" kasama ang pangalan habang hinahawakan ang base. Kung maunang makarating sa base ang nagtago, ligtas siya!"
-},
-{
-"key": "v2b977dcc",
-"text": "May sariling lugar at papel ang bawat antas. Minsan ikaw ang taya, minsan ikaw ang magtatago!"
-},
-{
-"key": "v6f6c6ca3",
-"text": "Taya: magbilang, saka maglakad at maghanap. I-tap ang taguan para puntahan at silipin. May nakita? Unahan siya sa base at sumigaw ng \"Pung!\""
-},
-{
-"key": "vc5b31e53",
-"text": "Nagtatago: maglakad habang nagbibilang si Taya, saka i-tap ang taguan para magtago roon. Kapag malayo si Taya, pumuslit pabalik at hawakan ang base bago siya — \"Save!\""
-},
-{
-"key": "v521e63a5",
-"text": "Magkasundo muna sa mga hangganan bago maglaro. Para sa maliliit na bata, magtago sa madaling makitang lugar at hanggang 10 lang ang bilang para masaya at hindi nakakatakot."
-},
-{
-"key": "vb2cd1ef9",
-"text": "Magtago sa lilim — iwasan ang araw!"
-},
-{
-"key": "v2656eabc",
-"text": "Maaraw na bakuran na may lilim ng puno o pader"
-},
-{
-"key": "v5101cd85",
-"text": "Isa ang Taya. Ang iba ay nagsisikap manatili sa lilim kung saan hindi sila matatayaan."
-},
-{
-"key": "v3c50bf6c",
-"text": "Ang sinumang nasa araw ay puwedeng tayain."
-},
-{
-"key": "v55877284",
-"text": "Gumagalaw ang araw sa langit kaya gumagalaw rin ang anino — kailangang maghanap ng bagong lilim!"
-},
-{
-"key": "v779dfa02",
-"text": "Ang natayang manlalaro ang bagong Taya."
-},
-{
-"key": "vcc1b8bf3",
-"text": "I-drag para tumakbo. Ligtas ang madilim na lilim sa ilalim ng puno. Sa maliwanag na araw, puwede kang tayain!"
-},
-{
-"key": "v1d0c189f",
-"text": "Gumagalaw ang araw kaya dumudulas at lumiliit ang anino — bantayan ito! Nagbibilang din si Taya kapag matagal ka."
-},
-{
-"key": "vf1edb8ce",
-"text": "Tumawid sa araw papunta sa lilim ng ibang puno para sa isang . Kapag natayaan ka, ikaw ang Taya!"
-},
-{
-"key": "v554f917e",
-"text": "Maglaro sa maaraw na umaga o hapon. Tanungin ang bata kung saan kaya mapupunta ang anino mamaya — masayang paraan para matuto tungkol sa araw!"
-},
-{
-"key": "v4aa7a981",
-"text": "Ipagtatanggol ni Inahin ang mga sisiw laban sa Lawin!"
-},
-{
-"key": "v38d1de4e",
-"text": "5–10 bata"
-},
-{
-"key": "v8854f8be",
-"text": "Bukas na espasyo"
-},
-{
-"key": "v334d8606",
-"text": "Isang manlalaro ang Lawin, isa ang Inahin, at ang iba ay mga Sisiw."
-},
-{
-"key": "v7082b393",
-"text": "Pipila ang mga sisiw sa likod ng inahin, nakahawak sa baywang ng nasa harap."
-},
-{
-"key": "ve46a821d",
-"text": "Hihingi ang lawin ng isang sisiw sa inahin. Tatanggi ang inahin, at susubukan ng lawin na hawakan ang pinakahuling sisiw sa pila."
-},
-{
-"key": "v000fd8c6",
-"text": "Ibubuka ng inahin ang kanyang mga braso at gagalaw pakaliwa at pakanan para harangan ang lawin. Sasabay sa pag-indak ang mga sisiw. Ang natayang sisiw ay sasama sa lawin!"
-},
-{
-"key": "v964e327b",
-"text": "Ikaw ang Inahin. Nakakapit sa likod mo ang mga sisiw at sumusunod sa iyo saan ka man pumunta."
-},
-{
-"key": "v629b6934",
-"text": "Iikot ang Lawin para hawakan ang HULING sisiw. I-drag para gumalaw at iharang ang katawan mo sa pagitan ng lawin at ng mga sisiw!"
-},
-{
-"key": "v560ece5a",
-"text": "Ingatan ang mga sisiw hanggang maubos ang oras. Bumibilis at tumutuso ang lawin bawat antas."
-},
-{
-"key": "v351aca94",
-"text": "Dapat mahigpit ang kapit ng mga sisiw at sumabay ang inahin sa galaw ng lawin. Magsimula sa mabagal para masabayan ng maliliit."
-},
-{
-"key": "ve1dad9ea",
-"text": "Humawak sa bakod at ligtas ka!"
-},
-{
-"key": "v0994a9dd",
-"text": "4–10 bata"
-},
-{
-"key": "vbf7f891e",
-"text": "Bakod, poste, pader o puno"
-},
-{
-"key": "ve44007a7",
-"text": "Isa ang Taya. Tatakbo sa bakuran ang lahat."
-},
-{
-"key": "ve6ddbb3c",
-"text": "Ang kapit ay paghawak at ang bakod ay harang. Basta nakahawak ka sa bakod, poste o pader, ligtas ka."
-},
-{
-"key": "v1b21f90f",
-"text": "Hindi ka puwedeng manatili sa iisang bakod nang matagal — magbibilang ang Taya at kailangan mong lumipat sa iba!"
-},
-{
-"key": "va153b6b9",
-"text": "Kapag natayaan ka nang hindi nakahawak sa anuman, ikaw na ang susunod na Taya."
-},
-{
-"key": "vdde07f47",
-"text": "I-drag para tumakbo. Humawak sa bakod o poste para ligtas."
-},
-{
-"key": "v44684e21",
-"text": "Hindi puwedeng kumapit nang matagal — nagbibilang si Taya! Kapag naubos ang bilang mo, lumipat sa IBANG bakod. Bawat bagong bakod ay isang ."
-},
-{
-"key": "vadd27c8a",
-"text": "Kapag natayaan ka malayo sa bakod, ikaw ang Taya: habulin at tayaan ang kaibigan!"
-},
-{
-"key": "va9d934de",
-"text": "Pumili ng ilang bakod o poste para palipat-lipat ang mga bata. Gumawa ng patakaran: 5 segundo lang sa iisang bakod!"
-},
-{
-"key": "v755e91f5",
-"text": "Talunin ang \"tinik\" na gawa sa magkapatong na kamay!"
-},
-{
-"key": "v42c32ecf",
-"text": "Mga kamay at paa lang!"
-},
-{
-"key": "ve283b9d7",
-"text": "Dalawang manlalaro ang nakaupo sa lupa nang magkaharap, magkadikit ang talampakan. Ito ang unang \"tinik\"."
-},
-{
-"key": "v67f08a38",
-"text": "Magpapatong-patong sila ng kamay, isa sa ibabaw ng isa, para tumaas ang tinik — bawat antas ay isang dangkal."
-},
-{
-"key": "v01fcd427",
-"text": "Ang ibang manlalaro ay salitang tatakbo at tatalon sa ibabaw ng tinik nang hindi ito nahahawakan."
-},
-{
-"key": "vd5bf9d57",
-"text": "Kapag nasagi mo ito, ikaw ang papalit sa nakaupo!"
-},
-{
-"key": "v69f3eedf",
-"text": "Panoorin ang marka na dumudulas sa bar."
-},
-{
-"key": "v60a8763b",
-"text": "Pindutin ang Talon! kapag lampas na ng berdeng linya ang marka — sapat na ang taas!"
-},
-{
-"key": "vfffec68a",
-"text": "Tumataas ang tinik sa bawat antas . Lampasan ang 5 antas!"
-},
-{
-"key": "v6facc317",
-"text": "Magsimula sa mga paa lang, saka magdagdag ng isang kamay bawat beses. Palaging umalalay sa mga nakaupo: banayad na talon lang, at mas maganda sa malambot na damuhan."
-},
-{
-"key": "v4ed0454d",
-"text": "Talunin ang yumuyukong baka!"
-},
-{
-"key": "v3e120c12",
-"text": "Malambot at madamong lugar"
-},
-{
-"key": "vf1e1ecd1",
-"text": "Isa ang baka. Sa umpisa, nakayuko siya nang mababa, nakapatong ang kamay sa lupa at nakatago ang ulo."
-},
-{
-"key": "v5d5cc574",
-"text": "Ang ibang manlalaro ay tatakbo at lulundag sa likod ng baka, parang leap-frog, nang hindi nahahawakan ang ulo nito."
-},
-{
-"key": "v3be65577",
-"text": "Pagkatapos ng bawat ikot, tumataas ang baka: kamay sa paa, saka sa tuhod, saka sa hita."
-},
-{
-"key": "v6bfdd16b",
-"text": "Kapag may nakasagi sa baka o nadapa, siya na ang susunod na baka!"
-},
-{
-"key": "vbc2cd4ec",
-"text": "Pindutin at I-HOLD ang pindutan ng talon — pupuno ang bar ng lakas!"
-},
-{
-"key": "v4ad4a9bd",
-"text": "Bitawan kapag lampas na sa berdeng linya para sapat ang taas ng talon."
-},
-{
-"key": "vd4e645cc",
-"text": "Palaki nang palaki ang yumuyukong kaibigan mo sa bawat antas. Lampasan ang 4 na antas!"
-},
-{
-"key": "v94c8ed9b",
-"text": "Dapat nakatago ang ulo ng baka at tuwid ang likod. Turuan ang mga bata na tumakbo muna, saka tumulak gamit ang dalawang paa."
-},
-{
-"key": "vcc777fde",
-"text": "Tumakbo, tumalon at lampasan ang garter!"
-},
-{
-"key": "vb765841e",
-"text": "Mahabang goma na nakatali nang pabilog"
-},
-{
-"key": "vf24ba206",
-"text": "Dalawang manlalaro ang magkalayong nakatayo, hawak ang mahabang garter na nakaunat sa pagitan nila."
-},
-{
-"key": "v4d7979f4",
-"text": "Tatakbo ang tatalon at lulundagan ang garter nang hindi sumasabit."
-},
-{
-"key": "vf8f21539",
-"text": "Pagkatapos ng bawat ikot, tataas ang garter: bukong-bukong tuhod hita baywang dibdib kili-kili balikat leeg tainga ulo!"
-},
-{
-"key": "v3756a180",
-"text": "Sa matataas na antas, sinisipa pataas ng malalaking bata ang garter para mahila ito pababa, saka tatalon. Kapag nabigo ka, ikaw naman ang hahawak."
-},
-{
-"key": "vc6660ab2",
-"text": "Hawak ng dalawang kaibigan mo ang garter. Nagsisimula ito sa bukong-bukong at tumataas bawat ilang antas."
-},
-{
-"key": "v17174e73",
-"text": "Pindutin at I-HOLD ang pindutan para mag-ipon ng lakas, saka bitawan kapag nasa berdeng bahagi ang bar."
-},
-{
-"key": "vcc5aba57",
-"text": "Tumalon nang sapat na taas para malampasan ang garter — pero huwag sobra, baka matisod ka sa pagbagsak!"
-},
-{
-"key": "v8c8128e7",
-"text": "Gumawa ng pabilog na goma mula sa magkakabuhol na rubber band. Gustong-gusto ng mga bata ang pag-awit habang tumatalon — nakakatulong ito para matandaan ang ayos!"
-},
-{
-"key": "vefa7a00d",
-"text": "Hopscotch ng mga Pilipino — hop, hop, pahinga!"
-},
-{
-"key": "v3835f452",
-"text": "2–6 bata"
-},
-{
-"key": "v91e72472",
-"text": "Tisa at patag na bato na tinatawag na \"maru\""
-},
-{
-"key": "v3d788007",
-"text": "Gumuhit ng malaking grid sa lupa na may mga numerong kahon at kalahating bilog sa dulo na tinatawag na Langit."
-},
-{
-"key": "v3f263855",
-"text": "Ihagis ang patag mong bato sa kahon bilang 1. Saka lumundag sa mga kahon: isang paa sa solong kahon at dalawang paa sa magkatabing kahon. Laktawan ang kahong may bato!"
-},
-{
-"key": "v51f2ad2f",
-"text": "Sa Langit, puwede kang magpahinga sa dalawang paa at umikot. Lumundag pabalik, yumuko at damputin ang bato."
-},
-{
-"key": "v4d50f511",
-"text": "Saka ihagis sa kahon 2, at iba pa. Ang pagtapak sa linya o sa kahon ng bato ay tapos na ang turn mo."
-},
-{
-"key": "v7ab8b39b",
-"text": "UNA, PINDUTIN ang kumikinang na kahon para ihagis ang bato roon."
-},
-{
-"key": "vd906fe77",
-"text": "Saka pindutin ang mga kumikinang na kahon nang sunud-sunod para lumundag: isang kahon = isang paa , dalawang magkatabing kahon = dalawang paa ."
-},
-{
-"key": "vf71a4a46",
-"text": "Laktawan ang kahon ng bato, magpahinga sa Langit , lumundag pabalik, at pindutin ang bato para damputin!"
-},
-{
-"key": "v7a7d715c",
-"text": "Gumuhit ng grid gamit ang tisa sa semento. Puwedeng dalawang paa muna sa bawat kahon ang maliliit na bata, saka pag-aralan ang isang paa."
-},
-{
-"key": "vfc094082",
-"text": "Karera sa mga bao ng niyog!"
-},
-{
-"key": "vef07e89c",
-"text": "Kalahating bao ng niyog na may lubid na dumadaan sa bawat isa"
-},
-{
-"key": "v7acb076d",
-"text": "Nakatayo ang bawat manlalaro sa dalawang kalahating bao ng niyog. May lubid na dumadaan sa butas ng bawat bao."
-},
-{
-"key": "va54b0e75",
-"text": "Hawak mo nang mahigpit ang lubid at kinakapitan ng daliri ng paa ang bao."
-},
-{
-"key": "v852645d4",
-"text": "Humakbang nang kaliwa, kanan, kaliwa, kanan habang nagbabalanse, at tumakbo papunta sa finish line!"
-},
-{
-"key": "v3d45a4d1",
-"text": "Kapag nawalan ka ng balanse at nahulog, uulitin mo ang bahaging iyon."
-},
-{
-"key": "v97a64f4d",
-"text": "Hintayin ang \"Takbo!\" saka pindutin ang Kaliwa at Kanan salitan."
-},
-{
-"key": "ve123581f",
-"text": "Kapag pareho ang pinindot nang dalawang beses, hihiyaw ka at aatras!"
-},
-{
-"key": "v4149350a",
-"text": "Makipagkarera sa dalawa mong kaibigan papunta sa finish line."
-},
-{
-"key": "v6101e813",
-"text": "Gumamit ng makapal na lubid at matibay na bao; magsimula sa damuhan. Bilangin nang malakas ang \"kaliwa, kanan\" para may ritmo!"
-},
-{
-"key": "v5e92e882",
-"text": "Pabagsakin ang lata gamit ang tsinelas!"
-},
-{
-"key": "v916b016d",
-"text": "Walang lamang lata at tsinelas para sa bawat manlalaro"
-},
-{
-"key": "ve35c5ffa",
-"text": "May lata na nakatayo sa maliit na bilog. Ang Taya ang nagbabantay rito."
-},
-{
-"key": "v20a439b4",
-"text": "Nakatayo ang mga manlalaro sa likod ng linya at ihahagis ang kanilang tsinelas para mabuwal ang lata."
-},
-{
-"key": "v67158cd0",
-"text": "Kapag natumba ang lata, tatakbo ang lahat para kunin ang tsinelas habang itinatayo ulit ng Taya ang lata."
-},
-{
-"key": "v810497b3",
-"text": "Puwedeng tayain ng Taya ang sinumang malayo sa kanyang tsinelas — ang natayaan ang magiging susunod na Taya!"
-},
-{
-"key": "vfef20f7e",
-"text": "Panoorin ang marka sa bar. Pindutin ang Hagis! kapag nasa berdeng bahagi ito para ihagis!"
-},
-{
-"key": "vcb661849",
-"text": "Kung natumba ang lata: pindutin nang mabilis ang Takbo! para makuha ang tsinelas bago maitayo ng Taya ang lata."
-},
-{
-"key": "v0c4dfdc3",
-"text": "3 hagis ang mayroon ka. Subukang makuha ang tsinelas sa bawat beses!"
-},
-{
-"key": "v726e37aa",
-"text": "Maglaro sa malambot na lupa, tumira nang mababa, at ihagis nang pailalim. Hindi dapat masyadong malapit ang Taya — gawing patas para sa maliliit."
-},
-{
-"key": "v9f404d36",
-"text": "Panatilihing nasa ere ang sipa — bawal ang kamay!"
-},
-{
-"key": "v7d5d930e",
-"text": "1 o higit pang bata"
-},
-{
-"key": "vc3a1232f",
-"text": "Sipa o magaan na bola"
-},
-{
-"key": "v90df369e",
-"text": "Ang sipa ay washer na may makukulay na plastik na tali kaya dahan-dahan itong bumabagsak."
-},
-{
-"key": "v3e556124",
-"text": "Ihagis ito pataas at sipain gamit ang loob ng paa, tuhod, o siko para hindi bumagsak."
-},
-{
-"key": "vf2fe5fc9",
-"text": "Bawal na bawal ang kamay! Bilangin kung ilang sipa ang nagawa mo nang sunud-sunod."
-},
-{
-"key": "v98fe68c4",
-"text": "Ang sipa ang tradisyonal na pambansang laro ng Pilipinas. Puwedeng mag-isa o ipasa sa mga kasama sa bilog."
-},
-{
-"key": "vfc10f45c",
-"text": "Panoorin ang pagbagsak ng sipa. Kapag nasa dilaw na bahagi na, pindutin ang bahagi ng katawan na hinihingi ng hint!"
-},
-{
-"key": "vf25fbf48",
-"text": "Paa , tuhod o siko — bawal ang kamay."
-},
-{
-"key": "va3aaf131",
-"text": "May layunin ang bawat antas. May 3 puso ka: kapag dumikit sa lupa ang sipa, mababawasan ka ng isa."
-},
-{
-"key": "vfdbd980d",
-"text": "Gumawa ng sipa mula sa washer at ilang piraso ng plastik na supot. Magsimula sa mababang sipa malapit sa lupa."
-},
-{
-"key": "v5c3862a0",
-"text": "Pitikin ang maliit na patpat at paluin nang malayo!"
-},
-{
-"key": "v40308451",
-"text": "Isang mahabang patpat at isang maikling patpat"
-},
-{
-"key": "v8c0b4d3d",
-"text": "Dalawang patpat ang gamit: mahaba para sa pagpalo at maikli na lumilipad. Ipatong ang maikling patpat sa maliit na butas o bato."
-},
-{
-"key": "vd8f68cb3",
-"text": "Tapikin ang dulo nito gamit ang mahabang patpat para tumalbog pataas sa ere."
-},
-{
-"key": "v66f617f3",
-"text": "Habang nasa ere, ipalo ang mahabang patpat at paluin ito nang pinakamalayo!"
-},
-{
-"key": "v65938ff2",
-"text": "Sukatin kung gaano kalayo ang narating gamit ang haba ng mahabang patpat. Pinakamarami ang puntos ng pinakamalayo."
-},
-{
-"key": "v00b1f6d3",
-"text": "Pindutin ang Tuklap! para tumalbog pataas ang maikling patpat."
-},
-{
-"key": "ve7e6d29b",
-"text": "Pindutin ang Palo! kapag nasa loob ng berdeng kahon na may guhit ang patpat — ang perpektong palo ang pinakamalayo!"
-},
-{
-"key": "vb4a4c79b",
-"text": "3 palo ang mayroon ka. Abutin ang layuning haba ng patpat ng antas!"
-},
-{
-"key": "v88222035",
-"text": "Kuskusin ang mga patpat para walang tinik. Maglaro sa bukas na bukid na malayo sa ibang bata at bintana, at sukatin gamit ang mahabang patpat."
-},
-{
-"key": "vb4f6fbea",
-"text": "Pitikin ang holen at ilabas ang iba sa bilog!"
-},
-{
-"key": "vb677bf69",
-"text": "2–5 bata"
-},
-{
-"key": "v94675b51",
-"text": "Mga holen at tisa para gumuhit ng bilog"
-},
-{
-"key": "v8813b524",
-"text": "Gumuhit ng bilog sa lupa at maglagay ng ilang holen sa loob."
-},
-{
-"key": "vfaa394ca",
-"text": "May mas malaking \"pang-tira\" na holen ang bawat manlalaro. Lumuhod sa likod ng linya at pitikin ito gamit ang hinlalaki."
-},
-{
-"key": "v0c8fe252",
-"text": "Tamaan ang mga holen sa bilog at ilabas ang mga ito — sa iyo na ang bawat holen na mailabas mo!"
-},
-{
-"key": "v4bb08710",
-"text": "Isa pang bersyon ay gumagamit ng maliliit na butas sa lupa: igulong ang holen mo sa mga butas nang sunud-sunod."
-},
-{
-"key": "v4cb462ed",
-"text": "Idiin ang daliri sa screen, hilahin pabalik na parang tirador, saka bitawan para pitikin ang asul mong holen."
-},
-{
-"key": "vd2411fc9",
-"text": "Ilabas sa bilog ang 3 makukulay na holen!"
-},
-{
-"key": "vc62e1baa",
-"text": "Sinasabi ng bawat antas kung ilang holen ang ilalabas at ilang tira ang mayroon ka. Mas kaunting tira, mas maraming bituin."
-},
-{
-"key": "v622a3ad8",
-"text": "Maglaro sa patag at makinis na lupa. Ilayo ang mga holen sa mga sanggol at paslit na maaaring isubo ang mga ito. Bilangin ang mga holen bago at pagkatapos maglaro!"
-},
-{
-"key": "ve93c9bc7",
-"text": "Akyatin ang madulas na poste para makuha ang premyo!"
-},
-{
-"key": "vd5c88329",
-"text": "Mga koponang may 3–5 bata"
-},
-{
-"key": "va3337887",
-"text": "Mataas na poste ng kawayan na pinahiran ng sebo — laro ito sa pista para sa matatanda at malalaking bata!"
-},
-{
-"key": "v409ab182",
-"text": "May matayog na poste ng kawayan na nakatayo sa lupa at pinahiran ng sebo. May bandila o premyo sa tuktok."
-},
-{
-"key": "ve03dbcdd",
-"text": "Susubukang umakyat ng mga manlalaro, pero napakadulas — paulit-ulit silang dumudulas pababa!"
-},
-{
-"key": "v3498ddde",
-"text": "Gumagamit ang mga koponan ng buhangin o abo sa kamay para kumapit, at bumubuo ang magkakaibigan ng tao-tao na hagdan o piramide para umabot sa taas."
-},
-{
-"key": "v7defb9ef",
-"text": "Nilalaro ito sa mga pista ng bayan, at nagchi-cheer ang buong madla!"
-},
-{
-"key": "v1737890d",
-"text": "Pindutin nang paulit-ulit ang Akyat! para umakyat. Dudulas ka dahil sa sebo!"
-},
-{
-"key": "v1b693fed",
-"text": "Pindutin ang Buhangin para magpahid ng buhangin sa kamay."
-},
-{
-"key": "v5be7bb4e",
-"text": "Pindutin nang minsan ang Kaibigan para buhatin ka ng mga kaibigan mo! Abutin ang sa tuktok!"
-},
-{
-"key": "v4cc6b94f",
-"text": "Sa totoong buhay, mga mas malalaking bata lang na may bantay na matanda ang dapat sumubok. Sa bahay, laruin ito bilang \"kunwaring pag-akyat\" sa malambot na lubid o play-gym na dingding."
-},
-{
-"key": "v9af720e2",
-"text": "Ipamahagi ang mga sigay at punuin ang bahay mo!"
-},
-{
-"key": "veb07a312",
-"text": "2 manlalaro"
-},
-{
-"key": "va4ad3a57",
-"text": "Tabla ng sungka at 98 sigay, buto o maliliit na bato"
-},
-{
-"key": "v42980793",
-"text": "May inukit na kahoy na tabla na may dalawang hanay ng 7 maliliit na lubak at isang malaking bahay sa bawat dulo. May 7 sigay ang bawat maliit na lubak sa simula."
-},
-{
-"key": "ve7e6cf2e",
-"text": "Sa turn mo, kukunin mo ang lahat ng sigay sa isang lubak at isa-isa itong ilalagay sa mga susunod na lubak papunta sa sarili mong bahay."
-},
-{
-"key": "v41eb5878",
-"text": "Kapag sa sarili mong bahay bumagsak ang huling sigay, may isa ka pang turn. Kapag sa lubak na may laman, kunin ang laman at ituloy ang pagbibigay!"
-},
-{
-"key": "ve9d25e13",
-"text": "Kung sa walang lamang lubak sa panig mo bumagsak ang huling sigay, makukuha mo ang mga sigay sa katapat nito. Panalo ang may pinakamaraming sigay sa bahay!"
-},
-{
-"key": "vbc3eca40",
-"text": "Ikaw ang nasa ibabang hanay. Pindutin ang isang lubak mo para kunin at ipamahagi ang mga sigay pakanan."
-},
-{
-"key": "v28634d32",
-"text": "Huling sigay sa bahay mo = dagdag na turn! Huling sigay sa lubak na may laman = tuloy lang. Huling sigay sa walang lamang lubak mo = kunin ang katapat!"
-},
-{
-"key": "v3c788a60",
-"text": "Kapag naubos ang sigay sa isang panig, tapos na ang laro. Ang may pinakamaraming sigay sa bahay ang panalo!"
-},
-{
-"key": "v3a7f3c6a",
-"text": "Gumawa ng tabla mula sa egg carton at dalawang mangkok. Mahusay na pagsasanay sa pagbibilang at pagdaragdag ang pagbibilang ng sigay."
-},
-{
-"key": "vdaff1966",
-"text": "Checkers ng mga Pilipino gamit ang takip ng bote!"
-},
-{
-"key": "v701685aa",
-"text": "Checkerboard na iginuhit sa karton at 24 takip ng bote"
-},
-{
-"key": "v59c1c404",
-"text": "Nilalaro ang dama sa 8×8 na tabla gamit lang ang madidilim na kahon. May 12 piyesa ang bawat manlalaro — kadalasan ay takip ng bote, bato o kahoy."
-},
-{
-"key": "vcf1cbecf",
-"text": "Isang hakbang na pahilis paharap ang galaw ng piyesa papunta sa walang lamang kahon."
-},
-{
-"key": "v476bf88a",
-"text": "Para manakop, lumundag nang pahilis sa ibabaw ng kalabang piyesa papunta sa walang lamang kahon sa likod nito. Kapag may puwedeng sakupin, kailangan mo itong gawin!"
-},
-{
-"key": "vf2d8b9fd",
-"text": "Ang piyesang nakarating sa kabilang dulo ay nagiging dama at puwedeng gumalaw pasulong at paatras. Panalo ka kapag naubos mo ang kalaban!"
-},
-{
-"key": "v3ae592d8",
-"text": "Pumili ng kalaban. Ikaw ang asul na takip sa ibaba at ikaw ang unang gagalaw. Pindutin ang takip, saka ang berdeng tuldok."
-},
-{
-"key": "ve4c33c56",
-"text": "Lundagan ang pulang takip para mahuli ito. Kapag may puwedeng mahuli, kailangan mo itong gawin."
-},
-{
-"key": "v10681898",
-"text": "Abutin ang itaas na hanay para maging hari ! Naitatabi ang laro, kaya puwede mo itong ituloy mamaya."
-},
-{
-"key": "ve9ca396a",
-"text": "Gumawa ng tabla mula sa karton at gumamit ng dalawang uri ng takip ng bote. Hayaang 6 na piyesa lang muna ang bawat isa para matutunan ang mga galaw."
-},
-{
-"key": "v36d13869",
-"text": "Pindutin nang matagal, bitawan sa berdeng bahagi, at lundagan ang garter!"
-},
-{
-"key": "vc66be9a7",
-"text": "Naku! Sumabit ang paa mo sa garter. Subukan ulit!"
-},
-{
-"key": "v5bdb5dcd",
-"text": "Natayaan! Balik sa simula — subukan ulit!"
-},
-{
-"key": "v56bc97f2",
-"text": "Nakatawid ka! Takbo pabalik sa !"
-},
-{
-"key": "v5ebf8cd9",
-"text": "Natawid mo ang lahat ng linya at nakabalik ka nang ligtas!"
-},
-{
-"key": "v051b25f1",
-"text": "Takbo papunta sa ! Iwasan ang mga taya sa mga linya."
-},
-{
-"key": "v77bfbbb4",
-"text": "Nakuha mo ang pulang base!"
-},
-{
-"key": "v2056d0a6",
-"text": "Naku, nasa kulungan ka! Tawagin ang kaibigan para iligtas ka!"
-},
-{
-"key": "v43ffa457",
-"text": "Tumatakbo ang kaibigan mo para iligtas ka!"
-},
-{
-"key": "vbadc892f",
-"text": "Laya ka na! Takbo sa bandila!"
-},
-{
-"key": "v88c6bb18",
-"text": "Takbo papunta sa pulang bandila! Mag-ingat sa pulang koponan."
-},
-{
-"key": "v7a21272c",
-"text": "Taya! Sila na ulit ang Taya. Kolektahin ang mga !"
-},
-{
-"key": "vada9b11f",
-"text": "Napagod ang kaibigan mo. Balik sa pagkolekta ng !"
-},
-{
-"key": "v063ec35b",
-"text": "Tawagin ang kaibigan!"
-},
-{
-"key": "vcdd575c8",
-"text": "Tumayo sa para ligtas. Kolektahin ang 3 sa lupa!"
-},
-{
-"key": "v34ff9c54",
-"text": "Natayaan sa lupa! Ikaw na ang Taya — tayain ang kaibigan mo!"
-},
-{
-"key": "v8520fe7e",
-"text": "Nakolekta mo ang lahat ng bituin sa lupa!"
-},
-{
-"key": "vee2c27b4",
-"text": "Madilim na berde = lilim. Kolektahin ang 3 — at bantayan ang !"
-},
-{
-"key": "v505b11c3",
-"text": "Natayaan sa araw! Ikaw na ang Taya — tayain ang kaibigan mo!"
-},
-{
-"key": "v9930c889",
-"text": "Naglaro ka ng habulan sa araw at lilim!"
-},
-{
-"key": "v48f84c5d",
-"text": "Gumalaw ang araw! Gumalaw rin ang mga anino!"
-},
-{
-"key": "ve76143da",
-"text": "Ang dilaw na kahon ay nakahawak sa bakod — ligtas! Kolektahin ang 3 ."
-},
-{
-"key": "v1448d9a4",
-"text": "Natayaan nang malayo sa bakod! Ikaw na ang Taya — tayain ang kaibigan mo!"
-},
-{
-"key": "vb35d0199",
-"text": "Ikaw ang kampeon ng kapit-bakod!"
-},
-{
-"key": "v4e96a9e1",
-"text": "Nakita kita! Dali — pindutin ang PUNG!"
-},
-{
-"key": "v31b88b59",
-"text": "Walang tao rito! Subukan ang iba."
-},
-{
-"key": "v25bc74d4",
-"text": "Nakita mo ang lahat ng kaibigan mo! Pung! Pung! Pung!"
-},
-{
-"key": "v395dae72",
-"text": "Pumikit at magbilang kasama ko!"
-},
-{
-"key": "v32b85a81",
-"text": "Handa na ba kayo? Ayan na ako! Pindutin ang taguan para silipin."
-},
-{
-"key": "v61817e81",
-"text": "Nakapikit…"
-},
-{
-"key": "v9714f237",
-"text": "Ayan na ako!"
-},
-{
-"key": "va303d46e",
-"text": "Manatili sa ilalim ng lawin para maprotektahan ang mga sisiw!"
-},
-{
-"key": "ve19f1c43",
-"text": "Nahadlangan! Magaling, Inahin!"
-},
-{
-"key": "vbe2c61a5",
-"text": "Naku! Natayaan ng lawin ang isang sisiw. Lumapit ka pa!"
-},
-{
-"key": "v9f53ba99",
-"text": "Magaling na subok, Inahin! Ulitin para maligtas silang lahat."
-},
-{
-"key": "v138a8ed1",
-"text": "Wow! Natalon mo ito!"
-},
-{
-"key": "v8476f058",
-"text": "Pindutin ang Talon! kapag lampas na sa berdeng linya ang marka."
-},
-{
-"key": "v4d6a145a",
-"text": "Ay! Nasagi mo ang tinik. Subukan ulit!"
-},
-{
-"key": "vabeabc74",
-"text": "Natalon mo ang bawat tinik nang hindi ito nasasagi!"
-},
-{
-"key": "v4b5a4adf",
-"text": "I-hold ang pindutan, bitawan kapag lampas na sa berdeng linya!"
-},
-{
-"key": "v6c9f78b8",
-"text": "Ay! Nasagi mo ang baka. Mas matagal na pag-hold!"
-},
-{
-"key": "vc9eb0362",
-"text": "Nalundagan mo ang baka sa lahat ng taas!"
-},
-{
-"key": "v695f2507",
-"text": "I-hold… saka bitawan!"
-},
-{
-"key": "vbb5afa91",
-"text": "Paa"
-},
-{
-"key": "va9209345",
-"text": "Tuhod"
-},
-{
-"key": "vfa55e968",
-"text": "Baywang"
-},
-{
-"key": "va57c20ab",
-"text": "Dibdib"
-},
-{
-"key": "vf94d8e25",
-"text": "Balikat"
-},
-{
-"key": "v2c5bee3f",
-"text": "Mababa"
-},
-{
-"key": "v7ca13974",
-"text": "Mataas"
-},
-{
-"key": "vdcead5a4",
-"text": "Napakataas"
-},
-{
-"key": "v8e88b73c",
-"text": "Bukong-bukong"
-},
-{
-"key": "vb45abbe1",
-"text": "Ulo"
-},
-{
-"key": "v4cb0e7cf",
-"text": "Gayahin ang ayos: pindutin ang mga pindutan nang sunud-sunod!"
-},
-{
-"key": "v12726e21",
-"text": "Ang galing! Tumataas ang goma!"
-},
-{
-"key": "v1f454667",
-"text": "Nalampasan mo ang lahat ng taas ng Chinese Garter!"
-},
-{
-"key": "vab8d14c4",
-"text": "Nalampasan mo ang taas na ito!"
-},
-{
-"key": "ve598e06e",
-"text": "Ang galing! Isa pang ayos!"
-},
-{
-"key": "v0b1b27b4",
-"text": "Ang bagal! Naunang nakarating sa base ang kaibigan mo."
-},
-{
-"key": "v30272141",
-"text": "Nakita mo silang lahat! Pero may ilang mas mabilis sa iyo."
-},
-{
-"key": "v35801643",
-"text": "Ay! Ulitin ang ayos."
-},
-{
-"key": "vc5e26f12",
-"text": "Kaliwa"
-},
-{
-"key": "v1eacec1e",
-"text": "Kanan"
-},
-{
-"key": "ve5b15045",
-"text": "Magaling! Bagong hagis naman."
-},
-{
-"key": "v14f30abf",
-"text": "Nalundagan mo ang buong Piko!"
-},
-{
-"key": "v73adb9c0",
-"text": "Magpahinga sa Langit ! Pindutin ito, saka umikot."
-},
-{
-"key": "v0bfb23d7",
-"text": "Yumuko at damputin ang bato mo !"
-},
-{
-"key": "v0d569169",
-"text": "Panalo ka sa karera!"
-},
-{
-"key": "v178fc12e",
-"text": "Natapos mo ang karera!"
-},
-{
-"key": "v6e098542",
-"text": "Nayanig! Salitan: kaliwa, kanan, kaliwa, kanan!"
-},
-{
-"key": "v2ef89a45",
-"text": "Humanda…"
-},
-{
-"key": "v4b372315",
-"text": "TAKBO! Pindutin ang kaliwa, kanan, kaliwa, kanan!"
-},
-{
-"key": "v5f6d9cca",
-"text": "Pindutin ang Hagis! kapag nasa berdeng bahagi ang marka!"
-},
-{
-"key": "v1da61a59",
-"text": "TUMBANG! Takbo, takbo! Pindutin nang mabilis ang Takbo!"
-},
-{
-"key": "v49249c4d",
-"text": "Mintis! Hindi tinamaan — nakatayo pa rin ang lata."
-},
-{
-"key": "va8f3c07f",
-"text": "Natayaan! Tinaya ka ng Taya. Subukan ulit!"
-},
-{
-"key": "v8134beeb",
-"text": "Nakuha mo ang tsinelas! Ligtas ka na!"
-},
-{
-"key": "v93121ce2",
-"text": "Magagaling na hagis! Subukan ulit para makuha ang tsinelas."
-},
-{
-"key": "v2ba97232",
-"text": "Ikaw: pindutin ang Takbo!"
-},
-{
-"key": "vde6d946b",
-"text": "Itinatayo ng Taya ang lata"
-},
-{
-"key": "v056d9117",
-"text": "Ay! Dumikit sa lupa. Subukan ulit!"
-},
-{
-"key": "v73a60ec0",
-"text": "Hintayin ang dilaw na bahagi!"
-},
-{
-"key": "v42c08958",
-"text": "Magaling na subok! Magsanay pa sa pagsipa."
-},
-{
-"key": "v906dcfb3",
-"text": "Siko"
-},
-{
-"key": "v48d5b9c4",
-"text": "Sipa:"
-},
-{
-"key": "v1197bfd4",
-"text": "Mintis! Nahulog ang patpat."
-},
-{
-"key": "v61f4cee1",
-"text": "Pindutin ang Palo! kapag nasa berdeng kahon ang patpat!"
-},
-{
-"key": "vaa9e0116",
-"text": "Kabuuan:"
-},
-{
-"key": "v33196984",
-"text": "haba ng patpat"
-},
-{
-"key": "ve8e26346",
-"text": "Hilahin pabalik na parang tirador, saka bitawan!"
-},
-{
-"key": "v87446cdd",
-"text": "Labas! Isang holen ang nailabas!"
-},
-{
-"key": "vd67c922a",
-"text": "Labas:"
-},
-{
-"key": "vac005752",
-"text": "/3 Natitirang tira:"
-},
-{
-"key": "v89a0616d",
-"text": "Binuhat ka ng mga kaibigan mo!"
-},
-{
-"key": "v0a562bc6",
-"text": "Pindutin nang paulit-ulit ang Akyat! Madulas ang sebo!"
-},
-{
-"key": "v9f677737",
-"text": "Madulas!"
-},
-{
-"key": "v74ef5a92",
-"text": "May kapit!"
-},
-{
-"key": "v74456908",
-"text": "Taas:"
-},
-{
-"key": "vee2b0cf3",
-"text": "Sa bahay ni Lolo bumagsak ang huling sigay — isa pang turn!"
-},
-{
-"key": "v33422135",
-"text": "Sa BAHAY MO bumagsak ang huling sigay! Ulit!"
-},
-{
-"key": "v9292ab9f",
-"text": "May laman ang lubak — ituloy ang pamamahagi!"
-},
-{
-"key": "v1bea871f",
-"text": "Pindutin ang isa sa mga lubak mo para ipamahagi ang mga sigay!"
-},
-{
-"key": "v8740c0e5",
-"text": "Ikaw naman!"
-},
-{
-"key": "vcf96cc7c",
-"text": "Nag-iisip si Lolo…"
-},
-{
-"key": "vb90de6f9",
-"text": "Ikaw"
-},
-{
-"key": "v755efa4f",
-"text": "Nakuha mo ang lahat ng pulang takip! Panalo!"
-},
-{
-"key": "va3952f74",
-"text": "Nanalo ang pula ngayon. Subukan ulit!"
-},
-{
-"key": "v0b052973",
-"text": "Lundag ulit!"
-},
-{
-"key": "v7824d635",
-"text": "Kailangan mong manakop! Pumili ng kumikislap na takip."
-},
-{
-"key": "v9669f338",
-"text": "May naiwang takip ang pula! Lundagan mo!"
-},
-{
-"key": "v0d5c24c3",
-"text": "Ikaw ang asul . Pindutin ang takip, saka ang berdeng tuldok!"
-},
-{
-"key": "v90f3f403",
-"text": "Kailangan mong manakop! Pindutin ang kumikislap na takip."
-},
-{
-"key": "vc8c98223",
-"text": "Ikaw naman! Pindutin ang asul na takip."
-},
-{
-"key": "v9fa5bbfc",
-"text": "Nag-iisip ang pula…"
-},
-{
-"key": "v2af2d3d3",
-"text": "Gumuhit ng mga linya sa lupa. Ang mga taya ay nakatayo SA mga linya."
-},
-{
-"key": "vee584ecd",
-"text": "Tatawid ang mga takbuhan sa bawat linya nang hindi nahahawakan."
-},
-{
-"key": "v09dcb48b",
-"text": "Natayaan? Magpalitan ng koponan! Nakabalik nang ligtas? May puntos!"
-},
-{
-"key": "va1233d6c",
-"text": "Ikaw ang takbuhan. I-drag ang daliri sa laruan para tumakbo."
-},
-{
-"key": "v2a6cad7d",
-"text": "Gumagalaw sa linya ang mga taya. Hintayin ang bakante!"
-},
-{
-"key": "v89b24f14",
-"text": "Abutin ang , saka tumakbo pabalik sa para manalo!"
-},
-{
-"key": "v3c031771",
-"text": "Dalawang koponan. May sariling base ang bawat isa, magkalayo."
-},
-{
-"key": "v1bd38042",
-"text": "Tayain ang kalaban. Ang natayaan ay mapupunta sa kulungan."
-},
-{
-"key": "v40d11624",
-"text": "Palalayain ka ng kaibigan sa isang hawak. Hawakan ang base ng kalaban para manalo!"
-},
-{
-"key": "vc80e27fa",
-"text": "I-drag para tumakbo sa pulang base sa dulong kanan."
-},
-{
-"key": "v3271c4d1",
-"text": "Hinahabol ka lang ng pulang koponan sa kanilang panig."
-},
-{
-"key": "v493716a5",
-"text": "Nahuli? Pindutin ang “Tumawag ng kaibigan” para maligtas!"
-},
-{
-"key": "v5616ed85",
-"text": "Hinahabol ng Taya ang iba. Nasa paligid sila ng matataas na lugar gaya ng hagdan at bato."
-},
-{
-"key": "vc3ac4cbc",
-"text": "Ligtas ka sa mataas. Sa lupa, puwede kang matayaan!"
-},
-{
-"key": "vf71f261e",
-"text": "Natayaan sa lupa? Ikaw na ang bagong Taya!"
-},
-{
-"key": "v52638481",
-"text": "I-drag para tumakbo. Bawat BAGONG langit na maabot mo ay isang ."
-},
-{
-"key": "vbd14d76d",
-"text": "Tumayo sa mataas para ligtas — pero nagbibilang si Taya, kaya lumipat!"
-},
-{
-"key": "vf26edd25",
-"text": "Natayaan? Ngayon IKAW ang hahabol sa kaibigan!"
-},
-{
-"key": "v30c17132",
-"text": "Tinatakpan ng Taya ang mata sa base at nagbibilang. Nagtatago ang lahat!"
-},
-{
-"key": "ve6654eec",
-"text": "Hinahanap ng Taya ang bawat sulok."
-},
-{
-"key": "vb40e9cb6",
-"text": "May nakita? Tumakbo pabalik sa base at isigaw ang “Pung!”"
-},
-{
-"key": "v3d5d5565",
-"text": "May sariling lugar ang bawat antas. Minsan ikaw ang taya, minsan ikaw ang magtatago!"
-},
-{
-"key": "ve1494485",
-"text": "Magbilang hanggang sampu nang sabay. Pikit ang mata!"
-},
-{
-"key": "vde3ca04a",
-"text": "Maglakad at i-tap ang taguan para silipin. May nakita? Unahan sa base: Pung!"
-},
-{
-"key": "v850d0c9a",
-"text": "Manatili sa lilim kung saan hindi ka matatayaan."
-},
-{
-"key": "vfdefc837",
-"text": "Gumagalaw ang araw kaya gumagalaw ang lilim. Maghanap ng bagong lilim!"
-},
-{
-"key": "v5519493c",
-"text": "Sa araw, puwede kang matayaan!"
-},
-{
-"key": "vf1530635",
-"text": "Ligtas ang madilim na lilim sa ilalim ng puno."
-},
-{
-"key": "v281bb98e",
-"text": "Bantayan ang : kapag gumalaw ang araw, gumagalaw ang lilim!"
-},
-{
-"key": "v388bb56f",
-"text": "Tumakbo sa lilim ng ibang puno para sa . Natayaan? Ikaw ang hahabol!"
-},
-{
-"key": "vc368424b",
-"text": "Nakapila ang mga sisiw sa likod ng Inahin, nakahawak sa baywang."
-},
-{
-"key": "v4a7462aa",
-"text": "Susubukan ng lawin na hawakan ang huling sisiw. Haharangan ito ng inahin!"
-},
-{
-"key": "v72290cdc",
-"text": "Ang nahuling sisiw ay sasama sa lawin!"
-},
-{
-"key": "v7175d363",
-"text": "Ikaw ang Inahin . Nakakapit sa likod mo ang mga sisiw ."
-},
-{
-"key": "v2879c8d8",
-"text": "Iikot ang lawin para maabot ang HULING sisiw."
-},
-{
-"key": "v6afd2a38",
-"text": "I-drag para gumalaw at harangan ang lawin!"
-},
-{
-"key": "ve8473c79",
-"text": "Nakahawak sa bakod, poste o pader? Ligtas ka!"
-},
-{
-"key": "v73dbb2e4",
-"text": "Hindi ka puwedeng magtagal. Tumakbo sa ibang bakod!"
-},
-{
-"key": "vc9c0efee",
-"text": "Natayaan nang malayo sa bakod? Ikaw na ang bagong Taya!"
-},
-{
-"key": "vfb71a692",
-"text": "Humawak sa bakod o poste para ligtas ."
-},
-{
-"key": "v45070a0a",
-"text": "Nagbibilang si Taya! Tumakbo sa IBANG bakod para sa ."
-},
-{
-"key": "ve21ca616",
-"text": "Natayaan? Ikaw na ang Taya. Tayain ang kaibigan mo!"
-},
-{
-"key": "v4e1f709b",
-"text": "Magkaupo ang dalawang kaibigan, magkadikit ang talampakan. Ito ang unang tinik."
-},
-{
-"key": "v2c6b079f",
-"text": "Pinapatong nila ang mga kamay, isa sa ibabaw ng isa."
-},
-{
-"key": "v6141dc04",
-"text": "Tumakbo at lundagan ang tinik nang hindi ito nahahawakan!"
-},
-{
-"key": "vef18b758",
-"text": "Panoorin ang pulang marka na gumagalaw sa bar."
-},
-{
-"key": "v47eaaae6",
-"text": "Tumataas ang tinik sa bawat antas. Lampasan ang 5 antas!"
-},
-{
-"key": "v433e6046",
-"text": "Nakayuko nang mababa ang baka, nakapatong ang kamay sa lupa."
-},
-{
-"key": "v3b3a2f46",
-"text": "Tumakbo at lumundag sa likod na parang leap-frog. Huwag hahawak!"
-},
-{
-"key": "v315b213c",
-"text": "Bawat ikot ay tumataas ang baka: paa, tuhod, hita."
-},
-{
-"key": "va3fcd2d5",
-"text": "Pindutin at I-HOLD ang pindutan. Pupuno ng lakas ang bar!"
-},
-{
-"key": "vaa959924",
-"text": "Bitawan kapag lampas na sa berdeng linya ang bar!"
-},
-{
-"key": "v5f18e9c0",
-"text": "Tumataas ang baka sa bawat antas. Lampasan ang 4!"
-},
-{
-"key": "v9b4a9cdc",
-"text": "Hawak ng dalawang kaibigan ang garter sa kanilang bukong-bukong."
-},
-{
-"key": "vec6b95db",
-"text": "Tumatakbo at tumatalon ang manlalaro sa garter nang hindi ito nasasagi!"
-},
-{
-"key": "vd8f828da",
-"text": "Tumataas ang garter: bukong-bukong, tuhod, baywang, leeg!"
-},
-{
-"key": "vade9105b",
-"text": "Hawak ng dalawang kaibigan ang garter. Pindutin at I-HOLD ang pindutan para mag-ipon ng lakas."
-},
-{
-"key": "v9204142c",
-"text": "Bitawan sa berdeng bahagi para malundagan ang garter!"
-},
-{
-"key": "v1cde5372",
-"text": "I-hold ang talon, bitawan sa berde. Tataas ang garter!"
-},
-{
-"key": "v01a9d22f",
-"text": "Gumuhit ng may numerong kahon gamit ang tisa, at Langit sa dulo."
-},
-{
-"key": "v43c3b626",
-"text": "Ihagis ang bato sa kahon 1. Lundag: isang paa sa isang kahon, dalawang paa sa magkatabing kahon."
-},
-{
-"key": "v84367ba9",
-"text": "Magpahinga sa Langit, lumingon, lumundag pabalik at kunin ang bato."
-},
-{
-"key": "v268bc931",
-"text": "Pindutin ang kumikinang na kahon para ihagis ang bato ."
-},
-{
-"key": "v5ded0b4b",
-"text": "Pindutin ang mga kumikinang na kahon: isang kahon = isang paa, dalawa = dalawang paa."
-},
-{
-"key": "v0835a256",
-"text": "Magpahinga sa Langit , lumundag pabalik at pindutin ang bato."
-},
-{
-"key": "v829ca752",
-"text": "Tumayo sa bao ng niyog at hawakan nang mahigpit ang lubid."
-},
-{
-"key": "va26cbef7",
-"text": "Humakbang: kaliwa, kanan, kaliwa, kanan habang nagbabalanse."
-},
-{
-"key": "v1eeb50be",
-"text": "Ang unang makarating sa finish line ang panalo!"
-},
-{
-"key": "vcf3d4377",
-"text": "Hintayin ang “Takbo!” sa simula."
-},
-{
-"key": "v05aee914",
-"text": "Pindutin ang Kaliwa, Kanan, Kaliwa, Kanan…"
-},
-{
-"key": "v40db5eeb",
-"text": "Parehong panig dalawang beses? Magwawagayway ka at aatras!"
-},
-{
-"key": "vadd497f6",
-"text": "May lata sa loob ng bilog. Binabantayan ito ng Taya. Nasa likod ng linya ang mga manlalaro."
-},
-{
-"key": "ve49223ed",
-"text": "Ihagis ang tsinelas para matumba ang lata!"
-},
-{
-"key": "v94fe1e38",
-"text": "Tatakbo ang lahat para kunin ang tsinelas. Tatayain ng Taya ang malayo sa tsinelas niya!"
-},
-{
-"key": "va844879d",
-"text": "Panoorin ang pulang marka na gumagalaw."
-},
-{
-"key": "v526d8853",
-"text": "Pindutin ang Hagis! kapag nasa berdeng bahagi ang marka."
-},
-{
-"key": "vddc7960d",
-"text": "Natumba ang lata? Pindutin ang Takbo! nang mabilis para makuha ang tsinelas bago ang Taya!"
-},
-{
-"key": "vf0dac5c8",
-"text": "Ang sipa ay metal na washer na may makukulay na plastik na tali."
-},
-{
-"key": "v065d9657",
-"text": "Sipain pataas gamit ang paa, tuhod o siko. Bawal ang kamay!"
-},
-{
-"key": "v31f531fb",
-"text": "Bilangin kung ilang beses mo itong mapapanatili sa hangin!"
-},
-{
-"key": "v24eb340b",
-"text": "Panoorin ang sipa na bumabagsak sa dilaw na bahagi."
-},
-{
-"key": "vc287d81b",
-"text": "Pindutin ang bahagi ng katawan na hinihingi: paa, tuhod o siko."
-},
-{
-"key": "vbeb75e20",
-"text": "Gumawa ng 8 sipa! Kapag bumagsak, mawawalan ng puso ."
-},
-{
-"key": "v5e34a99c",
-"text": "Kailangan ng mahabang patpat at maikling patpat."
-},
-{
-"key": "v7c446069",
-"text": "Tapikin ang dulo para tumalbog ang maikling patpat. Saka palo!"
-},
-{
-"key": "vbd342e16",
-"text": "Sukatin gamit ang mahabang patpat. Ang pinakamalayo ang panalo!"
-},
-{
-"key": "v8fc63835",
-"text": "Pindutin ang Tuklap! para tumalbog ang maikling patpat."
-},
-{
-"key": "v5af4c3dc",
-"text": "Pindutin ang Palo! kapag nasa berdeng kahon ang patpat."
-},
-{
-"key": "vb87f7f55",
-"text": "3 palo. Bilangin ang mga haba ng patpat na naabot!"
-},
-{
-"key": "v56d8b5d1",
-"text": "Gumuhit ng bilog at maglagay ng holen sa loob."
-},
-{
-"key": "v3ffda7bc",
-"text": "Lumuhod sa linya at pitikin ang holen gamit ang hinlalaki."
-},
-{
-"key": "va0fa4b42",
-"text": "Ang bawat holen na mapalabas sa bilog ay sa iyo!"
-},
-{
-"key": "v449d0504",
-"text": "Idiin ang daliri at hilahin pabalik na parang tirador."
-},
-{
-"key": "v2fe338b5",
-"text": "Bitawan para mapitik ang asul na holen !"
-},
-{
-"key": "v58de1266",
-"text": "Pabagsakin palabas ng bilog ang 3 makukulay na holen."
-},
-{
-"key": "vf71a22f3",
-"text": "May mataas na poste na pinahiran ng sebo. Nasa tuktok ang bandila at premyo."
-},
-{
-"key": "vb1ffa3e8",
-"text": "Madulas! Magpahid ng buhangin sa kamay para mas kumapit."
-},
-{
-"key": "v0e4572e1",
-"text": "Gumagawa ng tao-tao na hagdan ang magkakaibigan para maabot ang tuktok!"
-},
-{
-"key": "v60439ccb",
-"text": "Pindutin nang paulit-ulit ang Akyat! para umakyat."
-},
-{
-"key": "v227ce505",
-"text": "Pindutin ang Buhangin para mas mahigpit ang kapit."
-},
-{
-"key": "v306d7f5e",
-"text": "Pindutin ng isang beses ang Kaibigan para maiangat ka sa !"
-},
-{
-"key": "v6e5db091",
-"text": "Dalawang hanay ng 7 lubak at 2 malaking bahay. May 7 sigay sa bawat lubak."
-},
-{
-"key": "v57a70c0f",
-"text": "Kunin ang lahat ng sigay sa isang lubak at maglagay ng isa sa bawat sunod na lubak."
-},
-{
-"key": "va4575843",
-"text": "Huling sigay sa bahay mo? Laro ulit! Ang pinakamaraming sigay ang panalo!"
-},
-{
-"key": "v3edbf6d1",
-"text": "Pindutin ang isa sa mga lubak mo."
-},
-{
-"key": "v6208dab6",
-"text": "Isa-isang ihuhulog ang mga sigay pakanan."
-},
-{
-"key": "va31344d8",
-"text": "Ang may pinakamaraming sigay sa bahay ang panalo!"
-},
-{
-"key": "v3a650b14",
-"text": "Maglaro sa tablerong checkers gamit ang takip ng bote. 12 takip bawat isa."
-},
-{
-"key": "vf8e52097",
-"text": "Humakbang nang pahilis pasulong sa bakanteng parisukat."
-},
-{
-"key": "v5fd73c4e",
-"text": "Lumundag sa takip ng kalaban para makuha ito. Abutin ang dulo para maging hari !"
-},
-{
-"key": "vd71078c1",
-"text": "Pindutin ang asul na takip, saka ang berdeng tuldok."
-},
-{
-"key": "v743678f2",
-"text": "Kapag puwedeng kumuha, kailangang kumuha! Kumikislap ang mga takip."
-},
-{
-"key": "ve60bf929",
-"text": "Abutin ang itaas na hanay para maging hari ."
-},
-{
-"key": "v46f3445a",
-"text": "Bago! Ang patotot ay tumatakbo na pataas-pababa sa mahabang gitnang linya. Lumayo sa gitna kapag malapit siya!"
-},
-{
-"key": "vdd6e30cc",
-"text": "Bago! May isa pang linyang tatawirin, at isa pang bantay!"
-},
-{
-"key": "v9570db2f",
-"text": "Bago! Tumawid at bumalik nang DALAWANG beses. May isa pang linya!"
-},
-{
-"key": "v1d24a8ee",
-"text": "Bago! Limang linya na. Lumihis pakaliwa, saka tumakbo pakanan!"
-},
-{
-"key": "v7f05a07a",
-"text": "Bago! TATLONG balikan at anim na linya. Kaya mo 'yan!"
-},
-{
-"key": "v023eadbc",
-"text": "Bago! DALAWA na ang nagbabantay. Humanap ng puwang bago tumakbo!"
-},
-{
-"key": "v729e01ca",
-"text": "Bago! Hawakan ang base nila nang DALAWANG beses para manalo."
-},
-{
-"key": "v54f082b7",
-"text": "Bago! Tatlo na ang bantay — may isang nagbabantay malapit sa base nila."
-},
-{
-"key": "v5f076c36",
-"text": "Bago! May kalabang susubok umagaw ng base NINYO. Bumalik at tayaan siya sa inyong panig!"
-},
-{
-"key": "vaf0bcd5d",
-"text": "Bago! APAT na ang bantay. Maging matiyaga at hintayin ang tamang pagkakataon!"
-},
-{
-"key": "vdfabe2c7",
-"text": "Ikaw naman ang MAGTATAGO! Pumunta sa taguan at i-tap ito habang nagbibilang si Taya. Saka pumuslit pabalik sa base!"
-},
-{
-"key": "v253a2679",
-"text": "Bago! Hindi na gumagalaw ang mga nakatago. Hanapin nang mabuti!"
-},
-{
-"key": "vcc56941f",
-"text": "Bago! Gabi na tayo maglalaro, sa ilalim ng buwan. Malapit lang ang nakikita mo!"
-},
-{
-"key": "vdbf812ad",
-"text": "Bago! Puwedeng pumuslit pabalik sa base ang mga nagtatago kapag malayo ka. Huwag lumayo sa base!"
-},
-{
-"key": "vc67ecf96",
-"text": "Bago! Apat na sisiw na — mas mahabang pila ang babantayan!"
-},
-{
-"key": "v0ff3301c",
-"text": "Bago! Limang sisiw! Nanlilinlang na rin ang lawin pakaliwa't pakanan."
-},
-{
-"key": "v5be07cfb",
-"text": "Bago! Anim na sisiw! Manatiling malapit at gumalaw nang mabilis."
-},
-{
-"key": "v50c5ba3a",
-"text": "Bago! Huwag masyadong malakas ang talon. Itigil ang bar sa loob ng berdeng bahagi!"
-},
-{
-"key": "v701adab1",
-"text": "Bago! Huwag masyadong matagal pumindot. Bumitaw sa loob ng berdeng bahagi!"
-},
-{
-"key": "vd67553d3",
-"text": "Mas mataas na ang garter, at humahaba ang ayos. Tingnang mabuti ang mga chip!"
-},
-{
-"key": "vf046ea5c",
-"text": "Bago! Hindi na umiilaw ang mga kahon. Tandaan: isang paa, isang paa, dalawang paa…"
-},
-{
-"key": "v67d432f7",
-"text": "Bago! Puwede na ring gamitin ang TUHOD. Pindutin ang bahaging hinihingi!"
-},
-{
-"key": "v03ac876a",
-"text": "Bago! Kasali na rin ang SIKO. Paa, tuhod o siko: tingnang mabuti!"
-},
-{
-"key": "v0e80fdd1",
-"text": "Bagong kalaban! Mas magaling silang magbilang ng sigay."
-},
-{
-"key": "vf9dec821",
-"text": "Narito si Kuya Ben, ang pinakamatalinong kalaro. Planuhin ang iyong galaw!"
-},
-{
-"key": "v96fadf46",
-"text": "Bago! Buong tabla na: tig-12 piyesa. Mas maingat na ring maglaro si Pula."
-},
-{
-"key": "vb027a3e3",
-"text": "Ang patintero ay isa sa pinakakilalang larong kalye sa Pilipinas. Madalas iugnay ang pangalan nito sa \"tinta,\" dahil minamarkahan noon ang mga linya sa lupa; ngayon ay iginuguhit ito ng tisa, patpat o tubig. Paborito ito sa kalye at sa paaralan, lalo na sa malamig na gabi."
-},
-{
-"key": "v1875c514",
-"text": "Ang ibig sabihin ng Agawan Base ay \"agawan ng base.\" May sariling base ang bawat koponan, tulad ng puno, poste o haligi, at sinusubukan nilang mahawakan ang base ng kalaban nang hindi nahuhuli. Nilalaro ang ganitong laro sa buong mundo, at matagal na itong nilalaro ng mga batang Pilipino sa paaralan."
-},
-{
-"key": "vd2c79c2c",
-"text": "Ang ibig sabihin ng Langit-Lupa ay \"langit at lupa.\" Ang mga nasa lupa lang ang puwedeng mataya; ligtas ang nakatayo sa mataas na lugar, pero sandali lang. Madalas pinipili ang unang taya sa pagbigkas ng \"Langit, lupa, impyerno…\" habang itinuturo ang bawat manlalaro."
-},
-{
-"key": "v6605613e",
-"text": "Ang taguan ay ang Pilipinong bersiyon ng hide-and-seek. Nagbibilang ang taya nang nakapikit habang nagtatago ang lahat, saka sila hahanapin at uunahan sa base sabay sigaw ng \"Pung!\" Karaniwan itong nilalaro sa dapithapon, at sinisimulan ng maraming bata sa pagkanta ng \"Tagu-taguan, maliwanag ang buwan.\""
-},
-{
-"key": "ve43c9945",
-"text": "Ang ibig sabihin ng Araw-Lilim ay \"araw at lilim.\" Ligtas ang mga manlalaro sa lilim ng puno at pader, pero puwede silang mataya sa sikat ng araw. Dahil gumagalaw ang araw, gumagalaw rin ang anino, kaya kailangang humanap ng bagong lilim. Larong pang-maaraw na hapon ito sa bakuran."
-},
-{
-"key": "v31526a48",
-"text": "Ang ibig sabihin ng Lawin at Sisiw ay \"lawin at mga sisiw.\" Lawin ang isang bata, inahing manok ang isa, at nakapila sa likod nito ang mga sisiw na magkakahawak sa baywang. Iniuunat ng inahin ang mga braso para protektahan sila. May katulad na laro sa maraming bansa sa Asya."
-},
-{
-"key": "v541cf8a7",
-"text": "Ang ibig sabihin ng Kapitang Bakod ay \"kumapit sa bakod.\" Ligtas sa taya ang sinumang nakahawak sa bakod, pader o poste, pero kailangang bumitaw at tumakbo papunta sa ibang bakod. Simpleng larong habulan ito na nabuo sa mga lugar na maraming bakod at tarangkahan."
-},
-{
-"key": "vaefba0e8",
-"text": "Ang ibig sabihin ng Luksong Tinik ay \"luksuhin ang tinik.\" Magkaharap na nakaupo ang dalawang manlalaro at pinagpapatong ang kanilang paa at kamay para maging \"tinik,\" na tumataas bawat round. Isa ito sa mga klasikong laro ng lahi at madalas laruin sa paaralan tuwing Buwan ng Wika."
-},
-{
-"key": "v064977aa",
-"text": "Ang ibig sabihin ng Luksong Baka ay \"luksuhin ang baka.\" Yumuyuko ang isang manlalaro, ang \"baka,\" at tumataas nang kaunti bawat round, habang lumulukso ang iba gamit ang kanilang kamay. Kahawig ito ng leapfrog na nilalaro ng mga bata sa maraming bansa."
-},
-{
-"key": "vf5407142",
-"text": "Ang piko ay ang Pilipinong bersiyon ng hopscotch. Napakatanda na ng larong ito at nilalaro sa buong mundo. Sa piko, inihahagis ng manlalaro ang pamato sa isang kahon, lumulukso sa mga kahon gamit ang isa o dalawang paa, at nagpapahinga sa \"langit\" sa dulo."
-},
-{
-"key": "v62670d0b",
-"text": "Ang kadang-kadang ay karera gamit ang tayakad. Lumalakad ang mga bata sa matataas na kawayan, o sa bao ng niyog na may taling hawak na parang renda. Sikat ito sa mga pista at field day sa paaralan, at nagsasanay ito ng balanse at pagtutulungan."
-},
-{
-"key": "v0409712e",
-"text": "Ang ibig sabihin ng Tumbang Preso ay \"patumbahin ang preso.\" Ibinabato ng mga manlalaro ang kanilang tsinelas para patumbahin ang lata na binabantayan ng taya, saka tatakbo para kunin ang tsinelas bago mataya. Sikat ito dahil lata at tsinelas lang ang kailangan."
-},
-{
-"key": "vc7f84553",
-"text": "Ang ibig sabihin ng sipa ay \"kick.\" Pinananatili ng mga manlalaro sa ere ang maliit na laruang may pabigat, karaniwang washer o barya na may makukulay na papel o plastik, gamit ang paa, tuhod at siko. Napakatanda na ng sipa at madalas itong tawaging pambansang laro ng Pilipinas, hanggang ideklara ang arnis na pambansang sining at isport noong 2009."
-},
-{
-"key": "v9ea1e78c",
-"text": "Ang tsato ay nilalaro gamit ang dalawang patpat, isang mahaba at isang maikli. Pinalilipad ng manlalaro ang maikling patpat at pinapalo ito nang pinakamalayo, saka sinusukat ang layo gamit ang mahabang patpat. May katulad na laro sa buong Asya, tulad ng gilli-danda sa India."
-},
-{
-"key": "v4a84aec0",
-"text": "Ang holen ay ang Pilipinong tawag sa marbles. Pinipitik ng manlalaro ang kanyang holen gamit ang hinlalaki para mapalabas ang ibang holen sa bilog na iginuhit sa lupa. Libu-libong taon na ang mga larong holen, at naglalaro rin ang mga batang Pilipino ng tatsing, isang katulad na laro gamit ang barya."
-},
-{
-"key": "vd78e525f",
-"text": "Galing ang palosebo sa mga salitang Kastila na \"palo\" at \"sebo\". Pinapahiran ng grasa ang mataas na kawayan para dumulas, at nag-uunahan ang mga manlalaro na umakyat at kunin ang premyong nakatali sa tuktok. Isa ito sa mga inaabangan sa maraming pista."
-},
-{
+"n": 16,
 "key": "vf9946b3c",
-"text": "Isa"
+"text": "Isa",
+"show": "Isa",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
+"n": 17,
 "key": "vd8f0b8ad",
-"text": "Dalawa"
+"text": "Dalawa",
+"show": "Dalawa",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
+"n": 18,
 "key": "vd5d11593",
-"text": "Tatlo"
+"text": "Tatlo",
+"show": "Tatlo",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
+"n": 19,
 "key": "v5303fa21",
-"text": "Apat"
+"text": "Apat",
+"show": "Apat",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
+"n": 20,
 "key": "v840f9190",
-"text": "Lima"
+"text": "Lima",
+"show": "Lima",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
+"n": 21,
 "key": "v4884da70",
-"text": "Anim"
+"text": "Anim",
+"show": "Anim",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
+"n": 22,
 "key": "v8781e347",
-"text": "Pito"
+"text": "Pito",
+"show": "Pito",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": "pito = pi-TÓ (bilang na 7)"
 },
 {
+"n": 23,
 "key": "v26ccdd7c",
-"text": "Walo"
+"text": "Walo",
+"show": "Walo",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
+"n": 24,
 "key": "v922a0242",
-"text": "Siyam"
+"text": "Siyam",
+"show": "Siyam",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
+"n": 25,
 "key": "va9f3f743",
-"text": "Sampu"
+"text": "Sampu",
+"show": "Sampu",
+"section": "Pagbilang (Taguan at Kadang-Kadang)",
+"note": ""
 },
 {
-"key": "v8db8db93",
-"text": "Ikaw ang Taya! Tayaan ang kaibigan"
+"n": 26,
+"key": "v35596155",
+"text": "Ikaw ang tatakbo. I-drag ang daliri sa palaruan para tumakbo. Gumagalaw sa linya ang mga taya. Hintayin ang butas! Abutin ang , saka tumakbo pabalik sa para manalo!",
+"show": "Ikaw ang tatakbo. I-drag ang daliri sa palaruan para tumakbo. Gumagalaw sa linya ang mga taya. Hintayin ang butas! Abutin ang ⭐, saka tumakbo pabalik sa 🏠 para manalo!",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "vace44bd8",
-"text": "Nagbilang na si Taya ng lima! Lumipat ng puwesto!"
+"n": 27,
+"key": "v46f3445a",
+"text": "Bago! Ang patotot ay tumatakbo na pataas-pababa sa mahabang gitnang linya. Lumayo sa gitna kapag malapit siya!",
+"show": "Bago! Ang patotot ay tumatakbo na pataas-pababa sa mahabang gitnang linya. Lumayo sa gitna kapag malapit siya!",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "vdd880bee",
-"text": "Ilang beses kang natayaan. Lumipat bago matapos ang bilang!"
+"n": 28,
+"key": "ve66161e5",
+"text": "Bago! Bawat ilang antas, may isa pang linya at isa pang bantay!",
+"show": "Bago! Bawat ilang antas, may isa pang linya at isa pang bantay!",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "v37e152c0",
-"text": "Taya! Sila na ang Taya. Takbo ulit sa ligtas na puwesto!"
+"n": 29,
+"key": "v8a726aa0",
+"text": "Bago! Tumawid at bumalik nang DALAWANG beses!",
+"show": "Bago! Tumawid at bumalik nang DALAWANG beses!",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "vfe58d99a",
-"text": "Patotot"
+"n": 30,
+"key": "vff771bc6",
+"text": "Bago! May mga linyang DALAWA na ang bantay, isa sa bawat kalahati. Hanapin ang puwang sa pagitan nila!",
+"show": "Bago! May mga linyang DALAWA na ang bantay, isa sa bawat kalahati. Hanapin ang puwang sa pagitan nila!",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "v3e616e58",
-"text": "Takbo sa"
+"n": 31,
+"key": "vced3edbc",
+"text": "Bago! TATLONG balikan. Kaya mo 'yan!",
+"show": "Bago! TATLONG balikan. Kaya mo 'yan!",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "v8cec4df8",
-"text": "Balik sa"
-},
-{
+"n": 32,
 "key": "v4bbc71b9",
-"text": "I-drag para tumakbo! Pipilitin ka nilang tayain. Lumihis pakaliwa at pakanan!"
+"text": "I-drag para tumakbo! Pipilitin ka nilang tayain. Lumihis pakaliwa at pakanan!",
+"show": "I-drag para tumakbo! Pipilitin ka nilang tayain. Lumihis pakaliwa at pakanan!",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "v465d6a2e",
-"text": "Ilang beses kang natayaan. Bantayan sila, lumihis, saka tumakbo!"
+"n": 33,
+"key": "v8f093017",
+"text": "Nataya ka! Ulitin ang bahaging iyan.",
+"show": "Nataya ka! 😅 Ulitin ang bahaging iyan.",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "ve61eea5c",
-"text": "Natayaan! Ulitin ang bahaging iyan."
-},
-{
+"n": 34,
 "key": "v358f8daa",
-"text": "Nakatawid ka! Ngayon, takbo pabalik sa !"
+"text": "Nakatawid ka! Ngayon, takbo pabalik sa !",
+"show": "Nakatawid ka! ⭐ Ngayon, takbo pabalik sa 🏠!",
+"section": "Patintero",
+"note": ""
 },
 {
-"key": "v3b9437c1",
-"text": "Natawid mo ang lahat ng linya at nakabalik nang ligtas!"
+"n": 35,
+"key": "v4678af93",
+"text": "I-drag para tumakbo sa pulang base sa dulong kanan. Hahabulin ka ng pulang grupo kahit saan, kaya mag-ingat! Nahuli? Pindutin ang “Tumawag ng kaibigan” para maligtas!",
+"show": "I-drag para tumakbo sa pulang 🚩 base sa dulong kanan. Hahabulin ka ng pulang grupo kahit saan, kaya mag-ingat! Nahuli? Pindutin ang “Tumawag ng kaibigan” para maligtas!",
+"section": "Agawan Base",
+"note": ""
 },
 {
-"key": "vd015f92a",
-"text": "Lusob"
+"n": 36,
+"key": "v2b9ebf3f",
+"text": "Bago! DALAWA na ang humahabol. Bumalik sa base ninyo para ligtas!",
+"show": "Bago! DALAWA na ang humahabol. Bumalik sa base ninyo para ligtas!",
+"section": "Agawan Base",
+"note": ""
 },
 {
-"key": "vcf1aabb4",
-"text": "Hawakan ang base nila!"
+"n": 37,
+"key": "vbd7a6047",
+"text": "Bago! Tatlo na ang kalaban. At hawakan ang base nila nang DALAWANG beses!",
+"show": "Bago! Tatlo na ang kalaban. At hawakan ang base nila nang DALAWANG beses!",
+"section": "Agawan Base",
+"note": ""
 },
 {
-"key": "ve6621ad6",
-"text": "Bantayan ang inyo"
+"n": 38,
+"key": "vfa1d4660",
+"text": "Bago! May isang kalabang nagbabantay malapit sa bandila nila. Lumihis sa isang direksiyon, saka umikot sa kabila!",
+"show": "Bago! May isang kalabang nagbabantay malapit sa bandila nila. Lumihis sa isang direksiyon, saka umikot sa kabila!",
+"section": "Agawan Base",
+"note": ""
 },
 {
-"key": "v6a4174ef",
-"text": "Takbo sa pulang base! Hahabulin ka nila sa kanilang panig."
+"n": 39,
+"key": "vf6d96733",
+"text": "Bago! APAT na ang kalaban. Magpahinga sa base ninyo, saka tumakbo!",
+"show": "Bago! APAT na ang kalaban. Magpahinga sa base ninyo, saka tumakbo!",
+"section": "Agawan Base",
+"note": ""
 },
 {
-"key": "vba46bb4b",
-"text": "Ilang beses kang nahuli. Maghintay ng puwang, saka tumakbo!"
+"n": 40,
+"key": "v9afea047",
+"text": "Bago! May kalabang susubok umagaw ng base NINYO. Tayain siya bago niya ito maabot!",
+"show": "Bago! May kalabang susubok umagaw ng base NINYO. Tayain siya bago niya ito maabot!",
+"section": "Agawan Base",
+"note": ""
 },
 {
+"n": 41,
+"key": "va1b4ce83",
+"text": "Bago! LIMA na ang kalaban. Maging matiyaga at hintayin ang tamang pagkakataon!",
+"show": "Bago! LIMA na ang kalaban. Maging matiyaga at hintayin ang tamang pagkakataon!",
+"section": "Agawan Base",
+"note": ""
+},
+{
+"n": 42,
+"key": "ve4a807ed",
+"text": "Takbo sa pulang base! Hahabulin ka nila kahit saan — ligtas ka lang sa base ninyo.",
+"show": "Takbo sa pulang 🚩 base! Hahabulin ka nila kahit saan — ligtas ka lang sa base ninyo.",
+"section": "Agawan Base",
+"note": ""
+},
+{
+"n": 43,
 "key": "v8c0f71cb",
-"text": "Nahuli! Nasa kulungan ka . Tumawag ng kakampi!"
+"text": "Nahuli! Nasa kulungan ka . Tumawag ng kakampi!",
+"show": "Nahuli! Nasa kulungan ka 🔒. Tumawag ng kakampi!",
+"section": "Agawan Base",
+"note": ""
 },
 {
+"n": 44,
 "key": "vcea39c5f",
-"text": "Tawagin ang kakampi!"
+"text": "Tawagin ang kakampi!",
+"show": "Tawagin ang kakampi!",
+"section": "Agawan Base",
+"note": ""
 },
 {
+"n": 45,
 "key": "vf6261d15",
-"text": "Tumatakbo ang kakampi mo para palayain ka!"
+"text": "Tumatakbo ang kakampi mo para palayain ka!",
+"show": "Tumatakbo ang kakampi mo para palayain ka! 🏃",
+"section": "Agawan Base",
+"note": ""
 },
 {
-"key": "v0f063190",
-"text": "Malaya ka na! Takbo sa !"
+"n": 46,
+"key": "vd63006cc",
+"text": "Malaya ka na! Nasa base ninyo ka na. Subukan ulit!",
+"show": "Malaya ka na! Nasa base ninyo ka na. Subukan ulit! 🚩",
+"section": "Agawan Base",
+"note": ""
 },
 {
-"key": "v70ea12ea",
-"text": "Ilang beses naagaw ang base ninyo. Bantayan ito!"
-},
-{
+"n": 47,
 "key": "vb8e7382d",
-"text": "Naku! Nahawakan ng kalaban ang base ninyo. Bantayan mo!"
+"text": "Naku! Nahawakan ng kalaban ang base ninyo. Bantayan mo!",
+"show": "Naku! Nahawakan ng kalaban ang base ninyo. Bantayan mo!",
+"section": "Agawan Base",
+"note": ""
 },
 {
+"n": 48,
 "key": "v2a6c4d2c",
-"text": "Nataya mo ang lumusob! Sa kulungan ninyo siya!"
+"text": "Nataya mo ang lumusob! Sa kulungan ninyo siya!",
+"show": "Nataya mo ang lumusob! Sa kulungan ninyo siya! 🔒",
+"section": "Agawan Base",
+"note": ""
 },
 {
-"key": "v6db4371b",
-"text": "Naagaw mo ang pulang base!"
+"n": 49,
+"key": "v1201e45c",
+"text": "I-drag para tumakbo. Bawat BAGONG langit na maabot mo ay isang . Tumayo sa mataas para ligtas — pero nagbibilang si Taya, kaya lumipat! Nataya ka? Ngayon, IKAW ang hahabol sa kaibigan!",
+"show": "I-drag para tumakbo. Bawat BAGONG langit na maabot mo ay isang ⭐. Tumayo sa mataas para ligtas ✅ — pero nagbibilang si Taya, kaya lumipat! Nataya ka? Ngayon, IKAW ang hahabol sa kaibigan!",
+"section": "Langit-Lupa",
+"note": ""
 },
 {
+"n": 50,
 "key": "vd79645be",
-"text": "Tumayo sa matataas na lugar para ligtas. Lumipat-lipat!"
+"text": "Tumayo sa matataas na lugar para ligtas. Lumipat-lipat!",
+"show": "Tumayo sa matataas na lugar para ligtas. Lumipat-lipat!",
+"section": "Langit-Lupa",
+"note": ""
 },
 {
-"key": "v8a33cafd",
-"text": "Nataya ka sa lupa! Ikaw na ang Taya — tayaan ang kaibigan!"
+"n": 51,
+"key": "v280abe05",
+"text": "Nataya ka sa lupa! Ikaw na ang Taya — tayain ang kaibigan!",
+"show": "Nataya ka sa lupa! Ikaw na ang Taya — tayain ang kaibigan!",
+"section": "Langit-Lupa",
+"note": ""
 },
 {
+"n": 52,
 "key": "vbfaf7d12",
-"text": "Ang galing mong lumipat-lipat ng langit!"
+"text": "Ang galing mong lumipat-lipat ng langit!",
+"show": "Ang galing mong lumipat-lipat ng langit!",
+"section": "Langit-Lupa",
+"note": ""
 },
 {
-"key": "v7ec3e722",
-"text": "Baryo"
+"n": 53,
+"key": "vcff2c0ee",
+"text": "May sariling lugar ang bawat antas. Minsan ikaw ang taya, minsan ikaw ang magtatago! Magbilang hanggang sampu nang sabay. Pikit ang mata! Maglakad at i-tap ang taguan para silipin. May nakita? Unahan sa base: Pung!",
+"show": "May sariling lugar ang bawat antas. Minsan ikaw ang taya, minsan ikaw ang magtatago! Magbilang hanggang sampu nang sabay. Pikit ang mata! Maglakad at i-tap ang taguan para silipin. May nakita? Unahan sa base: Pung!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "v78e579cb",
-"text": "Palaruan"
+"n": 54,
+"key": "vdfabe2c7",
+"text": "Ikaw naman ang MAGTATAGO! Pumunta sa taguan at i-tap ito habang nagbibilang si Taya. Saka pumuslit pabalik sa base!",
+"show": "Ikaw naman ang MAGTATAGO! Pumunta sa taguan at i-tap ito habang nagbibilang si Taya. Saka pumuslit pabalik sa base!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "v026f86fb",
-"text": "Paaralan"
+"n": 55,
+"key": "v253a2679",
+"text": "Bago! Hindi na gumagalaw ang mga nakatago. Hanapin nang mabuti!",
+"show": "Bago! Hindi na gumagalaw ang mga nakatago. Hanapin nang mabuti!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "vf59f15ac",
-"text": "Gubat"
+"n": 56,
+"key": "vcc56941f",
+"text": "Bago! Gabi na tayo maglalaro, sa ilalim ng buwan. Malapit lang ang nakikita mo!",
+"show": "Bago! Gabi na tayo maglalaro, sa ilalim ng buwan. Malapit lang ang nakikita mo!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "v6b580523",
-"text": "Dalampasigan"
+"n": 57,
+"key": "vdbf812ad",
+"text": "Bago! Puwedeng pumuslit pabalik sa base ang mga nagtatago kapag malayo ka. Huwag lumayo sa base!",
+"show": "Bago! Puwedeng pumuslit pabalik sa base ang mga nagtatago kapag malayo ka. Huwag lumayo sa base!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "ve972db58",
-"text": "BASE"
+"n": 58,
+"key": "v09281ccc",
+"text": "Baryo: ikaw ang Taya! Pumikit at magbilang…",
+"show": "Baryo: ikaw ang Taya! Pumikit at magbilang…",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "v7d074be4",
-"text": "Taya"
+"n": 59,
+"key": "v8fd5445d",
+"text": "Baryo: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"show": "Baryo: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "vbcd71961",
-"text": "Handa man o hindi, hahanapin ko kayo! Maglakad at i-tap ang taguan para silipin."
+"n": 60,
+"key": "vccdf4619",
+"text": "Palaruan: ikaw ang Taya! Pumikit at magbilang…",
+"show": "Palaruan: ikaw ang Taya! Pumikit at magbilang…",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "vc8241751",
-"text": "Nasilip mo na iyan."
+"n": 61,
+"key": "vbe454b72",
+"text": "Palaruan: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"show": "Palaruan: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "v1aabed7b",
-"text": "Tapos na ang oras! Sapat ang nahanap mo."
+"n": 62,
+"key": "vb198a449",
+"text": "Paaralan: ikaw ang Taya! Pumikit at magbilang…",
+"show": "Paaralan: ikaw ang Taya! Pumikit at magbilang…",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "v65b401dd",
-"text": "Tapos na ang oras! Bilisan — silipin muna ang malalapit."
+"n": 63,
+"key": "veeb14282",
+"text": "Paaralan: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"show": "Paaralan: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "vf66afff2",
-"text": "Maraming naunang nakabalik sa base. Bumalik agad pagkakita mo sa kanila!"
+"n": 64,
+"key": "vf7ab9aa2",
+"text": "Gubat: ikaw ang Taya! Pumikit at magbilang…",
+"show": "Gubat: ikaw ang Taya! Pumikit at magbilang…",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "v0f999d0e",
-"text": "Nahanap mo silang lahat! Pung, pung, pung!"
+"n": 65,
+"key": "v91bfd8ef",
+"text": "Gubat: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"show": "Gubat: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "ved1be9ea",
-"text": "Nahanap mo silang lahat! Pero may naunang nakabalik."
+"n": 66,
+"key": "vf8996f21",
+"text": "Dalampasigan: ikaw ang Taya! Pumikit at magbilang…",
+"show": "Dalampasigan: ikaw ang Taya! Pumikit at magbilang…",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "v46274b38",
-"text": "Magtago!"
+"n": 67,
+"key": "v86a893ba",
+"text": "Dalampasigan: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"show": "Dalampasigan: ikaw ang MAGTATAGO! Nagbibilang si Taya — humanap ng taguan at i-tap ito!",
+"section": "Taguan",
+"note": ""
 },
 {
-"key": "vc0db6add",
-"text": "Nakatago"
+"n": 68,
+"key": "va1b5b8ff",
+"text": "Ligtas ang madilim na lilim sa ilalim ng puno. Bantayan ang : kapag gumalaw ang araw, gumagalaw ang lilim! Tumakbo sa lilim ng ibang puno para sa . Nataya ka? Ikaw ang hahabol!",
+"show": "Ligtas ✅ ang madilim na lilim sa ilalim ng puno. Bantayan ang ☀️: kapag gumalaw ang araw, gumagalaw ang lilim! Tumakbo sa lilim ng ibang puno para sa ⭐. Nataya ka? Ikaw ang hahabol!",
+"section": "Araw-Lilim",
+"note": ""
 },
 {
-"key": "v4394f971",
-"text": "Hindi nakatago"
-},
-{
-"key": "v4b3b338f",
-"text": "\"Hahanapin ko na kayo!\" Manatiling nakatago… o pumuslit sa base kapag malayo si Taya!"
-},
-{
-"key": "v9d0c5557",
-"text": "May nakatago na riyan!"
-},
-{
-"key": "vece2c49e",
-"text": "Shh… nakatago ka! Gumalaw para lumabas."
-},
-{
-"key": "vab40ad9b",
-"text": "Nakita ka ni Taya! Takbo sa base!"
-},
-{
-"key": "vc3b41b36",
-"text": "May nahanap si Taya! Pung!"
-},
-{
+"n": 69,
 "key": "v1c0821db",
-"text": "Manatili sa lilim! Gumagalaw ang anino kasama ng araw ."
+"text": "Manatili sa lilim! Gumagalaw ang anino kasama ng araw .",
+"show": "Manatili sa lilim! Gumagalaw ang anino kasama ng araw ☀️.",
+"section": "Araw-Lilim",
+"note": ""
 },
 {
-"key": "veaa6ff04",
-"text": "Nataya ka sa araw! Ikaw na ang Taya — tayaan ang kaibigan!"
+"n": 70,
+"key": "v9930c889",
+"text": "Naglaro ka ng habulan sa araw at lilim!",
+"show": "Naglaro ka ng habulan sa araw at lilim!",
+"section": "Araw-Lilim",
+"note": ""
 },
 {
+"n": 71,
+"key": "vbf9604bc",
+"text": "Nataya ka sa araw! Ikaw na ang Taya — tayain ang kaibigan!",
+"show": "Nataya ka sa araw! Ikaw na ang Taya — tayain ang kaibigan!",
+"section": "Araw-Lilim",
+"note": ""
+},
+{
+"n": 72,
 "key": "v604862bd",
-"text": "Ang galing mo sa araw at lilim!"
+"text": "Ang galing mo sa araw at lilim!",
+"show": "Ang galing mo sa araw at lilim!",
+"section": "Araw-Lilim",
+"note": ""
 },
 {
-"key": "v85001b98",
-"text": "Lawin"
+"n": 73,
+"key": "vcd3db465",
+"text": "Ikaw ang Inahin . Nakakapit sa likod mo ang mga sisiw . Iikot ang lawin para maabot ang HULING sisiw. I-drag para gumalaw at harangan ang lawin!",
+"show": "Ikaw ang Inahin 🐓. Nakakapit sa likod mo ang mga sisiw 🐥. Iikot ang lawin para maabot ang HULING sisiw. I-drag para gumalaw at harangan ang lawin!",
+"section": "Lawin at Sisiw",
+"note": ""
 },
 {
+"n": 74,
+"key": "vc67ecf96",
+"text": "Bago! Apat na sisiw na — mas mahabang pila ang babantayan!",
+"show": "Bago! Apat na sisiw na — mas mahabang pila ang babantayan!",
+"section": "Lawin at Sisiw",
+"note": ""
+},
+{
+"n": 75,
+"key": "v41a7f308",
+"text": "Bago! Limang sisiw! Nanloloko na rin ang lawin pakaliwa't pakanan.",
+"show": "Bago! Limang sisiw! Nanloloko na rin ang lawin pakaliwa't pakanan.",
+"section": "Lawin at Sisiw",
+"note": ""
+},
+{
+"n": 76,
+"key": "v5be07cfb",
+"text": "Bago! Anim na sisiw! Manatiling malapit at gumalaw nang mabilis.",
+"show": "Bago! Anim na sisiw! Manatiling malapit at gumalaw nang mabilis.",
+"section": "Lawin at Sisiw",
+"note": ""
+},
+{
+"n": 77,
 "key": "vca9cd3af",
-"text": "Protektahan ang mga sisiw! Pumagitna sa lawin at sa huling sisiw."
+"text": "Protektahan ang mga sisiw! Pumagitna sa lawin at sa huling sisiw.",
+"show": "Protektahan ang mga sisiw! Pumagitna sa lawin at sa huling sisiw.",
+"section": "Lawin at Sisiw",
+"note": ""
 },
 {
-"key": "v8d4db1b2",
-"text": "Maraming sisiw ang nakuha ng lawin. Iharang ang katawan mo sa pagitan ng lawin at ng huling sisiw!"
+"n": 78,
+"key": "v33692472",
+"text": "Ang galing mo, Inahin! Ulitin para maligtas silang lahat.",
+"show": "Ang galing mo, Inahin! Ulitin para maligtas silang lahat.",
+"section": "Lawin at Sisiw",
+"note": ""
 },
 {
+"n": 79,
 "key": "v4ea3104c",
-"text": "Nakuha ng lawin ang isang sisiw! Bantayan ang iba!"
+"text": "Nakuha ng lawin ang isang sisiw! Bantayan ang iba!",
+"show": "Nakuha ng lawin ang isang sisiw! Bantayan ang iba!",
+"section": "Lawin at Sisiw",
+"note": ""
 },
 {
+"n": 80,
 "key": "ve178e2e0",
-"text": "Nakuha ng lawin ang lahat ng sisiw!"
+"text": "Nakuha ng lawin ang lahat ng sisiw!",
+"show": "Nakuha ng lawin ang lahat ng sisiw!",
+"section": "Lawin at Sisiw",
+"note": ""
 },
 {
+"n": 81,
 "key": "v4c819f9d",
-"text": "Magaling, Inahin! Subukan ulit para mailigtas silang lahat."
+"text": "Magaling, Inahin! Subukan ulit para mailigtas silang lahat.",
+"show": "Magaling, Inahin! Subukan ulit para mailigtas silang lahat.",
+"section": "Lawin at Sisiw",
+"note": ""
 },
 {
+"n": 82,
+"key": "vd056e15d",
+"text": "Humawak sa bakod o poste para ligtas . Nagbibilang si Taya! Tumakbo sa IBANG bakod para sa . Nataya ka? Ikaw na ang Taya. Tayain ang kaibigan mo!",
+"show": "Humawak sa bakod o poste para ligtas ✅. Nagbibilang si Taya! Tumakbo sa IBANG bakod para sa ⭐. Nataya ka? Ikaw na ang Taya. Tayain ang kaibigan mo!",
+"section": "Kapitang Bakod",
+"note": ""
+},
+{
+"n": 83,
 "key": "v2bd86ccc",
-"text": "Humawak sa bakod o poste para ligtas. Lumipat-lipat!"
+"text": "Humawak sa bakod o poste para ligtas. Lumipat-lipat!",
+"show": "Humawak sa bakod o poste para ligtas. Lumipat-lipat!",
+"section": "Kapitang Bakod",
+"note": ""
 },
 {
-"key": "vab63de9f",
-"text": "Nataya ka malayo sa bakod! Ikaw na ang Taya — tayaan ang kaibigan!"
+"n": 84,
+"key": "vb35d0199",
+"text": "Ikaw ang kampeon ng kapit-bakod!",
+"show": "Ikaw ang kampeon ng kapit-bakod!",
+"section": "Kapitang Bakod",
+"note": ""
 },
 {
+"n": 85,
+"key": "v883b18c7",
+"text": "Nataya ka malayo sa bakod! Ikaw na ang Taya — tayain ang kaibigan!",
+"show": "Nataya ka malayo sa bakod! Ikaw na ang Taya — tayain ang kaibigan!",
+"section": "Kapitang Bakod",
+"note": ""
+},
+{
+"n": 86,
 "key": "vd4832579",
-"text": "Nagbilang na si Taya! Bitaw at takbo sa ibang bakod!"
+"text": "Nagbilang na si Taya! Bitaw at takbo sa ibang bakod!",
+"show": "Nagbilang na si Taya! Bitaw at takbo sa ibang bakod!",
+"section": "Kapitang Bakod",
+"note": ""
 },
 {
+"n": 87,
 "key": "vbe37e0af",
-"text": "Kampeon ka sa Kapitang Bakod!"
+"text": "Kampeon ka sa Kapitang Bakod!",
+"show": "Kampeon ka sa Kapitang Bakod!",
+"section": "Kapitang Bakod",
+"note": ""
+},
+{
+"n": 88,
+"key": "v2df64306",
+"text": "Panoorin ang pulang marka na gumagalaw sa bar. Pindutin ang Talon! kapag lampas na sa berdeng linya ang marka. Tumataas ang tinik sa bawat antas. Lampasan ang 5 antas!",
+"show": "Panoorin ang pulang marka na gumagalaw sa bar. Pindutin ang Talon! kapag lampas na sa berdeng linya ang marka. Tumataas ang tinik sa bawat antas. Lampasan ang 5 antas!",
+"section": "Luksong Tinik",
+"note": "talon = ta-LÓN (lundag)"
+},
+{
+"n": 89,
+"key": "v1fc1934d",
+"text": "Bago! Huwag masyadong malakas ang talon. Patigilin ang bar sa berde!",
+"show": "Bago! Huwag masyadong malakas ang talon. Patigilin ang bar sa berde!",
+"section": "Luksong Tinik",
+"note": "talon = ta-LÓN (lundag)"
+},
+{
+"n": 90,
+"key": "v8476f058",
+"text": "Pindutin ang Talon! kapag lampas na sa berdeng linya ang marka.",
+"show": "Pindutin ang Talon! kapag lampas na sa berdeng linya ang marka.",
+"section": "Luksong Tinik",
+"note": "talon = ta-LÓN (lundag)"
+},
+{
+"n": 91,
+"key": "v4d6a145a",
+"text": "Ay! Nasagi mo ang tinik. Subukan ulit!",
+"show": "Ay! Nasagi mo ang tinik. Subukan ulit! 🌵",
+"section": "Luksong Tinik",
+"note": ""
+},
+{
+"n": 92,
+"key": "vabeabc74",
+"text": "Natalon mo ang bawat tinik nang hindi ito nasasagi!",
+"show": "Natalon mo ang bawat tinik nang hindi ito nasasagi!",
+"section": "Luksong Tinik",
+"note": ""
+},
+{
+"n": 93,
+"key": "vfdf2d48c",
+"text": "Pindutin nang matagal ang pindutan. Mapupuno ng lakas ang bar! Bitawan kapag lampas na sa berdeng linya ang bar! Tumataas ang baka sa bawat antas. Lampasan ang 4!",
+"show": "Pindutin nang matagal ang pindutan. Mapupuno ng lakas ang bar! Bitawan kapag lampas na sa berdeng linya ang bar! Tumataas ang baka sa bawat antas. Lampasan ang 4!",
+"section": "Luksong Baka",
+"note": "baka = BÁ-ka (hayop)"
+},
+{
+"n": 94,
+"key": "v803ed824",
+"text": "Bago! Huwag masyadong matagal pumindot. Bumitaw kapag nasa berde!",
+"show": "Bago! Huwag masyadong matagal pumindot. Bumitaw kapag nasa berde!",
+"section": "Luksong Baka",
+"note": ""
+},
+{
+"n": 95,
+"key": "v0c686397",
+"text": "Pindutin nang matagal, saka bitawan kapag lampas na sa berdeng linya!",
+"show": "Pindutin nang matagal, saka bitawan kapag lampas na sa berdeng linya!",
+"section": "Luksong Baka",
+"note": ""
+},
+{
+"n": 96,
+"key": "v7ae26476",
+"text": "Ay! Nasagi mo ang baka. Pindutin nang mas matagal!",
+"show": "Ay! Nasagi mo ang baka. Pindutin nang mas matagal! 🐄",
+"section": "Luksong Baka",
+"note": "baka = BÁ-ka (hayop)"
+},
+{
+"n": 97,
+"key": "vc9eb0362",
+"text": "Nalundagan mo ang baka sa lahat ng taas!",
+"show": "Nalundagan mo ang baka sa lahat ng taas!",
+"section": "Luksong Baka",
+"note": "baka = BÁ-ka (hayop)"
+},
+{
+"n": 98,
+"key": "va427ccd1",
+"text": "Hawak ng dalawang kaibigan ang garter. Pindutin nang matagal ang pindutan para mag-ipon ng lakas. Bitawan sa berdeng bahagi para malundagan ang garter! Pindutin nang matagal, bitawan sa berde. Tataas ang garter!",
+"show": "Hawak ng dalawang kaibigan ang garter. Pindutin nang matagal ang pindutan para mag-ipon ng lakas. Bitawan sa berdeng bahagi para malundagan ang garter! Pindutin nang matagal, bitawan sa berde. Tataas ang garter!",
+"section": "Chinese Garter",
+"note": ""
+},
+{
+"n": 99,
+"key": "vd67553d3",
+"text": "Mas mataas na ang garter, at humahaba ang ayos. Tingnang mabuti ang mga chip!",
+"show": "Mas mataas na ang garter, at humahaba ang ayos. Tingnang mabuti ang mga chip!",
+"section": "Chinese Garter",
+"note": ""
+},
+{
+"n": 100,
+"key": "v36d13869",
+"text": "Pindutin nang matagal, bitawan sa berdeng bahagi, at lundagan ang garter!",
+"show": "Pindutin nang matagal, bitawan sa berdeng bahagi, at lundagan ang garter!",
+"section": "Chinese Garter",
+"note": ""
+},
+{
+"n": 101,
+"key": "vc66be9a7",
+"text": "Naku! Sumabit ang paa mo sa garter. Subukan ulit!",
+"show": "Naku! Sumabit ang paa mo sa garter. Subukan ulit! 🎀",
+"section": "Chinese Garter",
+"note": ""
+},
+{
+"n": 102,
+"key": "v1f454667",
+"text": "Nalampasan mo ang lahat ng taas ng Chinese Garter!",
+"show": "Nalampasan mo ang lahat ng taas ng Chinese Garter!",
+"section": "Chinese Garter",
+"note": ""
+},
+{
+"n": 103,
+"key": "va3e1ccd5",
+"text": "Mag-swipe pataas kahit saan para ihagis ang bato . Swipe pataas para lumundag nang isang paa. Dalawang magkatabing kahon? Swipe pakaliwa o pakanan para sa dalawang paa. Magpahinga sa Langit , lumundag pabalik, at swipe pababa para damputin ang bato.",
+"show": "Mag-swipe pataas kahit saan ⬆️ para ihagis ang bato 🪨. Swipe pataas ⬆️ para lumundag nang isang paa. Dalawang magkatabing kahon? Swipe pakaliwa o pakanan ⬅️➡️ para sa dalawang paa. Magpahinga sa Langit 🌈, lumundag pabalik, at swipe pababa ⬇️ para damputin ang bato.",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 104,
+"key": "vf046ea5c",
+"text": "Bago! Hindi na umiilaw ang mga kahon. Tandaan: isang paa, isang paa, dalawang paa…",
+"show": "Bago! Hindi na umiilaw ang mga kahon. Tandaan: isang paa, isang paa, dalawang paa…",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 105,
+"key": "v17ee2546",
+"text": "Ihagis ang bato sa kahon 1: pindutin ang kumikinang na kahon!",
+"show": "Ihagis ang bato 🪨 sa kahon 1: pindutin ang kumikinang na kahon!",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 106,
+"key": "v7324ff75",
+"text": "Ihagis ang bato sa kahon 2: pindutin ang kumikinang na kahon!",
+"show": "Ihagis ang bato 🪨 sa kahon 2: pindutin ang kumikinang na kahon!",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 107,
+"key": "v222d2b87",
+"text": "Ihagis ang bato sa kahon 3 at 4: pindutin ang kumikinang na kahon!",
+"show": "Ihagis ang bato 🪨 sa kahon 3 at 4: pindutin ang kumikinang na kahon!",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 108,
+"key": "v42701f4a",
+"text": "Ihagis ang bato sa kahon 5: pindutin ang kumikinang na kahon!",
+"show": "Ihagis ang bato 🪨 sa kahon 5: pindutin ang kumikinang na kahon!",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 109,
+"key": "v81fca763",
+"text": "Ihagis ang bato sa kahon 6 at 7: pindutin ang kumikinang na kahon!",
+"show": "Ihagis ang bato 🪨 sa kahon 6 at 7: pindutin ang kumikinang na kahon!",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 110,
+"key": "vcdf48e5f",
+"text": "Ihagis ang bato sa kahon 8: pindutin ang kumikinang na kahon!",
+"show": "Ihagis ang bato 🪨 sa kahon 8: pindutin ang kumikinang na kahon!",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 111,
+"key": "ve5b15045",
+"text": "Magaling! Bagong hagis naman.",
+"show": "Magaling! Bagong hagis naman. 🪨",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 112,
+"key": "v73adb9c0",
+"text": "Magpahinga sa Langit ! Pindutin ito, saka umikot.",
+"show": "Magpahinga sa Langit 🌈! Pindutin ito, saka umikot.",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 113,
+"key": "v0bfb23d7",
+"text": "Yumuko at damputin ang bato mo !",
+"show": "Yumuko at damputin ang bato mo 🪨!",
+"section": "Piko",
+"note": ""
+},
+{
+"n": 114,
+"key": "vc50d9d6a",
+"text": "Muntik kang matumba! Bilisan ang talon.",
+"show": "Muntik kang matumba! Bilisan ang talon. 🦶",
+"section": "Piko",
+"note": "talon = ta-LÓN (lundag)"
+},
+{
+"n": 115,
+"key": "v9530feab",
+"text": "Bantayan ang balance bar sa itaas. Humakbang kapag nasa BERDE ang marka. Pindutin ang Kaliwa, Kanan, Kaliwa, Kanan… Parehong paa, o humakbang sa pula? Pagewang ka. Sobrang pagewang, mahuhulog ka!",
+"show": "Bantayan ang balance bar sa itaas. Humakbang kapag nasa BERDE ang marka. Pindutin ang Kaliwa, Kanan, Kaliwa, Kanan… Parehong paa, o humakbang sa pula? Pagewang ka. Sobrang pagewang, mahuhulog ka!",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 116,
+"key": "vfc90f1ed",
+"text": "Bago! Kailangan mo nang matapos nang 1st o 2nd.",
+"show": "Bago! Kailangan mo nang matapos nang 1st o 2nd.",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 117,
+"key": "v03f3c7d7",
+"text": "Bago! Tayakad na kawayan! Mas mataas ka na, kaya ingatan ang balanse.",
+"show": "Bago! Tayakad na kawayan! Mas mataas ka na, kaya ingatan ang balanse.",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 118,
+"key": "v318d37cb",
+"text": "Bago! Kailangan mo nang MANALO sa karera. Tumataas din ang kawayan!",
+"show": "Bago! Kailangan mo nang MANALO sa karera. Tumataas din ang kawayan!",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 119,
+"key": "vc1ccac79",
+"text": "Humanda… sumakay sa bao!",
+"show": "Humanda… sumakay sa bao!",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 120,
+"key": "v4ea0e60b",
+"text": "Humanda… sumakay sa kawayan!",
+"show": "Humanda… sumakay sa kawayan!",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 121,
+"key": "v0d569169",
+"text": "Panalo ka sa karera!",
+"show": "Panalo ka sa karera! 🥇",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 122,
+"key": "v2ef89a45",
+"text": "Humanda…",
+"show": "Humanda…",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 123,
+"key": "v08d5e763",
+"text": "Nahulog! Aakyat ulit…",
+"show": "Nahulog! Aakyat ulit…",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 124,
+"key": "ve1b42707",
+"text": "Pagewang! Salitan dapat: kaliwa, kanan!",
+"show": "Pagewang! Salitan dapat: kaliwa, kanan!",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 125,
+"key": "va13dac0e",
+"text": "Pagewang! Hintaying nasa berde ang marka.",
+"show": "Pagewang! Hintaying nasa berde ang marka.",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 126,
+"key": "vec29aa55",
+"text": "TAKBO! Kaliwa, kanan — humakbang kapag nasa berde!",
+"show": "TAKBO! Kaliwa, kanan — humakbang kapag nasa berde!",
+"section": "Kadang-Kadang",
+"note": ""
+},
+{
+"n": 127,
+"key": "v17d526b2",
+"text": "Idiin ang daliri sa iyong bata at hilahin papunta sa lata . Ipinapakita ng mga tuldok kung saan babagsak. Bitawan para ihagis! Kulang ang hila, sasadsad sa harap; sobra, lalampas sa lata. Tumba! Tumakbo para kunin ang , saka bumalik sa likod ng linya bago maitayo ni Taya ang lata.",
+"show": "Idiin ang daliri sa iyong bata at hilahin papunta sa lata 🥫. Ipinapakita ng mga tuldok kung saan babagsak. Bitawan para ihagis! Kulang ang hila, sasadsad sa harap; sobra, lalampas sa lata. Tumba! Tumakbo para kunin ang 🩴, saka bumalik sa likod ng linya bago maitayo ni Taya ang lata.",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 128,
+"key": "v3491b6f6",
+"text": "I-drag mula sa iyo papunta sa lata , saka bitawan para ihagis!",
+"show": "I-drag mula sa iyo papunta sa lata 🥫, saka bitawan para ihagis!",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 129,
+"key": "v68c22a48",
+"text": "TUMBA! Takbo, kunin ang , saka bumalik sa likod ng linya!",
+"show": "TUMBA! 🥫 Takbo, kunin ang 🩴, saka bumalik sa likod ng linya!",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 130,
+"key": "v2a808e85",
+"text": "Naharang ni Taya! Kunin ang mo — mag-ingat!",
+"show": "Naharang ni Taya! Kunin ang 🩴 mo — mag-ingat!",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 131,
+"key": "v0fb2ab45",
+"text": "Sablay! Kunin ang mo — bantayan si Taya!",
+"show": "Sablay! Kunin ang 🩴 mo — bantayan si Taya!",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 132,
+"key": "va78f6cb0",
+"text": "Nataya ka! Balik sa linya — subukan ulit!",
+"show": "Nataya ka! 😅 Balik sa linya — subukan ulit!",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 133,
+"key": "vf42afdd3",
+"text": "Ikaw na! I-drag papunta sa lata at bitawan.",
+"show": "Ikaw na! I-drag papunta sa lata at bitawan. 🩴",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 134,
+"key": "ve8e9e2ed",
+"text": "Nakuha mo! Takbo pabalik sa likod ng linya!",
+"show": "Nakuha mo! 🩴 Takbo pabalik sa likod ng linya!",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 135,
+"key": "vc0837dd7",
+"text": "Nakatayo na ang lata! Puwede ka nang tayain — takbo!",
+"show": "Nakatayo na ang lata! Puwede ka nang tayain — takbo!",
+"section": "Tumbang Preso",
+"note": ""
+},
+{
+"n": 136,
+"key": "vaee21ab6",
+"text": "Mag-swipe pakaliwa at pakanan para tumakbo sa ilalim ng sipa. Kapag bumaba na ito sa iyo, PUMINDOT. Kusang sisipa ang bata gamit ang paa, tuhod o siko! Gumawa ng 8 sipa! Kapag bumagsak, mawawalan ng puso .",
+"show": "Mag-swipe pakaliwa at pakanan para tumakbo sa ilalim ng sipa. Kapag bumaba na ito sa iyo, PUMINDOT. Kusang sisipa ang bata gamit ang paa, tuhod o siko! Gumawa ng 8 sipa! Kapag bumagsak, mawawalan ng puso 💛.",
+"section": "Sipa",
+"note": ""
+},
+{
+"n": 137,
+"key": "v7fc3499e",
+"text": "Bago! Mas lumilihis na ang sipa sa gilid. Mag-swipe nang mabilis para masalo ito!",
+"show": "Bago! Mas lumilihis na ang sipa sa gilid. Mag-swipe nang mabilis para masalo ito!",
+"section": "Sipa",
+"note": ""
+},
+{
+"n": 138,
+"key": "vcce368fc",
+"text": "Bago! Mas mabilis nang bumagsak ang sipa. Tumakbo agad sa ilalim nito, saka pumindot!",
+"show": "Bago! Mas mabilis nang bumagsak ang sipa. Tumakbo agad sa ilalim nito, saka pumindot!",
+"section": "Sipa",
+"note": ""
+},
+{
+"n": 139,
+"key": "v4f391fdc",
+"text": "I-swipe para lumapit sa sipa, saka pumindot para sumipa!",
+"show": "I-swipe para lumapit sa sipa, saka pumindot para sumipa!",
+"section": "Sipa",
+"note": ""
+},
+{
+"n": 140,
+"key": "vfd6c06b0",
+"text": "Bumagsak! Habulin ang sipa — i-swipe pakaliwa o pakanan.",
+"show": "Bumagsak! Habulin ang sipa — i-swipe pakaliwa o pakanan.",
+"section": "Sipa",
+"note": ""
+},
+{
+"n": 141,
+"key": "v85ce69e0",
+"text": "Masyadong malayo! Lumapit muna sa sipa.",
+"show": "Masyadong malayo! Lumapit muna sa sipa.",
+"section": "Sipa",
+"note": ""
+},
+{
+"n": 142,
+"key": "v362b9acc",
+"text": "Mataas pa — hintaying bumaba ang sipa, saka pumindot!",
+"show": "Mataas pa — hintaying bumaba ang sipa, saka pumindot!",
+"section": "Sipa",
+"note": ""
+},
+{
+"n": 143,
+"key": "v7bb6a16e",
+"text": "Galing! Sundan ito habang bumabagsak.",
+"show": "Galing! Sundan ito habang bumabagsak.",
+"section": "Sipa",
+"note": ""
+},
+{
+"n": 144,
+"key": "ve85149f8",
+"text": "Una, tumira sa guhit: hilahin pababa at bitawan. Pinakamalapit ang mauuna. Pindutin ang gilid ng bilog para pumili ng puwesto. Hilahin pabalik, saka bitawan. Makakuha ng mas maraming holen kaysa sa kalaro para manalo!",
+"show": "Una, tumira sa guhit: hilahin pababa at bitawan. Pinakamalapit ang mauuna. Pindutin ang gilid ng bilog para pumili ng puwesto. Hilahin pabalik, saka bitawan. Makakuha ng mas maraming holen kaysa sa kalaro 🔴 para manalo!",
+"section": "Holen",
+"note": ""
+},
+{
+"n": 145,
+"key": "v0915dafc",
+"text": "Bago! Si Ate Mae na ang kalaro. Mas magaling siyang umasinta, at mas marami na ang holen sa bilog.",
+"show": "Bago! Si Ate Mae na ang kalaro. Mas magaling siyang umasinta, at mas marami na ang holen sa bilog.",
+"section": "Holen",
+"note": ""
+},
+{
+"n": 146,
+"key": "vb8ec936d",
+"text": "Bago! Si Kuya Ben na ang kalaro, at mas maikli na ang guhit na pang-asinta. Magtiwala sa iyong mata!",
+"show": "Bago! Si Kuya Ben na ang kalaro, at mas maikli na ang guhit na pang-asinta. Magtiwala sa iyong mata!",
+"section": "Holen",
+"note": ""
+},
+{
+"n": 147,
+"key": "v8fcaeb8d",
+"text": "Narito si Lolo Ambo, ang pinakamagaling tumira. Manatili sa loob ng bilog para makatira ulit!",
+"show": "Narito si Lolo Ambo, ang pinakamagaling tumira. Manatili sa loob ng bilog para makatira ulit!",
+"section": "Holen",
+"note": ""
+},
+{
+"n": 148,
+"key": "v8fae9f5f",
+"text": "Pitik sa guhit! Hilahin pababa at bitawan — ang pinakamalapit sa guhit ang mauuna.",
+"show": "Pitik sa guhit! Hilahin pababa at bitawan — ang pinakamalapit sa guhit ang mauuna.",
+"section": "Holen",
+"note": ""
+},
+{
+"n": 149,
+"key": "v6a9b31f1",
+"text": "Mas malapit ka sa guhit — ikaw ang mauuna!",
+"show": "Mas malapit ka sa guhit — ikaw ang mauuna! 🔵",
+"section": "Holen",
+"note": ""
+},
+{
+"n": 150,
+"key": "v3e59961e",
+"text": "Patay! Natamaan ang pamato ng kalaban: +1!",
+"show": "Patay! Natamaan ang pamato ng kalaban: +1! 💥",
+"section": "Holen",
+"note": ""
+},
+{
+"n": 151,
+"key": "v7b8c0c4a",
+"text": "Ikaw na! Pumili ng puwesto sa gilid ng bilog o tumira mula sa pamato mo.",
+"show": "Ikaw na! Pumili ng puwesto sa gilid ng bilog o tumira mula sa pamato mo.",
+"section": "Holen",
+"note": ""
+},
+{
+"n": 152,
+"key": "vf289170f",
+"text": "Pindutin ang isa sa mga butas mo. Isa-isang ihuhulog ang mga sigay pakanan. Ang may pinakamaraming sigay sa bahay ang panalo!",
+"show": "Pindutin ang isa sa mga butas mo. Isa-isang ihuhulog ang mga sigay pakanan. Ang may pinakamaraming sigay sa 🏠 bahay ang panalo!",
+"section": "Sungka",
+"note": ""
+},
+{
+"n": 153,
+"key": "v0e80fdd1",
+"text": "Bagong kalaban! Mas magaling silang magbilang ng sigay.",
+"show": "Bagong kalaban! Mas magaling silang magbilang ng sigay.",
+"section": "Sungka",
+"note": ""
+},
+{
+"n": 154,
+"key": "vf9dec821",
+"text": "Narito si Kuya Ben, ang pinakamatalinong kalaro. Planuhin ang iyong galaw!",
+"show": "Narito si Kuya Ben, ang pinakamatalinong kalaro. Planuhin ang iyong galaw!",
+"section": "Sungka",
+"note": ""
+},
+{
+"n": 155,
+"key": "v586cd419",
+"text": "Pumili ng kalaban!",
+"show": "Pumili ng kalaban! 👇",
+"section": "Sungka",
+"note": ""
+},
+{
+"n": 156,
+"key": "v33422135",
+"text": "Sa BAHAY MO bumagsak ang huling sigay! Ulit!",
+"show": "Sa BAHAY MO bumagsak ang huling sigay! Ulit! 🎉",
+"section": "Sungka",
+"note": ""
+},
+{
+"n": 157,
+"key": "v634dbca3",
+"text": "May laman ang butas — ituloy ang pamamahagi!",
+"show": "May laman ang butas — ituloy ang pamamahagi! 🐚",
+"section": "Sungka",
+"note": ""
+},
+{
+"n": 158,
+"key": "v2459f37a",
+"text": "Ituloy natin ang laro!",
+"show": "Ituloy natin ang laro! 🐚",
+"section": "Sungka",
+"note": ""
+},
+{
+"n": 159,
+"key": "v5b021d88",
+"text": "Pindutin ang asul na takip, saka ang berdeng tuldok. Kapag may puwedeng kainin, kailangang kainin! Kumikislap ang mga takip. Abutin ang pinakataas na hilera para maging hari .",
+"show": "Pindutin ang asul na takip, saka ang berdeng tuldok. Kapag may puwedeng kainin, kailangang kainin! Kumikislap ang mga takip. Abutin ang pinakataas na hilera para maging hari 👑.",
+"section": "Dama",
+"note": ""
+},
+{
+"n": 160,
+"key": "v1ae25614",
+"text": "Bago! Buong board na: tig-12 takip. Mas maingat na ring maglaro si Pula.",
+"show": "Bago! Buong board na: tig-12 takip. Mas maingat na ring maglaro si Pula.",
+"section": "Dama",
+"note": ""
+},
+{
+"n": 161,
+"key": "v0b052973",
+"text": "Lundag ulit!",
+"show": "Lundag ulit! 🦘",
+"section": "Dama",
+"note": ""
+},
+{
+"n": 162,
+"key": "vbd11637b",
+"text": "Kailangan mong kumain! Pumili ng kumikislap na takip.",
+"show": "Kailangan mong kumain! Pumili ng kumikislap na takip.",
+"section": "Dama",
+"note": ""
+},
+{
+"n": 163,
+"key": "v9669f338",
+"text": "May naiwang takip ang pula! Lundagan mo!",
+"show": "May naiwang takip ang pula! Lundagan mo! 🦘",
+"section": "Dama",
+"note": ""
+},
+{
+"n": 164,
+"key": "v0d5c24c3",
+"text": "Ikaw ang asul . Pindutin ang takip, saka ang berdeng tuldok!",
+"show": "Ikaw ang asul 🔵. Pindutin ang takip, saka ang berdeng tuldok!",
+"section": "Dama",
+"note": ""
+},
+{
+"n": 165,
+"key": "vc8c98223",
+"text": "Ikaw naman! Pindutin ang asul na takip.",
+"show": "👆 Ikaw naman! Pindutin ang asul na takip.",
+"section": "Dama",
+"note": ""
+},
+{
+"n": 166,
+"key": "v9fa5bbfc",
+"text": "Nag-iisip ang pula…",
+"show": "🔴 Nag-iisip ang pula…",
+"section": "Dama",
+"note": ""
+},
+{
+"n": 167,
+"key": "v9714f237",
+"text": "Ayan na ako!",
+"show": "Ayan na ako!",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 168,
+"key": "v138a8ed1",
+"text": "Wow! Natalon mo ito!",
+"show": "Wow! Natalon mo ito! 🎉",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 169,
+"key": "v923e8998",
+"text": "Pindutin nang matagal… saka bitawan!",
+"show": "🦘 Pindutin nang matagal… saka bitawan!",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 170,
+"key": "vab8d14c4",
+"text": "Nalampasan mo ang taas na ito!",
+"show": "Nalampasan mo ang taas na ito! 🎉",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 171,
+"key": "v30272141",
+"text": "Nakita mo silang lahat! Pero may ilang mas mabilis sa iyo.",
+"show": "Nakita mo silang lahat! Pero may ilang mas mabilis sa iyo.",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 172,
+"key": "v4f3e49fb",
+"text": "Pindutin ang isa sa mga butas mo para ipamahagi ang mga sigay!",
+"show": "Pindutin ang isa sa mga butas mo para ipamahagi ang mga sigay!",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 173,
+"key": "vace44bd8",
+"text": "Nagbilang na si Taya ng lima! Lumipat ng puwesto!",
+"show": "Nagbilang na si Taya ng lima! Lumipat ng puwesto!",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 174,
+"key": "v37e152c0",
+"text": "Taya! Sila na ang Taya. Takbo ulit sa ligtas na puwesto!",
+"show": "Taya! Sila na ang Taya. Takbo ulit sa ligtas na puwesto!",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 175,
+"key": "vbcd71961",
+"text": "Handa man o hindi, hahanapin ko kayo! Maglakad at i-tap ang taguan para silipin.",
+"show": "Handa man o hindi, hahanapin ko kayo! Maglakad at i-tap ang taguan para silipin. 🔍",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 176,
+"key": "vc8241751",
+"text": "Nasilip mo na iyan.",
+"show": "Nasilip mo na iyan.",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 177,
+"key": "v31b88b59",
+"text": "Walang tao rito! Subukan ang iba.",
+"show": "Walang tao rito! Subukan ang iba.",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 178,
+"key": "ved1be9ea",
+"text": "Nahanap mo silang lahat! Pero may naunang nakabalik.",
+"show": "Nahanap mo silang lahat! Pero may naunang nakabalik.",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 179,
+"key": "v4b3b338f",
+"text": "\"Hahanapin ko na kayo!\" Manatiling nakatago… o pumuslit sa base kapag malayo si Taya!",
+"show": "\"Hahanapin ko na kayo!\" Manatiling nakatago… o pumuslit sa 🚩 base kapag malayo si Taya!",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 180,
+"key": "v9d0c5557",
+"text": "May nakatago na riyan!",
+"show": "May nakatago na riyan!",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 181,
+"key": "vece2c49e",
+"text": "Shh… nakatago ka! Gumalaw para lumabas.",
+"show": "Shh… nakatago ka! 🤫 Gumalaw para lumabas.",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 182,
+"key": "vab40ad9b",
+"text": "Nakita ka ni Taya! Takbo sa base!",
+"show": "Nakita ka ni Taya! Takbo sa base! 🏃",
+"section": "Iba pang mensahe sa laro",
+"note": ""
+},
+{
+"n": 183,
+"key": "vc3b41b36",
+"text": "May nahanap si Taya! Pung!",
+"show": "May nahanap si Taya! Pung!",
+"section": "Iba pang mensahe sa laro",
+"note": ""
 }
 ]

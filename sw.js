@@ -1,9 +1,9 @@
 'use strict';
 /* FunZone offline helper: keeps a copy of the app on the phone or tablet so it also works without internet.
    Change VERSION whenever you publish new files, so everyone gets the new copy. */
-const VERSION = 'funzone-2026-11-28e';
+const VERSION = 'funzone-2026-11-28f';
 const APP = [
-  './', 'index.html', 'styles.css', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/apple-touch-icon.png', 'voice/tl/index.json', 'core.js', 'lang.js', 'figures.js', 'field.js', 'games-a.js', 'games-b.js', 'games-c.js', 'tutorial.js', 'books.js', 'gameinfo.js', 'app.js', 'reader.js', 'coloring-data.js', 'coloring.js'];
+  './', 'index.html', 'styles.css', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/apple-touch-icon.png', 'voice/tl/index.json', 'core.js', 'lang.js', 'figures.js', 'field.js', 'games-a.js', 'games-b.js', 'games-c.js', 'tutorial.js', 'books.js', 'gameinfo.js', 'app.js', 'reader.js', 'story-voices.js', 'studio.js', 'voice/tl/lines.json', 'coloring-data.js', 'coloring.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(APP)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim()));

@@ -210,21 +210,59 @@ function playAudio(url, revoke, fallback, times) {
 }
 /* which word is being read at time t (seconds): the last word that has started; none before the first or after the last one ends */
 FZ.wordAt = (T, t) => { const times = T && T.w || T || []; let i = -1; for (let k = 0; k < times.length; k++) if (times[k] != null && t >= times[k]) i = k; if (i === times.length - 1 && T.end && t > T.end + .2) i = -1; return i; };
+/* ---------- STORY VOICES: the narrator and every character get their own voice ----------
+   Each "quoted" part of a page is read by the character who says it (FZ.storyCast), everything else by the narrator.
+   The Filipino tales are read in Tagalog. */
+const VOICE_TYPES = {                 // g: man's or woman's voice; p: pitch; r: speed
+  narrator: { g: 'f', p: 1.0, r: .9 }, boy: { g: 'm', p: 1.55, r: 1.02 }, girl: { g: 'f', p: 1.55, r: 1.02 },
+  man: { g: 'm', p: .85, r: .92 }, woman: { g: 'f', p: 1.12, r: .94 }, oldman: { g: 'm', p: .72, r: .8 }, oldwoman: { g: 'f', p: .92, r: .8 },
+  big: { g: 'm', p: .5, r: .8 }, small: { g: 'f', p: 1.9, r: 1.1 }, crowd: { g: 'm', p: 1.15, r: 1 }
+};
+const storyLang = st => st.group === 'pinoy' ? 'tl' : rd.lang;
+function pageParts(spans, id = rd.st.id, pageIdx = rd.page - 1) {
+  const cast = FZ.storyCast && FZ.storyCast[id], who = cast && pageIdx >= 0 ? (cast.pages[pageIdx] || []) : [];
+  const parts = []; let inQ = false, qi = -1;
+  spans.forEach((s, i) => {
+    const t = s.textContent, opens = !inQ && /^[(\[]?["“]/.test(t);
+    if (opens) { inQ = true; qi++; }
+    const sp = inQ ? (who[qi] || null) : null, type = sp ? (cast.types[sp] || 'narrator') : 'narrator';
+    const last = parts[parts.length - 1];
+    if (last && last.type === type && last.sp === sp && last.q === (inQ ? qi : -1)) last.idx.push(i); else parts.push({ type, sp, q: inQ ? qi : -1, idx: [i] });
+    if (inQ && (/["”][.,!?;:)]*$/.test(t) && !(opens && t.length === 1))) inQ = false;
+  });
+  return parts;
+}
 function speakPage() {
   if (!('speechSynthesis' in window) || FZ.screen !== 'reader') return;
   const box = $('#rdText'); if (!box) return;
   try { speechSynthesis.cancel(); } catch (e) { }
-  const spans = $$('.w', box), text = spans.map(s => s.textContent).join(' ');
-  const starts = []; let pos = 0; spans.forEach(s => { starts.push(pos); pos += s.textContent.length + 1; });
-  const u = new SpeechSynthesisUtterance(text.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, ' '));
-  const v = FZ.voiceFor(rd.lang);
-  if (v) { u.voice = v; u.lang = v.lang; } else u.lang = rd.lang === 'tl' ? 'fil-PH' : 'en-US';
-  u.rate = 0.85; u.pitch = 1.05;
+  const spans = $$('.w', box), lang = storyLang(rd.st), token = rd.token;
   const light = i => spans.forEach((s, k) => s.classList.toggle('hl', k === i));
-  u.onboundary = e => { if (e.name && e.name !== 'word') return; let i = starts.findIndex((p, k) => e.charIndex >= p && (k === starts.length - 1 || e.charIndex < starts[k + 1])); light(i); };
-  u.onend = () => { if (rd.utter === u) light(-1); };
-  rd.utter = u;
-  try { speechSynthesis.speak(u); } catch (e) { }
+  const queue = [];
+  pageParts(spans).forEach(part => {                         // long parts are read sentence by sentence, so nothing gets cut off
+    let cur = [];
+    part.idx.forEach(i => { cur.push(i); if (/[.!?]["”]?$/.test(spans[i].textContent) && cur.length > 2) { queue.push({ type: part.type, idx: cur }); cur = []; } });
+    if (cur.length) queue.push({ type: part.type, idx: cur });
+  });
+  const next = () => {
+    if (token !== rd.token || FZ.screen !== 'reader') return;
+    const q = queue.shift(); if (!q) { light(-1); return; }
+    const words = q.idx.map(i => spans[i].textContent), starts = []; let pos = 0; words.forEach(w => { starts.push(pos); pos += w.length + 1; });
+    let text = words.join(' ').replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, ' ');
+    if (lang === 'tl') text = FZ.tlFix(text);
+    if (!text.replace(/[^\p{L}\p{N}]/gu, '')) return next();
+    const T = VOICE_TYPES[q.type] || VOICE_TYPES.narrator, v = FZ.voiceOf(lang, T.g), u = new SpeechSynthesisUtterance(text);
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = lang === 'tl' ? 'fil-PH' : 'en-US';
+    let pitch = T.p; if (v && T.g === 'm' && !FZ.voiceIsMale(v) && q.type !== 'boy') pitch *= .78;    // no man's voice on this device: go lower instead
+    u.pitch = clamp(pitch, .1, 2); u.rate = T.r * (lang === 'tl' ? .95 : 1);
+    light(q.idx[0]);
+    u.onboundary = e => { if (e.name && e.name !== 'word') return; const k = starts.findIndex((p, j) => e.charIndex >= p && (j === starts.length - 1 || e.charIndex < starts[j + 1])); if (k >= 0) light(q.idx[k]); };
+    u.onend = () => { if (rd.utter === u) next(); };
+    u.onerror = () => { if (rd.utter === u) next(); };
+    rd.utter = u;
+    try { speechSynthesis.speak(u); } catch (e) { }
+  };
+  next();
 }
 
 /* ---------------- controls ---------------- */
@@ -247,9 +285,11 @@ $('#rdBook').addEventListener('click', e => {
   pop.style.left = clamp(r.left + r.width / 2 - box.left, 90, box.width - 90) + 'px';
   pop.style.top = Math.max(60, r.top - box.top - 14) + 'px';
   setTimeout(() => pop.classList.add('out'), 1500); setTimeout(() => pop.remove(), 1900);
+  const L = storyLang(rd.st);
+  if (L === 'tl' && FZ.voiceFiles.has(FZ.voiceKey(word))) { new Audio(`voice/tl/${FZ.voiceKey(word)}.mp3`).play().catch(() => { }); return; }   // a recorded Tagalog word
   if (!('speechSynthesis' in window)) return;
-  const u = new SpeechSynthesisUtterance(word);
-  const v = FZ.voiceFor(rd.lang); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = rd.lang === 'tl' ? 'fil-PH' : 'en-US';
+  const u = new SpeechSynthesisUtterance(L === 'tl' ? FZ.tlFix(word) : word);
+  const v = FZ.voiceFor(L); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = L === 'tl' ? 'fil-PH' : 'en-US';
   u.rate = 0.7;
   try { speechSynthesis.speak(u); } catch (er) { }
 });
@@ -340,6 +380,13 @@ async function openRecPage(i) {
   /* while recording: tap the word you are reading if the highlight is ahead or behind */
   $('#recWords').addEventListener('click', e => { const w = e.target.closest('.w'); if (!w || !recUI.mr || recUI.gi < 0) return; guideTo($$('#recWords .w').indexOf(w), true); });
   if (live) lightRec(recUI.gi);
+  /* who says what on this page: each character's words get their own colour, so the reader can do their voices */
+  if (i < n) {
+    const COLS = ['#ffe3e3', '#d3f9d8', '#d0ebff', '#fff3bf', '#e5dbff', '#ffe8cc'], EM = { boy: '👦', girl: '👧', man: '👨', woman: '👩', oldman: '👴', oldwoman: '👵', big: '🐻', small: '🐭', crowd: '👥' };
+    const cast = FZ.storyCast && FZ.storyCast[st.id], who = [], ws = $$('#recWords .w');
+    pageParts(ws, st.id, i).forEach(p => { if (!p.sp) return; let k = who.indexOf(p.sp); if (k < 0) { who.push(p.sp); k = who.length - 1; } p.idx.forEach(j => { ws[j].dataset.spk = k; ws[j].style.setProperty('--rc', COLS[k % COLS.length]); }); });
+    if (who.length) $('#recWords').insertAdjacentHTML('beforebegin', `<div class="recroles"><b>${FZ.t('rec_roles')}</b>${who.map((w, k) => `<span style="--rc:${COLS[k % COLS.length]}">${EM[cast.types[w]] || '🗣️'} ${w === '_crowd' ? (FZ.lang === 'tl' ? 'lahat' : 'everyone') : w}</span>`).join('')}</div>`);
+  }
   $('#recPrev').onclick = () => openRecPage(i - 1);
   $('#recNext').onclick = () => openRecPage(i + 1);
   /* listen back, with the words lighting up just like in the story */

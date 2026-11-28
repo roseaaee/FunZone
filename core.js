@@ -62,6 +62,18 @@ if ('speechSynthesis' in window) {
 const voiceScore = v => (/blessica|angelo/i.test(v.name) ? 20 : 0)          // Microsoft's natural Filipino voices (Edge, online)
   + (/natural|neural|online/i.test(v.name) ? 10 : 0) + (/google/i.test(v.name) ? 6 : 0)
   + (/samantha|karen|moira|ava|allison|aria|jenny|zira|libby|sonia|blessica|angelo|rosa|female/i.test(v.name) ? 4 : 0) + (v.localService ? 0 : 1);
+/* the devices' voices: is it a man's or a woman's voice? (used to give story characters their own voices) */
+const MALE_V = /\b(male|man|guy|david|daniel|alex|fred|james|tom|ryan|eric|christopher|davis|tony|jason|roger|brian|andrew|george|mark|richard|aaron|arthur|oliver|thomas|angelo|rishi|lee|gordon|reed|rocko|grandpa|eddy|ralph|junior|albert|bruce|jorge|diego|juan|carlos|pablo)\b/i;
+const FEMALE_V = /\b(female|woman|jenny|aria|samantha|karen|moira|tessa|zira|susan|hazel|libby|sonia|natasha|michelle|emma|ava|allison|victoria|fiona|serena|kate|blessica|catherine|nicky|shelley|flo|sandy|grandma|martha|paulina|monica|lucia|rosa|google us english)\b/i;
+FZ.voiceOf = (lang, want) => {                                     // want: 'm' or 'f'; falls back to the normal voice
+  const base = FZ.voiceFor(lang); if (!want || !base) return base;
+  const pre = base.lang.toLowerCase().slice(0, 2), same = FZ.voices.filter(v => v.lang.toLowerCase().startsWith(pre));
+  const rx = want === 'm' ? MALE_V : FEMALE_V, other = want === 'm' ? FEMALE_V : MALE_V;
+  if (rx.test(base.name) && !other.test(base.name)) return base;
+  const c = same.filter(v => rx.test(v.name) && !other.test(v.name)).sort((a, b) => voiceScore(b) - voiceScore(a));
+  return c[0] || base;
+};
+FZ.voiceIsMale = v => !!v && MALE_V.test(v.name) && !FEMALE_V.test(v.name);
 FZ.voiceFor = lang => {
   const vs = FZ.voices; if (!vs.length) return null;
   const chosen = FZ.settings.voices && FZ.settings.voices[lang];              // the parent's own choice wins

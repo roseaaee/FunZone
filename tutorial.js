@@ -137,9 +137,9 @@
     st(['They pile their hands up, one on top of the other.', 'Ipinapatong nila ang mga kamay, isa sa ibabaw ng isa.'], [S(tinik(3), 34, 61.5, 32), K(12, 88, 'stand', 40, 'me', 'bob')], 'jump'),
     st(['Run and jump over the tinik without touching it!', 'Tumakbo at lundagan ang tinik nang hindi ito nahahawakan!'], [S(tinik(4), 34, 61.5, 32), K(50, 50, 'jump', 40, 'me', 'hop'), E('🎉', 82, 40, 9, 'bob')], 'jump')
   ], [
-    st(['Put your finger on your player and pull toward the can 🥫. The dots show where it will land.', 'Idiin ang daliri sa iyong bata at hilahin papunta sa lata 🥫. Ipinapakita ng mga tuldok kung saan babagsak.'], [R(36, 8, 28, 30, 'rgba(255,255,255,.4)', 50, 0, 'border:.9cqw dashed #fff'), E('🥫', 50, 24, 10), K(70, 30, 'stand', 22, 'r'), R(49.5, 40, 1, 34, '#845ef7', 2), E('👆', 54, 80, 9, 'tap'), K(50, 94, 'arms', 24, 'me')], 'ground'),
-    st(['Let go to throw! Too short falls in front; too long flies over the can.', 'Bitawan para ihagis! Kulang ang hila, sasadsad sa harap; sobra, lalampas sa lata.'], [R(36, 8, 28, 30, 'rgba(255,255,255,.4)', 50, 0, 'border:.9cqw dashed #fff'), E('🥫', 50, 24, 10, 'shake'), E('🩴', 50, 46, 8, 'slide'), K(70, 30, 'stand', 22, 'r'), K(50, 94, 'arms', 24, 'me')], 'ground'),
-    st(['Tumba! Run to get your 🩴 and come back behind the line before Taya sets up the can.', 'Tumba! Tumakbo para kunin ang 🩴, saka bumalik sa likod ng linya bago maitayo ni Taya ang lata.'], [E('🥫', 30, 30, 9), K(36, 40, 'run', 22, 'r', 'bob'), E('🩴', 72, 34, 8, 'bob'), K(66, 60, 'run', 24, 'me', 'bob'), R(6, 80, 88, 1.2, '#fff'), E('⬇️', 66, 76, 7, 'bob')], 'ground')
+    st(['Watch the red marker slide on the bar.', 'Panoorin ang pulang marka na gumagalaw sa bar.'], [S(tinik(2), 34, 38, 32), K(12, 64, 'stand', 40, 'me'), ...meter(8, 84, 52, .3, .45), ...btn('🦘 Talon!', 80, 84, 24)], 'jump'),
+    st(['Tap Talon! when the marker is past the green line.', 'Pindutin ang Talon! kapag lampas na sa berdeng linya ang marka.'], [S(tinik(2), 34, 38, 32), K(12, 64, 'stand', 40, 'me'), ...meter(8, 84, 52, .62, .45), ...btn('🦘 Talon!', 80, 84, 24), tap(84, 90)], 'jump'),
+    st(['Each level the tinik is taller. Clear all 5 levels!', 'Tumataas ang tinik sa bawat antas. Lampasan ang 5 antas!'], [S(tinik(5), 34, 38, 32), K(52, 28, 'jump', 40, 'me', 'hop'), T('5 / 5', 14, 12, 5, '#7048e8'), E('⭐', 84, 18, 9, 'bob')], 'jump')
   ]);
 
   /* ================= LUKSONG BAKA ================= */
@@ -177,9 +177,9 @@
       st(['Throw your stone (maru) into box 1. Hop: one foot on single boxes, two feet on boxes side by side.', 'Ihagis ang bato (maru) sa kahon 1. Lundag: isang paa sa isang kahon, dalawang paa sa magkatabing kahon.'], [...pk([], [1, 2], 1), K(18, 92, 'knee', 34, 'me', 'hop'), E('🪨', 40, 86, 7, 'bob')], 'ground'),
       st(['Rest in Langit, turn around, hop back and pick up your stone.', 'Magpahinga sa Langit, umikot, lumundag pabalik at kunin ang bato.'], [...pk([], [1, 2, 3, 4, 5, 6, 7, 8], 0), K(20, 30, 'jump', 34, 'me', 'hop'), E('🎉', 80, 20, 9, 'bob')], 'ground')
     ], [
-      st(['Tap the glowing box to throw your stone 🪨.', 'Pindutin ang kumikinang na kahon para ihagis ang bato 🪨.'], [...pk([1], [], 0), tap(60, 82)], 'ui'),
-      st(['Tap the glowing boxes: one box = one foot, two boxes = both feet.', 'Pindutin ang mga kumikinang na kahon: isang kahon = isang paa, dalawa = dalawang paa.'], [...pk([3, 4], [1], 2), tap(62, 62)], 'ui'),
-      st(['Rest in Langit 🌈, hop back and tap your stone.', 'Magpahinga sa Langit 🌈, lumundag pabalik at pindutin ang bato.'], [...pk(['L'], [8, 6, 7, 5], 2), tap(62, 14)], 'ui')
+      st(['Swipe up anywhere ⬆️ (or tap the glowing box) to throw your stone 🪨.', 'Mag-swipe pataas kahit saan ⬆️ (o pindutin ang kumikinang na kahon) para ihagis ang bato 🪨.'], [...pk([1], [], 0), tap(60, 82)], 'ui'),
+      st(['Swipe up ⬆️ to hop on one foot. Two boxes side by side? Swipe left or right ⬅️➡️ for both feet.', 'Swipe pataas ⬆️ para lumundag nang isang paa. Dalawang magkatabing kahon? Swipe pakaliwa o pakanan ⬅️➡️ para sa dalawang paa.'], [...pk([3, 4], [1], 2), tap(62, 62)], 'ui'),
+      st(['Rest in Langit 🌈, hop back, and swipe down ⬇️ to pick up your stone.', 'Magpahinga sa Langit 🌈, lumundag pabalik, at swipe pababa ⬇️ para damputin ang bato.'], [...pk(['L'], [8, 6, 7, 5], 2), tap(62, 14)], 'ui')
     ]); }
 
   /* ================= KADANG-KADANG ================= */
@@ -199,9 +199,9 @@
     st(['Throw your tsinelas to knock the can down!', 'Ihagis ang tsinelas para matumba ang lata!'], [R(36, 22, 28, 38, 'rgba(255,255,255,.4)', 50, 0, 'border:.9cqw dashed #fff'), E('🥫', 50, 42, 11, 'shake'), E('🩴', 42, 62, 9, 'slide'), K(30, 92, 'throw' in {} ? 'stand' : 'arms', 30, 'me'), K(74, 52, 'stand', 26, 'r')], 'ground'),
     st(['Everyone runs to grab their slippers. Taya tags anyone away from theirs!', 'Tatakbo ang lahat para kunin ang tsinelas. Tatayain ng Taya ang malayo sa tsinelas niya!'], [E('🥫', 50, 30, 11), K(36, 70, 'run', 28, 'r', 'bob'), K(26, 90, 'run', 28, 'me', 'bob'), K(72, 90, 'run', 28, 1, 'bob'), E('🩴', 50, 82, 7), E('🩴', 84, 82, 7)], 'ground')
   ], [
-    st(['Watch the red marker slide on the bar.', 'Panoorin ang pulang marka na gumagalaw.'], [R(14, 8, 72, 40, '#d8f5a2', 6), E('🥫', 50, 30, 10), K(50, 46, 'stand', 24, 'me'), R(10, 62, 80, 8, '#fff', 99), R(40, 62, 20, 8, '#8ce99a', 99), R(26, 62, 1.8, 8, '#e03131', 99, 'slide')], 'ui'),
-    st(['Tap Hagis! when the marker is in the green zone.', 'Pindutin ang Hagis! kapag nasa berdeng bahagi ang marka.'], [R(14, 8, 72, 40, '#d8f5a2', 6), E('🥫', 50, 30, 10), E('🩴', 50, 40, 7, 'bob'), R(10, 58, 80, 8, '#fff', 99), R(40, 58, 20, 8, '#8ce99a', 99), R(49, 58, 1.8, 8, '#e03131', 99), ...btn('🩴 Hagis!', 50, 82, 40), tap(60, 88)], 'ui'),
-    st(['Can fell? Tap Takbo! fast to grab your tsinelas before Taya!', 'Natumba ang lata? Pindutin ang Takbo! nang mabilis para makuha ang tsinelas bago ang Taya!'], [E('🥫', 50, 22, 10), R(10, 40, 80, 7, '#fff', 99), R(10, 40, 56, 7, '#6fcf97', 99), R(10, 52, 80, 7, '#fff', 99), R(10, 52, 30, 7, '#ff8787', 99), ...btn('🏃 Takbo!', 50, 80, 40), tap(60, 86)], 'ui')
+    st(['Put your finger on your player and pull toward the can 🥫. The dots show where it will land.', 'Idiin ang daliri sa iyong bata at hilahin papunta sa lata 🥫. Ipinapakita ng mga tuldok kung saan babagsak.'], [R(36, 8, 28, 30, 'rgba(255,255,255,.4)', 50, 0, 'border:.9cqw dashed #fff'), E('🥫', 50, 24, 10), K(70, 30, 'stand', 22, 'r'), R(49.5, 40, 1, 34, '#845ef7', 2), E('👆', 54, 80, 9, 'tap'), K(50, 94, 'arms', 24, 'me')], 'ground'),
+    st(['Let go to throw! Too short falls in front; too long flies over the can.', 'Bitawan para ihagis! Kulang ang hila, sasadsad sa harap; sobra, lalampas sa lata.'], [R(36, 8, 28, 30, 'rgba(255,255,255,.4)', 50, 0, 'border:.9cqw dashed #fff'), E('🥫', 50, 24, 10, 'shake'), E('🩴', 50, 46, 8, 'slide'), K(70, 30, 'stand', 22, 'r'), K(50, 94, 'arms', 24, 'me')], 'ground'),
+    st(['Tumba! Run to get your 🩴 and come back behind the line before Taya sets up the can.', 'Tumba! Tumakbo para kunin ang 🩴, saka bumalik sa likod ng linya bago maitayo ni Taya ang lata.'], [E('🥫', 30, 30, 9), K(36, 40, 'run', 22, 'r', 'bob'), E('🩴', 72, 34, 8, 'bob'), K(66, 60, 'run', 24, 'me', 'bob'), R(6, 80, 88, 1.2, '#fff'), E('⬇️', 66, 76, 7, 'bob')], 'ground')
   ]);
 
   /* ================= SIPA ================= */

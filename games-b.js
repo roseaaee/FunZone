@@ -445,7 +445,7 @@ FZ.reg({
     draw();
     let c = 3; api.msg(L ? 'Humanda… sumakay sa ' + NAME + '!' : 'Get ready… climb on your ' + NAME + '!', true);
     const id = api.every(() => {
-      if (c > 0) { api.msg(String(c), false); FZ.say(String(c)); api.sfx('pop'); c--; }
+      if (c > 0) { api.msg(String(c), false); FZ.say(FZ.lang === 'tl' ? ['Isa', 'Dalawa', 'Tatlo'][c - 1] : String(c)); api.sfx('pop'); c--; }
       else { api.stopEvery(id); go = true; api.msg(L ? 'TAKBO! Kaliwa, kanan — humakbang kapag nasa berde!' : 'GO! Left, right — step when the marker is in the green!', true); }
     }, 900);
     FZ.kadangPeek = () => ({ go, mk: mk_, GZ, busy, wob, me: me.p, fall: me.fall, last: me.last, others: rs.slice(0, 2).map(r => r.p), STEPS });

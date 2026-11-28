@@ -513,6 +513,7 @@ function renderParent() {
       <p class="muted" id="voiceNote">${hasLangVoice() ? FZ.t('voice_note') : FZ.t('voice_no_tl')}</p>
       <p class="muted">${FZ.t('voice_tl_tip')}</p>
     </div>
+    <div class="pcard" id="studioCard"></div>
     <div class="pcard" id="recCard"></div>
     <div class="pcard"><h3>${FZ.t('limit_title')}</h3>
       <div class="row"><label for="sLimit">${FZ.t('limit_lbl')}</label>
@@ -532,6 +533,7 @@ function renderParent() {
   $('#sVoiceSel').onchange = e => { S.voices = Object.assign({}, S.voices); if (e.target.value) S.voices[FZ.lang] = e.target.value; else delete S.voices[FZ.lang]; FZ.saveSettings(); FZ.say(FZ.t('voice_hi'), true); };
   $('#sVoiceTest').onclick = () => FZ.say(FZ.t('voice_hi'), true);
   if (FZ.renderRecCard) FZ.renderRecCard($('#recCard'));
+  if (FZ.renderStudioCard) FZ.renderStudioCard($('#studioCard'));
   $('#sVoice').onchange = e => { S.voice = e.target.checked; FZ.saveSettings(); if (S.voice) FZ.say(FZ.t('hello')); };
   $('#sLimit').onchange = e => { S.limit = +e.target.value; FZ.saveSettings(); playedSec = 0; };
   $('#sPinSave').onclick = () => {
@@ -560,7 +562,7 @@ function toggleFold(t) {
 }
 $('#ptab-settings').addEventListener('click', e => { const t = e.target.closest('.pcard.fold > h3'); if (t) toggleFold(t); });
 $('#ptab-settings').addEventListener('keydown', e => { const t = e.target.closest('.pcard.fold > h3'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggleFold(t); } });
-new MutationObserver(() => { const c = $('#recCard'); if (c && !c.querySelector(':scope > h3[role]')) foldSettings(); }).observe($('#ptab-settings'), { childList: true, subtree: true });
+new MutationObserver(() => { if ($$('#recCard, #studioCard').some(c => c.firstElementChild && !c.querySelector(':scope > h3[role]'))) foldSettings(); }).observe($('#ptab-settings'), { childList: true, subtree: true });
 
 /* ---------------- TIME LIMIT / REST ---------------- */
 setInterval(() => {
